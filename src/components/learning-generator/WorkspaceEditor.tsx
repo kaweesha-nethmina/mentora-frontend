@@ -49,9 +49,9 @@ export default function WorkspaceEditor({
                 }`}>
                   {i + 1}
                 </div>
-                <div className="absolute left-6 top-0 w-64 p-3 bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-white/10 rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-auto">
-                  <p className="text-xs font-bold text-slate-900 dark:text-white mb-1">{ann.category}</p>
-                  <p className="text-xs text-slate-600 dark:text-white/70 mb-2">{ann.message}</p>
+                <div className="absolute left-6 top-0 w-64 p-3 bg-card border border-border rounded-xl shadow-overlay opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-auto">
+                  <p className="text-xs font-bold text-foreground mb-1">{ann.category}</p>
+                  <p className="text-xs text-muted-foreground mb-2">{ann.message}</p>
                   <p className="text-[10px] text-teal-700 dark:text-teal-400 font-semibold">{ann.suggestion}</p>
                 </div>
               </div>
@@ -63,10 +63,10 @@ export default function WorkspaceEditor({
   };
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 border-r border-slate-200 dark:border-white/10 relative bg-white dark:bg-[#0b1021] transition-colors duration-200">
-      <div className="flex items-center justify-between px-4 py-1.5 bg-slate-50 dark:bg-[#0f172a] border-b border-slate-200 dark:border-white/10 shrink-0">
-        <span className="text-[11px] font-mono text-slate-600 dark:text-slate-400 font-semibold">Main.java</span>
-        <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono">Ctrl+Enter to run</span>
+    <div className="flex-1 flex flex-col min-w-0 border-r border-border relative bg-sunken transition-colors duration-200">
+      <div className="flex items-center justify-between px-4 py-1.5 bg-background border-b border-border shrink-0">
+        <span className="text-[11px] font-mono text-muted-foreground font-semibold">Main.java</span>
+        <span className="text-[10px] text-subtle-foreground font-mono">Ctrl+Enter to run</span>
       </div>
       <div className="flex-1 relative">
         {renderAnnotations()}
@@ -77,14 +77,14 @@ export default function WorkspaceEditor({
           onMouseUp={onTextSelection}
           spellCheck={false}
           placeholder="// Write your Java code here..."
-          className="absolute inset-0 w-full h-full p-4 bg-transparent text-slate-900 dark:text-teal-300 font-mono text-sm leading-relaxed resize-none outline-none focus:ring-0 custom-scrollbar whitespace-pre placeholder:text-slate-400 dark:placeholder:text-slate-600 caret-teal-600 dark:caret-teal-400"
+          className="absolute inset-0 w-full h-full p-4 bg-transparent text-slate-900 dark:text-teal-300 font-mono text-sm leading-relaxed resize-none outline-none focus:ring-0 custom-scrollbar whitespace-pre placeholder:text-subtle-foreground caret-teal-600 dark:caret-teal-400"
           style={{ tabSize: 4 }}
         />
       </div>
 
       {showExplanation && highlightedCode && (
         <div
-          className="absolute z-50 w-80 bg-white dark:bg-[#1e293b] border border-teal-500/30 rounded-xl shadow-2xl animate-slide-up"
+          className="absolute z-50 w-80 bg-card border border-teal-500/30 rounded-xl shadow-overlay animate-slide-up"
           style={{ top: explanationPosition.top, left: Math.max(0, explanationPosition.left - 80) }}
         >
           <div className="flex items-center justify-between px-3 py-2 border-b border-teal-500/20 bg-teal-500/5 rounded-t-xl">
@@ -92,16 +92,16 @@ export default function WorkspaceEditor({
               <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
               <span className="text-[10px] font-bold text-teal-600 dark:text-teal-400 uppercase">AI Explainer</span>
             </div>
-            <button onClick={onCloseExplanation} className="text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors"><X className="w-3 h-3" /></button>
+            <button onClick={onCloseExplanation} className="text-muted-foreground hover:text-foreground/80 transition-colors"><X className="w-3 h-3" /></button>
           </div>
           <div className="p-3">
-            <pre className="text-[10px] text-slate-700 dark:text-teal-200/80 bg-slate-50 dark:bg-[#0b1021] p-2 rounded-lg font-mono mb-2 overflow-x-auto whitespace-pre-wrap border border-slate-200 dark:border-white/10">{highlightedCode}</pre>
+            <pre className="text-[10px] text-slate-700 dark:text-teal-200/80 bg-sunken p-2 rounded-lg font-mono mb-2 overflow-x-auto whitespace-pre-wrap border border-border">{highlightedCode}</pre>
             {isExplaining ? (
               <div className="flex items-center gap-2 text-xs text-teal-600 dark:text-teal-400/60">
                 <Loader2 className="w-3 h-3 animate-spin" /> Explaining...
               </div>
             ) : aiExplanation ? (
-              <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed whitespace-pre-wrap">{aiExplanation}</p>
+              <p className="text-xs text-foreground/80 leading-relaxed whitespace-pre-wrap">{aiExplanation}</p>
             ) : (
               <button onClick={onExplainSelected} className="w-full py-1.5 bg-teal-600/20 border border-teal-500/30 text-teal-700 dark:text-teal-400 text-xs font-bold rounded-lg hover:bg-teal-600/30 flex items-center justify-center gap-1">
                 <Wand2 className="w-3 h-3" /> Explain This

@@ -600,10 +600,10 @@ export default function ReportPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-card via-muted to-card flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-teal-400 animate-spin mx-auto mb-4" />
-          <p className="text-white/70 font-semibold">Loading report...</p>
+          <Loader2 className="w-12 h-12 text-teal-700 dark:text-teal-400 animate-spin mx-auto mb-4" />
+          <p className="text-foreground/80 font-semibold">Loading report...</p>
         </div>
       </div>
     );
@@ -611,12 +611,12 @@ export default function ReportPage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-card via-muted to-card flex items-center justify-center">
         <div className="text-center max-w-md">
-          <AlertTriangle className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-white mb-2">No Report Available</h2>
-          <p className="text-white/60 mb-6">Complete an assessment session first to view your personalized feedback report.</p>
-          <Button onClick={() => router.push('/assessment')} className="bg-teal-600 hover:bg-teal-500 text-white">
+          <AlertTriangle className="w-16 h-16 text-amber-700 dark:text-amber-400 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-foreground mb-2">No Report Available</h2>
+          <p className="text-muted-foreground mb-6">Complete an assessment session first to view your personalized feedback report.</p>
+          <Button onClick={() => router.push('/assessment')} className="bg-primary hover:bg-primary-hover text-primary-foreground">
             Go to Assessment
           </Button>
         </div>
@@ -625,80 +625,80 @@ export default function ReportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-card via-muted to-card p-6">
       <div className="max-w-6xl mx-auto space-y-8">
 
         {/* Report Header */}
         <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold text-white">{data.report_title}</h1>
-          <div className="text-slate-300 space-y-1">
+          <h1 className="text-3xl font-bold text-foreground">{data.report_title}</h1>
+          <div className="text-muted-foreground space-y-1">
             <p>Learner ID: {data.learner_id}</p>
             <p>Session ID: {data.session_id}</p>
             <p>Generated: {formatDate(data.generated_at)}</p>
-            <Badge className="bg-teal-500 text-white text-lg px-4 py-1 mt-2">
+            <Badge className="bg-primary text-primary-foreground text-lg px-4 py-1 mt-2">
               Overall Grade: {data.overall_grade}
             </Badge>
           </div>
         </div>
 
         {/* Overall Assessment */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-muted/50 border-border">
           <CardHeader>
-            <CardTitle className="text-white">Overall Assessment</CardTitle>
+            <CardTitle className="text-foreground">Overall Assessment</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-slate-200 text-lg leading-relaxed">{data.overall_assessment}</p>
+            <p className="text-foreground/90 text-lg leading-relaxed">{data.overall_assessment}</p>
           </CardContent>
         </Card>
 
         {/* Performance Overview Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-muted/50 border-border">
             <CardContent className="p-6 text-center">
-              <Target className="w-8 h-8 text-teal-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-white">{data.overall_mastery_percentage}%</p>
-              <p className="text-slate-400 text-sm">Overall Mastery</p>
+              <Target className="w-8 h-8 text-teal-700 dark:text-teal-400 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-foreground">{data.overall_mastery_percentage}%</p>
+              <p className="text-muted-foreground text-sm">Overall Mastery</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-muted/50 border-border">
             <CardContent className="p-6 text-center">
-              <TrendingUp className="w-8 h-8 text-teal-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-white">{data.overall_accuracy_percentage}%</p>
-              <p className="text-slate-400 text-sm">Overall Accuracy</p>
+              <TrendingUp className="w-8 h-8 text-teal-700 dark:text-teal-400 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-foreground">{data.overall_accuracy_percentage}%</p>
+              <p className="text-muted-foreground text-sm">Overall Accuracy</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-muted/50 border-border">
             <CardContent className="p-6 text-center">
-              <Award className="w-8 h-8 text-teal-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-white">{data.total_questions}</p>
-              <p className="text-slate-400 text-sm">Total Questions</p>
+              <Award className="w-8 h-8 text-teal-700 dark:text-teal-400 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-foreground">{data.total_questions}</p>
+              <p className="text-muted-foreground text-sm">Total Questions</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-muted/50 border-border">
             <CardContent className="p-6 text-center">
-              <Clock className="w-8 h-8 text-teal-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-white">{data.session_duration_minutes}</p>
-              <p className="text-slate-400 text-sm">Minutes</p>
+              <Clock className="w-8 h-8 text-teal-700 dark:text-teal-400 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-foreground">{data.session_duration_minutes}</p>
+              <p className="text-muted-foreground text-sm">Minutes</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Per-topic Deep Analysis */}
         <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-white">Topic Analysis</h2>
+          <h2 className="text-2xl font-bold text-foreground">Topic Analysis</h2>
           {data.topic_reports.map((topic, index) => (
-            <Card key={index} className="bg-slate-800/50 border-slate-700">
+            <Card key={index} className="bg-muted/50 border-border">
               <CardHeader>
-                <CardTitle className="text-white flex items-center justify-between">
+                <CardTitle className="text-foreground flex items-center justify-between">
                   <span>{topic.topic_name}</span>
                   <div className="flex items-center gap-4">
                     <Badge className={topic.mastery_percentage >= 85 ? "bg-green-500" : topic.mastery_percentage >= 60 ? "bg-blue-500" : "bg-yellow-500"}>
                       {topic.mastery_percentage}% Mastery
                     </Badge>
-                    <span className="text-slate-400 text-sm">
+                    <span className="text-muted-foreground text-sm">
                       {topic.correct_answers}/{topic.questions_asked} correct
                     </span>
                   </div>
@@ -708,28 +708,28 @@ export default function ReportPage() {
 
                 {/* Performance Summary */}
                 <div className="grid md:grid-cols-3 gap-4">
-                  <div className="text-center p-4 bg-slate-700/30 rounded-lg">
-                    <p className="text-2xl font-bold text-white">{topic.questions_asked}</p>
-                    <p className="text-slate-400 text-sm">Questions Asked</p>
+                  <div className="text-center p-4 bg-surface-3/30 rounded-lg">
+                    <p className="text-2xl font-bold text-foreground">{topic.questions_asked}</p>
+                    <p className="text-muted-foreground text-sm">Questions Asked</p>
                   </div>
-                  <div className="text-center p-4 bg-slate-700/30 rounded-lg">
-                    <p className="text-2xl font-bold text-white">{topic.correct_answers}</p>
-                    <p className="text-slate-400 text-sm">Correct Answers</p>
+                  <div className="text-center p-4 bg-surface-3/30 rounded-lg">
+                    <p className="text-2xl font-bold text-foreground">{topic.correct_answers}</p>
+                    <p className="text-muted-foreground text-sm">Correct Answers</p>
                   </div>
-                  <div className="text-center p-4 bg-slate-700/30 rounded-lg">
-                    <p className="text-2xl font-bold text-white">{topic.accuracy_percentage}%</p>
-                    <p className="text-slate-400 text-sm">Accuracy</p>
+                  <div className="text-center p-4 bg-surface-3/30 rounded-lg">
+                    <p className="text-2xl font-bold text-foreground">{topic.accuracy_percentage}%</p>
+                    <p className="text-muted-foreground text-sm">Accuracy</p>
                   </div>
                 </div>
 
                 {/* Strengths */}
                 {Array.isArray(topic.strengths) && topic.strengths.length > 0 && (
                   <div>
-                    <h4 className="text-green-300 font-semibold mb-2 flex items-center gap-2">
+                    <h4 className="text-green-700 dark:text-green-300 font-semibold mb-2 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       Strengths
                     </h4>
-                    <ul className="list-disc list-inside text-green-200 space-y-1">
+                    <ul className="list-disc list-inside text-green-800 dark:text-green-200 space-y-1">
                       {topic.strengths.map((strength, idx) => (
                         <li key={idx}>{strength}</li>
                       ))}
@@ -740,11 +740,11 @@ export default function ReportPage() {
                 {/* Weaknesses */}
                 {Array.isArray(topic.weaknesses) && topic.weaknesses.length > 0 && (
                   <div>
-                    <h4 className="text-red-300 font-semibold mb-2 flex items-center gap-2">
+                    <h4 className="text-red-700 dark:text-red-300 font-semibold mb-2 flex items-center gap-2">
                       <X className="w-4 h-4" />
                       Weaknesses
                     </h4>
-                    <ul className="list-disc list-inside text-red-200 space-y-1">
+                    <ul className="list-disc list-inside text-red-800 dark:text-red-200 space-y-1">
                       {topic.weaknesses.map((weakness, idx) => (
                         <li key={idx}>{weakness}</li>
                       ))}
@@ -755,8 +755,8 @@ export default function ReportPage() {
                 {/* Misconceptions Found */}
                 {Array.isArray(topic.misconceptions_found) && topic.misconceptions_found.length > 0 && (
                   <div>
-                    <h4 className="text-orange-300 font-semibold mb-2">Misconceptions Found</h4>
-                    <ul className="list-disc list-inside text-orange-200 space-y-1">
+                    <h4 className="text-orange-700 dark:text-orange-300 font-semibold mb-2">Misconceptions Found</h4>
+                    <ul className="list-disc list-inside text-orange-800 dark:text-orange-200 space-y-1">
                       {topic.misconceptions_found.map((misconception, idx) => (
                         <li key={idx}>{misconception}</li>
                       ))}
@@ -766,20 +766,20 @@ export default function ReportPage() {
 
                 {/* Improvement Plan */}
                 <div>
-                  <h4 className="text-blue-300 font-semibold mb-2">Improvement Plan</h4>
-                  <p className="text-blue-200">{topic.improvement_plan}</p>
+                  <h4 className="text-blue-700 dark:text-blue-300 font-semibold mb-2">Improvement Plan</h4>
+                  <p className="text-blue-800 dark:text-blue-200">{topic.improvement_plan}</p>
                 </div>
 
                 {/* Recommended Exercises */}
                 {Array.isArray(topic.recommended_exercises) && topic.recommended_exercises.length > 0 && (
                   <div>
-                    <h4 className="text-purple-300 font-semibold mb-2">Recommended Exercises</h4>
-                    <ul className="list-disc list-inside text-purple-200 space-y-1">
+                    <h4 className="text-purple-700 dark:text-purple-300 font-semibold mb-2">Recommended Exercises</h4>
+                    <ul className="list-disc list-inside text-purple-800 dark:text-purple-200 space-y-1">
                       {topic.recommended_exercises.map((exercise, idx) => (
                         <li key={idx}>{exercise}</li>
                       ))}
                     </ul>
-                    <p className="text-purple-400 text-sm mt-2">
+                    <p className="text-purple-700 dark:text-purple-400 text-sm mt-2">
                       Estimated study time: {topic.estimated_study_hours} hours
                     </p>
                   </div>
@@ -791,37 +791,37 @@ export default function ReportPage() {
         </div>
 
         {/* Q&A with AI Explanations */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-muted/50 border-border">
           <CardHeader>
-            <CardTitle className="text-white">Question Analysis</CardTitle>
+            <CardTitle className="text-foreground">Question Analysis</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {data.qa_with_explanations.map((qa, index) => (
-              <div key={index} className="border border-slate-600 rounded-lg p-6">
+              <div key={index} className="border border-border-strong rounded-lg p-6">
                 <div className="mb-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline" className="border-slate-500 text-slate-300">
+                    <Badge variant="outline" className="border-slate-500 text-muted-foreground">
                       Question {qa.question_number}
                     </Badge>
                   </div>
-                  <p className="text-white font-medium text-lg">{qa.question_text}</p>
+                  <p className="text-foreground font-medium text-lg">{qa.question_text}</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div className="p-3 bg-red-500/10 border border-red-500/30 rounded overflow-hidden">
-                    <p className="text-red-300 text-sm font-medium mb-2">Your Answer:</p>
+                    <p className="text-red-700 dark:text-red-300 text-sm font-medium mb-2">Your Answer:</p>
                     {qa.type === 'coding_challenge' || qa.type === 'code_completion' || qa.type === 'code_tracing' || qa.type === 'debugging' ? (
-                      <pre className="text-red-200 text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto">{qa.learner_answer}</pre>
+                      <pre className="text-red-800 dark:text-red-200 text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto">{qa.learner_answer}</pre>
                     ) : (
-                      <p className="text-red-200 font-mono text-sm">{qa.learner_answer}</p>
+                      <p className="text-red-800 dark:text-red-200 font-mono text-sm">{qa.learner_answer}</p>
                     )}
                   </div>
                   <div className="p-3 bg-green-500/10 border border-green-500/30 rounded overflow-hidden">
-                    <p className="text-green-300 text-sm font-medium mb-2">Correct Answer:</p>
+                    <p className="text-green-700 dark:text-green-300 text-sm font-medium mb-2">Correct Answer:</p>
                     {qa.type === 'coding_challenge' || qa.type === 'code_completion' || qa.type === 'code_tracing' || qa.type === 'debugging' ? (
-                      <pre className="text-green-200 text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto">{qa.correct_answer}</pre>
+                      <pre className="text-green-800 dark:text-green-200 text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto">{qa.correct_answer}</pre>
                     ) : (
-                      <p className="text-green-200 font-mono text-sm">{qa.correct_answer}</p>
+                      <p className="text-green-800 dark:text-green-200 font-mono text-sm">{qa.correct_answer}</p>
                     )}
                   </div>
                 </div>
@@ -829,11 +829,11 @@ export default function ReportPage() {
                 {qa.concept_explanation && (
                   <div className="space-y-4">
                     <div>
-                      <h5 className="text-blue-300 font-semibold flex items-center gap-2 mb-2">
+                      <h5 className="text-blue-700 dark:text-blue-300 font-semibold flex items-center gap-2 mb-2">
                         <BookOpen className="w-4 h-4" />
                         Concept Explanation
                       </h5>
-                      <p className="text-blue-200">{qa.concept_explanation}</p>
+                      <p className="text-blue-800 dark:text-blue-200">{qa.concept_explanation}</p>
                     </div>
                   </div>
                 )}
@@ -847,7 +847,7 @@ export default function ReportPage() {
 
           <Card className="bg-green-500/10 border-green-500/30">
             <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
+              <CardTitle className="text-green-700 dark:text-green-300 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5" />
                 Key Strengths
               </CardTitle>
@@ -855,7 +855,7 @@ export default function ReportPage() {
             <CardContent>
               <ul className="space-y-2">
                 {data.key_strengths.map((strength, index) => (
-                  <li key={index} className="text-green-200 flex items-start gap-2">
+                  <li key={index} className="text-green-800 dark:text-green-200 flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     {strength}
                   </li>
@@ -866,7 +866,7 @@ export default function ReportPage() {
 
           <Card className="bg-red-500/10 border-red-500/30">
             <CardHeader>
-              <CardTitle className="text-red-300 flex items-center gap-2">
+              <CardTitle className="text-red-700 dark:text-red-300 flex items-center gap-2">
                 <X className="w-5 h-5" />
                 Key Weaknesses
               </CardTitle>
@@ -874,7 +874,7 @@ export default function ReportPage() {
             <CardContent>
               <ul className="space-y-2">
                 {data.key_weaknesses.map((weakness, index) => (
-                  <li key={index} className="text-red-200 flex items-start gap-2">
+                  <li key={index} className="text-red-800 dark:text-red-200 flex items-start gap-2">
                     <X className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     {weakness}
                   </li>
@@ -889,12 +889,12 @@ export default function ReportPage() {
         {data.misconceptions_to_address.length > 0 && (
           <Card className="bg-orange-500/10 border-orange-500/30">
             <CardHeader>
-              <CardTitle className="text-orange-300">Misconceptions to Address</CardTitle>
+              <CardTitle className="text-orange-700 dark:text-orange-300">Misconceptions to Address</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
                 {data.misconceptions_to_address.map((misconception, index) => (
-                  <li key={index} className="text-orange-200 flex items-start gap-2">
+                  <li key={index} className="text-orange-800 dark:text-orange-200 flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     {misconception}
                   </li>
@@ -905,23 +905,23 @@ export default function ReportPage() {
         )}
 
         {/* Personalized Learning Path */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-muted/50 border-border">
           <CardHeader>
-            <CardTitle className="text-white">Personalized Learning Path</CardTitle>
+            <CardTitle className="text-foreground">Personalized Learning Path</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
 
             {data.learning_path.immediate_focus && (
               <div>
-                <h4 className="text-teal-300 font-semibold mb-2">Immediate Focus</h4>
-                <p className="text-teal-200">{data.learning_path.immediate_focus}</p>
+                <h4 className="text-teal-700 dark:text-teal-300 font-semibold mb-2">Immediate Focus</h4>
+                <p className="text-teal-800 dark:text-teal-200">{data.learning_path.immediate_focus}</p>
               </div>
             )}
 
             {data.learning_path.week_1_goals.length > 0 && (
               <div>
-                <h4 className="text-blue-300 font-semibold mb-2">Week 1 Goals</h4>
-                <ul className="list-disc list-inside text-blue-200 space-y-1">
+                <h4 className="text-blue-700 dark:text-blue-300 font-semibold mb-2">Week 1 Goals</h4>
+                <ul className="list-disc list-inside text-blue-800 dark:text-blue-200 space-y-1">
                   {data.learning_path.week_1_goals.map((goal, index) => (
                     <li key={index}>{goal}</li>
                   ))}
@@ -931,8 +931,8 @@ export default function ReportPage() {
 
             {data.learning_path.week_2_4_goals.length > 0 && (
               <div>
-                <h4 className="text-purple-300 font-semibold mb-2">Weeks 2-4 Goals</h4>
-                <ul className="list-disc list-inside text-purple-200 space-y-1">
+                <h4 className="text-purple-700 dark:text-purple-300 font-semibold mb-2">Weeks 2-4 Goals</h4>
+                <ul className="list-disc list-inside text-purple-800 dark:text-purple-200 space-y-1">
                   {data.learning_path.week_2_4_goals.map((goal, index) => (
                     <li key={index}>{goal}</li>
                   ))}
@@ -942,11 +942,11 @@ export default function ReportPage() {
 
             {data.learning_path.long_term_goals.length > 0 && (
               <div>
-                <h4 className="text-indigo-300 font-semibold mb-2">Long-term Goals</h4>
+                <h4 className="text-indigo-700 dark:text-indigo-300 font-semibold mb-2">Long-term Goals</h4>
                 {typeof data.learning_path.long_term_goals === 'string' ? (
-                  <p className="text-indigo-200">{data.learning_path.long_term_goals}</p>
+                  <p className="text-indigo-800 dark:text-indigo-200">{data.learning_path.long_term_goals}</p>
                 ) : (
-                  <ul className="list-disc list-inside text-indigo-200 space-y-1">
+                  <ul className="list-disc list-inside text-indigo-800 dark:text-indigo-200 space-y-1">
                     {data.learning_path.long_term_goals.map((goal, index) => (
                       <li key={index}>{goal}</li>
                     ))}
@@ -959,24 +959,24 @@ export default function ReportPage() {
         </Card>
 
         {data.recommended_resources.length > 0 && (
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="bg-muted/50 border-border">
             <CardHeader>
-              <CardTitle className="text-white">Recommended Resources</CardTitle>
+              <CardTitle className="text-foreground">Recommended Resources</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-4">
                 {data.recommended_resources.map((resource, index) => (
-                  <div key={index} className="p-4 bg-slate-700/30 rounded-lg border border-slate-600">
+                  <div key={index} className="p-4 bg-surface-3/30 rounded-lg border border-border-strong">
                     <div className="flex items-center justify-between mb-2">
-                      <Badge variant="outline" className="border-slate-500 text-slate-300">
+                      <Badge variant="outline" className="border-slate-500 text-muted-foreground">
                         {resource.topic}
                       </Badge>
-                      <Badge className="bg-slate-600 text-slate-200">
+                      <Badge className="bg-slate-600 text-foreground/90">
                         {resource.type}
                       </Badge>
                     </div>
-                    <h5 className="text-white font-medium mb-1">{resource.name}</h5>
-                    <p className="text-slate-400 text-sm">{resource.url_hint}</p>
+                    <h5 className="text-foreground font-medium mb-1">{resource.name}</h5>
+                    <p className="text-muted-foreground text-sm">{resource.url_hint}</p>
                   </div>
                 ))}
               </div>
@@ -987,32 +987,32 @@ export default function ReportPage() {
         {data.practice_project_suggestion && (
           <Card className="bg-teal-500/10 border-teal-500/30">
             <CardHeader>
-              <CardTitle className="text-teal-300 flex items-center gap-2">
+              <CardTitle className="text-teal-700 dark:text-teal-300 flex items-center gap-2">
                 <Code className="w-5 h-5" />
                 Practice Project Suggestion
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-teal-200 leading-relaxed">{data.practice_project_suggestion}</p>
+              <p className="text-teal-800 dark:text-teal-200 leading-relaxed">{data.practice_project_suggestion}</p>
             </CardContent>
           </Card>
         )}
 
         {/* Next Assessment Recommendation */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-muted/50 border-border">
           <CardHeader>
-            <CardTitle className="text-white">Next Assessment Recommendation</CardTitle>
+            <CardTitle className="text-foreground">Next Assessment Recommendation</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-slate-200">{data.next_assessment_recommendation}</p>
+            <p className="text-foreground/90">{data.next_assessment_recommendation}</p>
           </CardContent>
         </Card>
 
         {/* Motivational Closing */}
         <Card className="bg-gradient-to-r from-teal-500/10 to-blue-500/10 border-teal-500/30">
           <CardContent className="p-8 text-center">
-            <Heart className="w-8 h-8 text-red-400 mx-auto mb-4" />
-            <p className="text-white text-lg italic leading-relaxed">{data.motivational_message}</p>
+            <Heart className="w-8 h-8 text-red-700 dark:text-red-400 mx-auto mb-4" />
+            <p className="text-foreground text-lg italic leading-relaxed">{data.motivational_message}</p>
           </CardContent>
         </Card>
 
@@ -1021,14 +1021,14 @@ export default function ReportPage() {
           <Button
             onClick={onDownload}
             variant="outline"
-            className="border-slate-600 text-slate-300 hover:bg-slate-700 flex items-center gap-2"
+            className="border-border-strong text-muted-foreground hover:bg-surface-3 flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
             Download Report
           </Button>
           <Button
             onClick={onStartNew}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 font-semibold rounded-lg"
+            className="bg-primary hover:bg-primary-hover text-primary-foreground px-6 py-3 font-semibold rounded-lg"
           >
             Start New Session →
           </Button>

@@ -7,10 +7,10 @@ import { learningGeneratorApi, type ConceptCoverage as ConceptCoverageData } fro
 import { AlertTriangle, CheckCircle2, ChevronLeft, Layers, Loader2, GitBranch, HelpCircle } from "lucide-react";
 
 const getPctColor = (pct: number) => {
-  if (pct >= 80) return "text-green-400";
-  if (pct >= 60) return "text-amber-400";
-  if (pct >= 40) return "text-orange-400";
-  return "text-red-400";
+  if (pct >= 80) return "text-green-700 dark:text-green-400";
+  if (pct >= 60) return "text-amber-700 dark:text-amber-400";
+  if (pct >= 40) return "text-orange-700 dark:text-orange-400";
+  return "text-red-700 dark:text-red-400";
 };
 
 export default function ConceptCoveragePage() {
@@ -42,7 +42,7 @@ export default function ConceptCoveragePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-10 h-10 text-teal-400 animate-spin" />
+        <Loader2 className="w-10 h-10 text-teal-700 dark:text-teal-400 animate-spin" />
       </div>
     );
   }
@@ -56,7 +56,7 @@ export default function ConceptCoveragePage() {
           <p className="text-sm text-[var(--lmg-text-muted)] mb-6">{error}</p>
           <button
             onClick={fetchData}
-            className="px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl transition-all hover:scale-105"
+            className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-primary-foreground font-bold rounded-xl transition-all "
           >
             Retry
           </button>
@@ -83,7 +83,7 @@ export default function ConceptCoveragePage() {
             <Layers className="w-6 h-6 text-teal-600 dark:text-teal-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-[var(--lmg-text-primary)]">Concept Coverage</h1>
+            <h1 className="text-2xl font-extrabold text-[var(--lmg-text-primary)]">Concept Coverage</h1>
             <p className="text-sm text-[var(--lmg-text-muted)]">
               Mastery breakdown across the concept graph, including prerequisite gaps injected by the graph.
             </p>
@@ -95,22 +95,22 @@ export default function ConceptCoveragePage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="p-4 bg-[var(--lmg-bg-surface)] border border-[var(--lmg-border)] rounded-xl shadow-sm">
           <p className="text-sm font-bold text-[var(--lmg-text-primary)] mb-1">Mastered concepts</p>
-          <p className={`text-3xl font-black ${getPctColor(coveragePct)}`}>{coveragePct}%</p>
+          <p className={`text-3xl font-extrabold ${getPctColor(coveragePct)}`}>{coveragePct}%</p>
         </div>
         <div className="p-4 bg-[var(--lmg-bg-surface)] border border-[var(--lmg-border)] rounded-xl shadow-sm">
           <p className="text-sm font-bold text-[var(--lmg-text-primary)] mb-1">Covered nodes</p>
-          <p className="text-3xl font-black text-[var(--lmg-text-primary)]">
+          <p className="text-3xl font-extrabold text-[var(--lmg-text-primary)]">
             {coveredNodes}
             <span className="text-base font-bold text-[var(--lmg-text-muted)]"> / {totalNodes}</span>
           </p>
         </div>
         <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
           <p className="text-sm font-bold text-blue-600 dark:text-blue-300 mb-1">Prerequisite gaps</p>
-          <p className="text-3xl font-black text-blue-600 dark:text-blue-400">{coverage?.implicitGapsCount ?? 0}</p>
+          <p className="text-3xl font-extrabold text-blue-600 dark:text-blue-400">{coverage?.implicitGapsCount ?? 0}</p>
         </div>
         <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
           <p className="text-sm font-bold text-amber-600 dark:text-amber-300 mb-1">Unresolved</p>
-          <p className="text-3xl font-black text-amber-600 dark:text-amber-400">{coverage?.unverifiedCount ?? 0}</p>
+          <p className="text-3xl font-extrabold text-amber-600 dark:text-amber-400">{coverage?.unverifiedCount ?? 0}</p>
         </div>
       </div>
 

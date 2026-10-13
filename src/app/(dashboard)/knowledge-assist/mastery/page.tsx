@@ -103,28 +103,28 @@ export default function KnowledgeAssistMasteryPage() {
 
   return (
     <div className="space-y-4 pb-4">
-      <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-5 shadow-xs">
+      <section className="rounded-2xl border border-border bg-card/55 p-5 shadow-xs">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-300">
               MongoDB Mastery Profile
             </p>
-            <h1 className="mt-1 text-2xl font-black text-slate-900 dark:text-white md:text-3xl">
+            <h1 className="mt-1 text-2xl font-extrabold text-foreground md:text-3xl">
               Saved KAA output
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 dark:text-white/60">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
               This view reads the canonical profile saved in `knowledge_analysis.mastery_profiles`.
             </p>
           </div>
 
           <form onSubmit={submitLookup} className="flex w-full flex-col gap-2 sm:w-auto sm:min-w-[420px] sm:flex-row">
             <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-white/35" />
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle-foreground" />
               <input
                 value={studentIdInput}
                 onChange={(event) => setStudentIdInput(event.target.value)}
                 placeholder="Student ID"
-                className="h-10 w-full rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] pl-9 pr-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/40 outline-none transition focus:border-cyan-500"
+                className="h-10 w-full rounded-xl border border-border bg-background pl-9 pr-3 text-sm text-foreground placeholder:text-subtle-foreground outline-none transition focus:border-cyan-500"
               />
             </div>
             <button
@@ -138,7 +138,7 @@ export default function KnowledgeAssistMasteryPage() {
               type="button"
               onClick={() => displayStudentId && void loadProfile(displayStudentId)}
               disabled={loading || !displayStudentId}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-4 text-sm font-bold text-slate-700 dark:text-white/70 transition hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white disabled:cursor-wait disabled:opacity-50"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-muted px-4 text-sm font-bold text-foreground/80 transition hover:bg-surface-3 hover:text-foreground disabled:cursor-wait disabled:opacity-50"
             >
               <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
               Refresh
@@ -148,8 +148,8 @@ export default function KnowledgeAssistMasteryPage() {
       </section>
 
       {loading && (
-        <section className="flex min-h-[260px] items-center justify-center rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 shadow-xs">
-          <div className="flex items-center gap-3 text-slate-600 dark:text-white/65">
+        <section className="flex min-h-[260px] items-center justify-center rounded-2xl border border-border bg-card/55 shadow-xs">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <CircleDashed className="h-5 w-5 animate-spin text-cyan-600 dark:text-cyan-300" />
             Loading saved profile...
           </div>
@@ -208,9 +208,9 @@ export default function KnowledgeAssistMasteryPage() {
 
           <section className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)]">
             <div className="space-y-4">
-              <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
+              <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
                 <div className="flex items-center justify-between gap-3">
-                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">Generated knowledge gaps</h2>
+                  <h2 className="text-lg font-bold text-foreground">Generated knowledge gaps</h2>
                   <span className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-2 py-1 text-xs font-bold text-cyan-800 dark:text-cyan-200">
                     {profile.data_sources.github === "available" ? "GitHub included" : "No GitHub"}
                   </span>
@@ -221,19 +221,19 @@ export default function KnowledgeAssistMasteryPage() {
                       <GapCard key={`${gap.topic_id}-${index}`} gap={gap} />
                     ))
                   ) : (
-                    <p className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4 text-sm text-slate-600 dark:text-white/55">
+                    <p className="rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
                       No current knowledge gaps were saved for this profile.
                     </p>
                   )}
                 </div>
               </section>
 
-              <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
-                <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
+              <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
+                <h2 className="flex items-center gap-2 text-lg font-bold text-foreground">
                   <FileJson className="h-4 w-4 text-cyan-600 dark:text-cyan-300" />
                   DB JSON preview
                 </h2>
-                <pre className="mt-3 max-h-[420px] overflow-auto rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#050816] p-4 text-xs leading-5 text-slate-800 dark:text-cyan-50/80">
+                <pre className="mt-3 max-h-[420px] overflow-auto rounded-xl border border-border bg-muted p-4 text-xs leading-5 text-slate-800 dark:text-cyan-50/80">
                   {JSON.stringify(
                     {
                       profile_id: profile.profile_id,
@@ -250,34 +250,34 @@ export default function KnowledgeAssistMasteryPage() {
             </div>
 
             <aside className="space-y-4 xl:sticky xl:top-4 xl:self-start">
-              <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Strengths</h2>
+              <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
+                <h2 className="text-lg font-bold text-foreground">Strengths</h2>
                 <div className="mt-3 space-y-2">
                   {profile.mastery_profile.strengths.length ? (
                     profile.mastery_profile.strengths.map((strength, index) => (
                       <StrengthCard key={`${strength.topic_id}-${index}`} strength={strength} />
                     ))
                   ) : (
-                    <p className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4 text-sm text-slate-600 dark:text-white/55">
+                    <p className="rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
                       No strengths were saved in this profile.
                     </p>
                   )}
                 </div>
               </section>
 
-              <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recommendations</h2>
-                <div className="mt-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4">
-                  <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-white/40">
+              <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
+                <h2 className="text-lg font-bold text-foreground">Recommendations</h2>
+                <div className="mt-3 rounded-xl border border-border bg-background p-4">
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                     Priority order
                   </p>
                   <p className="mt-1 text-sm font-semibold text-cyan-700 dark:text-cyan-200">
                     {profile.recommendations.priority_order?.join(" -> ") || "No priority order"}
                   </p>
-                  <p className="mt-3 text-sm leading-6 text-slate-700 dark:text-white/65">
+                  <p className="mt-3 text-sm leading-6 text-foreground/80">
                     {profile.recommendations.general_advice || "No general advice saved."}
                   </p>
-                  <p className="mt-3 border-t border-slate-200 dark:border-white/10 pt-3 text-xs leading-5 text-slate-500 dark:text-white/45">
+                  <p className="mt-3 border-t border-border pt-3 text-xs leading-5 text-muted-foreground">
                     {profile.recommendations.for_instructor || "No instructor recommendation saved."}
                   </p>
                 </div>
@@ -304,32 +304,32 @@ function MetricCard({
   tone: string;
 }) {
   return (
-    <article className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
-      <div className={`mb-3 inline-flex rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-2 ${tone}`}>
+    <article className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
+      <div className={`mb-3 inline-flex rounded-lg border border-border bg-muted p-2 ${tone}`}>
         {icon}
       </div>
-      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/40">{label}</p>
-      <p className={`mt-1 truncate text-xl font-black ${tone}`}>{value}</p>
-      <p className="mt-1 truncate text-xs text-slate-500 dark:text-white/45">{helper}</p>
+      <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{label}</p>
+      <p className={`mt-1 truncate text-xl font-extrabold ${tone}`}>{value}</p>
+      <p className="mt-1 truncate text-xs text-muted-foreground">{helper}</p>
     </article>
   );
 }
 
 function GapCard({ gap }: { gap: KnowledgeGap }) {
   return (
-    <article className="rounded-xl border border-amber-500/30 dark:border-amber-400/20 bg-slate-50 dark:bg-[#0F172A] p-4 shadow-xs">
+    <article className="rounded-xl border border-amber-500/30 dark:border-amber-400/20 bg-background p-4 shadow-xs">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-lg font-black text-slate-900 dark:text-white">{gap.topic}</h3>
-            <span className="rounded-md border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 px-2 py-1 text-[11px] font-bold text-slate-600 dark:text-white/55">
+            <h3 className="text-lg font-extrabold text-foreground">{gap.topic}</h3>
+            <span className="rounded-md border border-border bg-muted px-2 py-1 text-[11px] font-bold text-muted-foreground">
               {gap.topic_id}
             </span>
             <span className="rounded-md border border-amber-500/30 dark:border-amber-400/25 bg-amber-500/10 px-2 py-1 text-[11px] font-bold text-amber-700 dark:text-amber-200">
               {gap.gap_type}
             </span>
           </div>
-          <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-white/60">{gap.evidence_summary}</p>
+          <p className="mt-2 text-sm leading-6 text-foreground/80">{gap.evidence_summary}</p>
         </div>
         <div className="flex shrink-0 gap-2">
           <ScorePill label="Mastery" value={formatPercent(gap.mastery_score)} />
@@ -344,7 +344,7 @@ function GapCard({ gap }: { gap: KnowledgeGap }) {
             <p className="mt-1 text-[11px] font-mono text-red-700 dark:text-red-100/45">{item.subskill_id}</p>
             <p className="mt-2 text-xs leading-5 text-red-800/80 dark:text-red-50/65">{item.evidence}</p>
             {item.recommended_content_focus && (
-              <p className="mt-2 text-xs leading-5 text-slate-700 dark:text-white/55">
+              <p className="mt-2 text-xs leading-5 text-foreground/80">
                 {item.recommended_content_focus}
               </p>
             )}
@@ -352,15 +352,15 @@ function GapCard({ gap }: { gap: KnowledgeGap }) {
         ))}
       </div>
 
-      <div className="mt-4 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-3">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-white/35">
+      <div className="mt-4 rounded-lg border border-border bg-muted p-3">
+        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Suggested intervention
         </p>
         <p className="mt-1 text-sm font-semibold text-cyan-700 dark:text-cyan-200">
           {gap.suggested_intervention.primary} · {gap.suggested_intervention.difficulty_level} ·{" "}
           {gap.suggested_intervention.estimated_time_minutes} min
         </p>
-        <ul className="mt-2 space-y-1 text-xs leading-5 text-slate-600 dark:text-white/55">
+        <ul className="mt-2 space-y-1 text-xs leading-5 text-muted-foreground">
           {gap.suggested_intervention.learning_objectives.map((objective) => (
             <li key={objective} className="flex gap-2">
               <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-teal-600 dark:text-teal-300" />
@@ -375,18 +375,18 @@ function GapCard({ gap }: { gap: KnowledgeGap }) {
 
 function StrengthCard({ strength }: { strength: Strength }) {
   return (
-    <article className="rounded-xl border border-emerald-500/25 dark:border-emerald-400/20 bg-slate-50 dark:bg-[#0F172A] p-3 shadow-xs">
+    <article className="rounded-xl border border-emerald-500/25 dark:border-emerald-400/20 bg-background p-3 shadow-xs">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="font-bold text-slate-900 dark:text-white">{strength.topic}</p>
-          <p className="mt-0.5 text-[11px] font-mono text-slate-500 dark:text-white/35">{strength.topic_id}</p>
+          <p className="font-bold text-foreground">{strength.topic}</p>
+          <p className="mt-0.5 text-[11px] font-mono text-muted-foreground">{strength.topic_id}</p>
         </div>
         <span className="rounded-lg border border-emerald-500/30 dark:border-emerald-400/25 bg-emerald-500/10 px-2 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-200">
           {formatPercent(strength.mastery_score)}
         </span>
       </div>
-      <p className="mt-2 text-xs leading-5 text-slate-600 dark:text-white/55">{strength.evidence_summary}</p>
-      <p className="mt-2 text-xs text-slate-500 dark:text-white/40">
+      <p className="mt-2 text-xs leading-5 text-muted-foreground">{strength.evidence_summary}</p>
+      <p className="mt-2 text-xs text-muted-foreground">
         Can teach others: {strength.can_teach_others ? "Yes" : "No"}
       </p>
     </article>
@@ -395,11 +395,11 @@ function StrengthCard({ strength }: { strength: Strength }) {
 
 function ScorePill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-[96px] rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#050816] px-3 py-2 text-center shadow-xs">
-      <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/35">
+    <div className="min-w-[96px] rounded-lg border border-border bg-card px-3 py-2 text-center shadow-xs">
+      <p className="whitespace-nowrap text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
-      <p className="mt-1 text-base font-black text-slate-900 dark:text-white">{value}</p>
+      <p className="mt-1 text-base font-extrabold text-foreground">{value}</p>
     </div>
   );
 }

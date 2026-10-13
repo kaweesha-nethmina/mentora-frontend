@@ -29,7 +29,7 @@ export default function MaterialCard({ material, onDelete }: MaterialCardProps) 
   const diffColor = difficultyColorMap[sm.difficulty_level] || difficultyColorMap.default;
 
   return (
-    <div className="group p-5 bg-[var(--lmg-bg-surface)] border border-[var(--lmg-border)] rounded-2xl hover:border-teal-500/40 shadow-xs hover:shadow-md transition-all hover:-translate-y-0.5">
+    <div className="group p-5 bg-[var(--lmg-bg-surface)] border border-[var(--lmg-border)] rounded-2xl hover:border-teal-500/40 shadow-xs hover:shadow-card transition-all ">
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className={`whitespace-nowrap px-2 py-0.5 rounded text-[10px] uppercase tracking-wider border ${diffColor}`}>

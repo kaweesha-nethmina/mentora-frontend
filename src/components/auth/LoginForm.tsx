@@ -63,12 +63,12 @@ export default function LoginForm() {
       {/* Header */}
       <div className="space-y-1.5">
         <div className="flex items-center gap-2 mb-1">
-          <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-400 bg-teal-400/10 border border-teal-400/20 rounded-full px-3 py-1">
+          <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 dark:text-teal-400 bg-teal-400/10 border border-teal-400/20 rounded-full px-3 py-1">
             <Sparkles className="w-3 h-3" /> AI-Powered Learning
           </span>
         </div>
-        <h1 className="text-2xl font-black text-white tracking-tight">Welcome back</h1>
-        <p className="text-sm text-white/50">Sign in to continue your learning journey</p>
+        <h1 className="text-2xl font-extrabold text-foreground tracking-tight">Welcome back</h1>
+        <p className="text-sm text-muted-foreground">Sign in to continue your learning journey</p>
       </div>
 
       {/* Social Buttons */}
@@ -81,7 +81,7 @@ export default function LoginForm() {
       {/* Form */}
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
         {errors.general && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-700 dark:text-red-400 text-sm">
             {errors.general}
           </div>
         )}
@@ -113,7 +113,7 @@ export default function LoginForm() {
                 type="button"
                 tabIndex={-1}
                 onClick={() => setShowPw((v) => !v)}
-                className="text-white/40 hover:text-white/70 transition-colors"
+                className="text-subtle-foreground hover:text-foreground/80 transition-colors"
                 aria-label={showPw ? "Hide password" : "Show password"}
               >
                 {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -123,7 +123,7 @@ export default function LoginForm() {
           <div className="flex justify-end mt-2">
             <Link
               href="/forgot-password"
-              className="text-xs text-teal-400/80 hover:text-teal-300 transition-colors"
+              className="text-xs text-teal-700 dark:text-teal-400/80 hover:text-teal-700 dark:hover:text-teal-300 transition-colors"
             >
               Forgot password?
             </Link>
@@ -135,9 +135,9 @@ export default function LoginForm() {
           <input
             type="checkbox"
             id="remember-me"
-            className="w-4 h-4 rounded border-white/20 bg-white/5 accent-teal-500 cursor-pointer"
+            className="w-4 h-4 rounded border-border-strong bg-muted accent-teal-500 cursor-pointer"
           />
-          <span className="text-sm text-white/50 group-hover:text-white/70 transition-colors">
+          <span className="text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors">
             Remember me for 30 days
           </span>
         </label>
@@ -150,11 +150,11 @@ export default function LoginForm() {
       </form>
 
       {/* Footer link */}
-      <p className="text-center text-sm text-white/40">
+      <p className="text-center text-sm text-subtle-foreground">
         Don&apos;t have an account?{" "}
         <Link
           href="/signup"
-          className="text-teal-400 font-semibold hover:text-teal-300 transition-colors"
+          className="text-teal-700 dark:text-teal-400 font-semibold hover:text-teal-700 dark:hover:text-teal-300 transition-colors"
         >
           Sign up for free
         </Link>

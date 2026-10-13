@@ -7,7 +7,7 @@ const stages = [
     title: 'Student Analysis',
     description: 'Analyze learning data to identify knowledge gaps and weak subskills.',
     icon: Brain,
-    color: 'text-teal-400',
+    color: 'text-teal-700 dark:text-teal-400',
     bg: 'bg-teal-500/10',
     border: 'border-teal-500/20',
     iconBg: 'bg-teal-500/15',
@@ -16,7 +16,7 @@ const stages = [
     title: 'Peer Matching',
     description: 'Find the most suitable peer based on the learner\'s knowledge gap and weak subskills.',
     icon: Search,
-    color: 'text-cyan-400',
+    color: 'text-cyan-700 dark:text-cyan-400',
     bg: 'bg-cyan-500/10',
     border: 'border-cyan-500/20',
     iconBg: 'bg-cyan-500/15',
@@ -25,7 +25,7 @@ const stages = [
     title: 'Question Generation',
     description: 'Generate targeted questions that address the learner\'s specific gaps.',
     icon: ClipboardList,
-    color: 'text-amber-400',
+    color: 'text-amber-700 dark:text-amber-400',
     bg: 'bg-amber-500/10',
     border: 'border-amber-500/20',
     iconBg: 'bg-amber-500/15',
@@ -34,7 +34,7 @@ const stages = [
     title: 'Collaborative Workspace',
     description: 'Collaborate in real-time to discuss, solve, and learn together.',
     icon: MessageSquare,
-    color: 'text-violet-400',
+    color: 'text-violet-700 dark:text-violet-400',
     bg: 'bg-violet-500/10',
     border: 'border-violet-500/20',
     iconBg: 'bg-violet-500/15',
@@ -43,7 +43,7 @@ const stages = [
     title: 'Code Evaluation',
     description: 'Evaluate submitted code and provide constructive feedback.',
     icon: Code2,
-    color: 'text-emerald-400',
+    color: 'text-emerald-700 dark:text-emerald-400',
     bg: 'bg-emerald-500/10',
     border: 'border-emerald-500/20',
     iconBg: 'bg-emerald-500/15',
@@ -52,7 +52,7 @@ const stages = [
     title: 'Learning Recommendation',
     description: 'Recommend personalized learning content to improve remaining weak areas.',
     icon: Lightbulb,
-    color: 'text-orange-400',
+    color: 'text-orange-700 dark:text-orange-400',
     bg: 'bg-orange-500/10',
     border: 'border-orange-500/20',
     iconBg: 'bg-orange-500/15',
@@ -72,11 +72,11 @@ export default function AgentWorkflow({ currentStage: _currentStage }: AgentWork
     return (
       <div
         key={i}
-        className={`relative flex-1 min-w-0 rounded-2xl border ${stage.border} ${stage.bg} p-5 transition-all hover:scale-[1.02] hover:shadow-lg`}
+        className={`relative flex-1 min-w-0 rounded-2xl border ${stage.border} ${stage.bg} p-5 transition-all hover:shadow-raised`}
       >
         {/* Step number */}
         <div className={`absolute top-4 left-4 w-7 h-7 rounded-lg ${stage.iconBg} flex items-center justify-center`}>
-          <span className={`text-xs font-black ${stage.color}`}>{i + 1}</span>
+          <span className={`text-xs font-extrabold ${stage.color}`}>{i + 1}</span>
         </div>
 
         {/* Icon */}
@@ -87,17 +87,17 @@ export default function AgentWorkflow({ currentStage: _currentStage }: AgentWork
         </div>
 
         {/* Title */}
-        <p className={`text-sm font-bold text-white text-center mb-1.5`}>{stage.title}</p>
+        <p className={`text-sm font-bold text-foreground text-center mb-1.5`}>{stage.title}</p>
 
         {/* Description */}
-        <p className="text-xs text-white/50 text-center leading-relaxed">{stage.description}</p>
+        <p className="text-xs text-muted-foreground text-center leading-relaxed">{stage.description}</p>
       </div>
     );
   };
 
   const renderVerticalConnector = () => (
     <div className="hidden md:flex h-10 items-center justify-center">
-      <div className="h-full w-px border-l-2 border-dashed border-white/15" />
+      <div className="h-full w-px border-l-2 border-dashed border-border" />
     </div>
   );
 
@@ -105,8 +105,8 @@ export default function AgentWorkflow({ currentStage: _currentStage }: AgentWork
     <div className="space-y-2">
       {/* Header */}
       <div className="mb-5">
-        <h3 className="text-xl font-black text-white mb-1">Peer Learning Workflow</h3>
-        <p className="text-sm text-white/40 leading-relaxed">
+        <h3 className="text-xl font-extrabold text-foreground mb-1">Peer Learning Workflow</h3>
+        <p className="text-sm text-subtle-foreground leading-relaxed">
           A structured journey that turns peer interaction into meaningful learning outcomes.
         </p>
       </div>
@@ -118,8 +118,8 @@ export default function AgentWorkflow({ currentStage: _currentStage }: AgentWork
             {renderCard(stage, i)}
             {i < 2 && (
               <div className="hidden md:flex items-center justify-center">
-                <div className="w-full h-px border-t-2 border-dashed border-white/15" />
-                <div className="w-0 h-0 border-t-[5px] border-b-[5px] border-l-[7px] border-t-transparent border-b-transparent border-l-white/15 shrink-0" />
+                <div className="w-full h-px border-t-2 border-dashed border-border" />
+                <div className="w-0 h-0 border-t-[5px] border-b-[5px] border-l-[7px] border-t-transparent border-b-transparent border-l-border shrink-0" />
               </div>
             )}
           </div>
@@ -136,8 +136,8 @@ export default function AgentWorkflow({ currentStage: _currentStage }: AgentWork
             {renderCard(stage, i + 3)}
             {i < 2 && (
               <div className="hidden md:flex items-center justify-center">
-                <div className="w-full h-px border-t-2 border-dashed border-white/15" />
-                <div className="w-0 h-0 border-t-[5px] border-b-[5px] border-l-[7px] border-t-transparent border-b-transparent border-l-white/15 shrink-0" />
+                <div className="w-full h-px border-t-2 border-dashed border-border" />
+                <div className="w-0 h-0 border-t-[5px] border-b-[5px] border-l-[7px] border-t-transparent border-b-transparent border-l-border shrink-0" />
               </div>
             )}
           </div>

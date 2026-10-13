@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import Sidebar from "../dashboard/Sidebar";
 import Header from "../dashboard/Header";
 import Footer from "../dashboard/Footer";
+import InteractiveBackground from "./InteractiveBackground";
+import { Menu } from "lucide-react";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -40,7 +42,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [pathname]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0F172A] text-slate-900 dark:text-white flex overflow-hidden transition-colors duration-200">
+    <div className="h-screen bg-background text-foreground flex overflow-hidden">
+
+      {/* mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          aria-hidden
+          className="fixed inset-0 z-30 bg-overlay backdrop-blur-[2px] lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       <Sidebar
         sidebarOpen={sidebarOpen}
@@ -50,7 +61,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         onMobileClose={() => setSidebarOpen(false)}
       />
 
-      <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
+      <div className="flex-1 min-w-0 flex flex-col h-screen overflow-hidden relative">
+
+        {/* mobile menu trigger */}
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          aria-label="Open menu"
+          className={`lg:hidden fixed left-3 top-3.5 z-40 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground shadow-xs ${sidebarOpen ? "hidden" : ""}`}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
 
         <Header
           scrolled={scrolled}
@@ -59,12 +80,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           profileOpen={profileOpen}
         />
 
-        <main className="flex-1 overflow-y-auto scrollbar-hide relative bg-slate-50 dark:bg-[#0F172A] flex flex-col transition-colors duration-200">
-          <div className="absolute top-0 right-0 w-125 h-125 bg-teal-600/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-100 h-100 bg-amber-600/5 rounded-full blur-[100px] pointer-events-none" />
-
+        <main className="flex-1 overflow-y-auto custom-scrollbar relative bg-background bg-page-glow flex flex-col">
+          <InteractiveBackground />
           <div className="relative z-10 flex flex-1 flex-col">
-            <div className="p-4 md:p-8 max-w-7xl mx-auto w-full animate-slide-up pb-24 flex-1">
+            <div className="px-4 py-6 md:px-8 md:py-8 2xl:px-12 2xl:py-10 max-w-7xl 2xl:max-w-[1600px] min-[1920px]:max-w-[1800px] mx-auto w-full animate-slide-up pb-20 flex-1">
               {children}
             </div>
 

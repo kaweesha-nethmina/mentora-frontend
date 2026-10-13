@@ -15,12 +15,11 @@ export default function SocialButton({ icon, label, onClick }: SocialButtonProps
       onClick={onClick}
       className="
         flex items-center justify-center gap-2.5
-        h-11 w-full rounded-xl
-        border border-white/10 bg-white/[0.05]
-        text-white/70 text-sm font-medium
-        transition-all duration-200
-        hover:bg-white/[0.1] hover:border-white/20 hover:text-white hover:scale-[1.01]
-        active:scale-[0.99]
+        h-11 w-full rounded-lg
+        border border-border-strong bg-card
+        text-foreground text-sm font-medium
+        transition-colors duration-150
+        hover:bg-muted
       "
     >
       {icon}

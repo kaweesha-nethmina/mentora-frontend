@@ -46,10 +46,10 @@ export default function InsightPanel({
         {insightType && !aiInsight ? (
           <div className="flex items-center gap-3 py-2">
             <div className="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center shrink-0">
-              <Brain className="w-4 h-4 text-teal-400 animate-pulse" />
+              <Brain className="w-4 h-4 text-teal-700 dark:text-teal-400 animate-pulse" />
             </div>
             <div>
-              <p className="text-xs text-teal-400/60 font-bold">Mentora AI is Thinking</p>
+              <p className="text-xs text-teal-700 dark:text-teal-400/60 font-bold">Mentora AI is Thinking</p>
               <div className="flex items-center gap-1.5 mt-1">
                 <div className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce" />
                 <div className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce delay-100" />

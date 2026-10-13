@@ -1,66 +1,69 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  Brain, Code, Activity, Sparkles, TrendingUp, Target, Zap, ChevronRight,
-  PlayCircle, BookOpen, Bug, BarChart3, CheckCircle2, XCircle, Award, Check
+  Brain, BookOpen, Target, Users, ChevronRight, Check, Sun, Moon,
+  Lightbulb, FlaskConical, ArrowUpRight,
 } from "lucide-react";
+import { GitHubIcon } from "@/components/onboarding/GithubLinkCard";
 import MentoraLogo from "@/components/auth/MentoraLogo";
+import { useTheme } from "@/contexts/ThemeContext";
+import InteractiveBackground from "@/components/layout/InteractiveBackground";
 
-const seededUnit = (index: number, salt: number) => {
-  const value = Math.sin(index * 92821 + salt * 68917) * 10000;
-  return value - Math.floor(value);
-};
+const loop = [
+  {
+    title: "Analyse your work",
+    desc: "Mentora reads the Java you have already written on GitHub and the answers you give, not just quiz scores.",
+  },
+  {
+    title: "Diagnose the gap",
+    desc: "It separates a missing fundamental from a partial idea or a surface slip, and names the misconception.",
+  },
+  {
+    title: "Teach to the gap",
+    desc: "A lesson, worked examples, a quiz and flashcards are written for that exact concept at your level.",
+  },
+  {
+    title: "Measure mastery",
+    desc: "Adaptive questions and code challenges confirm the concept has stuck before moving you on.",
+  },
+];
 
-const heroParticles = Array.from({ length: 15 }, (_, i) => ({
-  top: `${seededUnit(i, 1) * 100}%`,
-  left: `${seededUnit(i, 2) * 100}%`,
-  animationDelay: `${seededUnit(i, 3) * 5}s`,
-  animationDuration: `${10 + seededUnit(i, 4) * 10}s`,
-}));
-
-// ── Intersection Observer Hook for Scroll Animations ──
-function FadeInView({ children, delay = 0, direction = "up" }: { children: React.ReactNode, delay?: number, direction?: "up" | "left" | "right" }) {
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setInView(true);
-        observer.unobserve(entry.target);
-      }
-    }, { threshold: 0.1 });
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const getTransform = () => {
-    if (inView) return "translate-x-0 translate-y-0 opacity-100";
-    if (direction === "up") return "translate-y-12 opacity-0";
-    if (direction === "left") return "-translate-x-12 opacity-0";
-    if (direction === "right") return "translate-x-12 opacity-0";
-    return "opacity-0";
-  };
-
-  return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-1000 ease-out transform ${getTransform()}`}
-    >
-      {children}
-    </div>
-  );
-}
+const agents = [
+  {
+    icon: Brain,
+    name: "Knowledge Assistant",
+    tone: "bg-primary-soft text-primary-soft-foreground",
+    desc: "Builds your knowledge profile from repository forensics, quizzes and sandbox challenges.",
+    points: ["GitHub repository analysis", "Misconception diagnosis", "Career-fit insights"],
+  },
+  {
+    icon: BookOpen,
+    name: "Learning Material Generator",
+    tone: "bg-info-soft text-info",
+    desc: "Turns each knowledge gap into a short course you can work through at your own pace.",
+    points: ["Lessons and worked examples", "Quizzes and flashcards", "Hands-on coding workspace"],
+  },
+  {
+    icon: Target,
+    name: "Assessment & Mastery",
+    tone: "bg-warning-soft text-warning",
+    desc: "Adapts question difficulty as you answer and reports mastery concept by concept.",
+    points: ["Adaptive question sets", "Code tracing and debugging", "Detailed mastery report"],
+  },
+  {
+    icon: Users,
+    name: "Collaborative Peer Learning",
+    tone: "bg-violet-500/10 text-violet-700 dark:text-violet-300",
+    desc: "Matches you with a classmate whose strengths cover your gaps, then guides the session.",
+    points: ["Smart peer matching", "Shared live code editor", "AI-guided pair sessions"],
+  },
+];
 
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme, mounted } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,454 +74,231 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white selection:bg-teal-500/30 font-sans overflow-x-hidden">
-      
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <InteractiveBackground />
+
       {/* ── HEADER ── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-[#0F172A]/90 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent py-5"
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+          scrolled ? "bg-background/90 backdrop-blur-md border-b border-border" : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <MentoraLogo size="sm" />
-          <div className="flex items-center gap-4">
+        <div className="max-w-6xl mx-auto px-5 md:px-6 h-16 flex items-center justify-between gap-4">
+          <Link href="/" aria-label="Mentora home"><MentoraLogo size="sm" /></Link>
+          <nav className="hidden md:flex items-center gap-1 text-sm" aria-label="Sections">
+            <a href="#how-it-works" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">How it works</a>
+            <a href="#agents" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">Agents</a>
+            <a href="#research" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">Research</a>
+          </nav>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              {mounted ? (theme === "dark" ? <Sun className="w-[18px] h-[18px]" /> : <Moon className="w-[18px] h-[18px]" />) : <span className="w-[18px] h-[18px]" />}
+            </button>
             <Link
               href="/login"
-              className="hidden sm:block text-sm font-medium text-white/80 hover:text-white transition-colors px-4 py-2 border border-white/20 rounded-xl hover:bg-white/5"
+              className="hidden sm:inline-flex h-9 items-center px-4 text-sm font-semibold text-foreground rounded-lg hover:bg-muted transition-colors"
             >
               Log in
             </Link>
             <Link
               href="/signup"
-              className="relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all bg-teal-600 rounded-xl border border-teal-500/50 shadow-[0_0_15px_rgba(13,148,136,0.3)] hover:bg-teal-500 hover:scale-105 hover:shadow-[0_0_25px_rgba(13,148,136,0.5)] active:scale-95"
+              className="inline-flex h-9 items-center px-4 text-sm font-semibold text-white bg-action rounded-lg shadow-xs hover:brightness-110 transition"
             >
-              Sign up
+              Get started
             </Link>
           </div>
         </div>
       </header>
 
-      {/* ── HERO SECTION ── */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-        {/* Background Gradients & Glows */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A] via-[#0F172A] to-[#334155]/20 -z-10" />
-        <div className="absolute top-1/4 left-[10%] w-[500px] h-[500px] bg-teal-600/15 rounded-full blur-[120px] mix-blend-screen -z-10 animate-glow-pulse" />
-        <div className="absolute bottom-1/4 right-[10%] w-[600px] h-[600px] bg-amber-700/10 rounded-full blur-[150px] mix-blend-screen -z-10 animate-glow-pulse delay-700" />
-        
-        {/* Particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          {heroParticles.map((particle, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-teal-400 rounded-full animate-particle"
-              style={particle}
-            />
-          ))}
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 grid xl:grid-cols-2 gap-12 xl:gap-8 items-center h-full pt-10">
-          {/* Left: Content */}
-          <div className="space-y-8 relative z-10">
-            <FadeInView direction="up">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#334155]/50 border border-white/10 backdrop-blur-sm">
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                <span className="text-xs font-semibold tracking-wider text-teal-100 uppercase">Next-gen learning platform</span>
-              </div>
-            </FadeInView>
-            
-            <FadeInView delay={100} direction="up">
-              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tight">
-                Master Programming with Your <span className="bg-gradient-to-r from-teal-400 to-[#CCFBF1] bg-clip-text text-transparent">Personal AI Tutor</span>
-              </h1>
-            </FadeInView>
-            
-            <FadeInView delay={200} direction="up">
-              <p className="text-lg lg:text-xl text-[#F8FAFC]/70 max-w-xl leading-relaxed font-light">
-                MENTORA analyzes your weaknesses and generates personalized learning materials, exercises, and study plans in real-time.
-              </p>
-            </FadeInView>
-            
-            <FadeInView delay={300} direction="up">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
-                <Link
-                  href="/signup"
-                  className="group relative inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all bg-teal-600 border border-teal-500/50 rounded-xl hover:bg-teal-500 hover:scale-[1.02] shadow-[0_0_20px_rgba(13,148,136,0.3)] hover:shadow-[0_0_35px_rgba(13,148,136,0.5)] active:scale-95 w-full sm:w-auto overflow-hidden"
-                >
-                  <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black" />
-                  <span className="relative flex items-center gap-2 tracking-wide">
-                    Get Started <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </Link>
-                <button
-                  className="group inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all bg-white/5 border border-white/20 rounded-xl hover:bg-white/10 hover:border-white/30 active:scale-95 w-full sm:w-auto"
-                >
-                  <PlayCircle className="w-5 h-5 mr-2 text-teal-400 group-hover:scale-110 transition-transform" />
-                  Watch Demo
-                </button>
-              </div>
-            </FadeInView>
+      {/* ── HERO ── */}
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-page-glow">
+        <div className="max-w-6xl mx-auto px-5 md:px-6 grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
+          <div className="animate-slide-up">
+            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground shadow-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+              Multi-agent tutoring for Java programming
+            </p>
+            <h1 className="mt-6 text-4xl sm:text-5xl lg:text-[3.6rem] font-extrabold leading-[1.06] tracking-tight text-heading">
+              A tutor that finds what you have not understood yet.
+            </h1>
+            <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
+              Mentora studies how you write and reason about Java, pinpoints the concept behind each mistake,
+              and teaches exactly that, then checks that it stuck.
+            </p>
+            <div className="mt-9 flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/signup"
+                className="group inline-flex items-center justify-center gap-2 h-12 px-6 text-base font-semibold text-white bg-action rounded-xl shadow-raised hover:brightness-110 transition"
+              >
+                Start learning <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <a
+                href="#how-it-works"
+                className="inline-flex items-center justify-center h-12 px-6 text-base font-semibold text-foreground bg-card border border-border-strong rounded-xl hover:bg-muted transition-colors"
+              >
+                See how it works
+              </a>
+            </div>
+            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+              {["Personal knowledge profile", "Lessons written for you", "Adaptive mastery checks"].map((t) => (
+                <li key={t} className="flex items-center gap-2"><Check className="w-4 h-4 text-brand" />{t}</li>
+              ))}
+            </ul>
           </div>
 
-          {/* Right: Abstract AI Illustration */}
-          <FadeInView delay={400} direction="left">
-            <div className="relative z-10 h-[500px] w-full flex items-center justify-center">
-              <div className="relative w-full max-w-lg aspect-square flex items-center justify-center">
-                
-                {/* Center glowing brain */}
-                <div className="absolute z-10 w-32 h-32 rounded-full border border-teal-500/40 bg-[#0F172A] shadow-[0_0_60px_rgba(13,148,136,0.3)] flex items-center justify-center animate-glow-pulse backdrop-blur-sm">
-                  <Brain className="w-16 h-16 text-teal-400" />
-                </div>
-                
-                {/* Code Snippet Card */}
-                <div className="absolute top-[12%] left-[2%] w-48 p-4 rounded-xl bg-[#334155]/60 border border-white/10 backdrop-blur-md animate-float z-20 shadow-xl shadow-black/50">
-                  <div className="flex gap-2 mb-3">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-                  </div>
-                  <div className="space-y-2 opacity-80">
-                    <div className="h-2 w-3/4 bg-teal-400/50 rounded" />
-                    <div className="h-2 w-1/2 bg-[#CCFBF1]/30 rounded ml-4" />
-                    <div className="h-2 w-5/6 bg-[#CCFBF1]/30 rounded ml-4" />
-                    <div className="h-2 w-2/3 bg-teal-400/50 rounded" />
+          {/* Tutoring moment */}
+          <div className="relative animate-slide-up delay-200" aria-label="Example of Mentora diagnosing a misconception">
+            <div className="surface-card overflow-hidden shadow-overlay">
+              <div className="flex items-center justify-between border-b border-border bg-muted px-4 py-2.5">
+                <span className="font-mono text-xs text-muted-foreground">LoginCheck.java</span>
+                <span className="text-xs text-muted-foreground">Your submission</span>
+              </div>
+              <pre className="bg-sunken px-5 py-4 font-mono text-[13px] leading-6 text-foreground overflow-x-auto"><code>
+<span className="text-violet-700 dark:text-violet-300">String</span> input = scanner.nextLine();{"\n"}
+<span className="text-violet-700 dark:text-violet-300">if</span> (input <span className="rounded bg-danger-soft px-1 text-danger ring-1 ring-danger/30">==</span> <span className="text-primary-soft-foreground">&quot;admin&quot;</span>) {"{"}{"\n"}
+{"    "}grantAccess();{"\n"}
+{"}"}
+              </code></pre>
+              <div className="space-y-4 p-5">
+                <div className="flex gap-3">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning-soft text-warning"><Lightbulb className="h-4 w-4" /></span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">Misconception found: comparing Strings with ==</p>
+                    <p className="mt-1 text-sm text-muted-foreground"><code className="font-mono text-[13px]">==</code> checks whether both sides are the same object. Use <code className="font-mono text-[13px] text-primary-soft-foreground">input.equals(&quot;admin&quot;)</code> to compare text.</p>
                   </div>
                 </div>
-
-                {/* Exercise Card */}
-                <div className="absolute bottom-[15%] right-[2%] w-56 p-4 rounded-xl bg-[#334155]/80 border border-teal-500/30 backdrop-blur-md animate-float-delayed z-20 shadow-xl shadow-teal-900/20">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-[#B45309] border border-amber-500/30">
-                      <Target className="w-5 h-5 text-amber-500" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-teal-400 uppercase tracking-wider">New Exercise</p>
-                      <p className="text-sm font-bold text-white">Dynamic Programming</p>
-                    </div>
+                <div className="rounded-xl border border-border bg-muted p-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-medium text-foreground">Object equality</span>
+                    <span className="tabular-nums text-muted-foreground">38% → 82%</span>
                   </div>
-                </div>
-
-                {/* Error Card */}
-                <div className="absolute top-[30%] right-[-5%] w-44 p-3 rounded-xl bg-red-500/10 border border-red-500/20 backdrop-blur-md animate-float delay-500 z-10">
-                  <div className="flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-red-400" />
-                    <span className="text-xs font-medium text-red-200">Logic Error Detected</span>
+                  <div className="mt-2 h-2 rounded-full bg-card ring-1 ring-inset ring-border overflow-hidden">
+                    <div className="h-full w-[82%] rounded-full bg-action" />
                   </div>
+                  <p className="mt-3 text-xs text-muted-foreground">After a 6-minute lesson and four practice questions</p>
                 </div>
-
-                {/* Concept Card */}
-                <div className="absolute bottom-[20%] left-[5%] w-40 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 backdrop-blur-md animate-float delay-700 z-10 text-center">
-                  <Sparkles className="w-4 h-4 text-amber-500 mx-auto mb-1" />
-                  <span className="text-xs font-semibold text-amber-100">Mastered: Trees</span>
-                </div>
-
-                {/* Decorative rings & flow lines */}
-                <div className="absolute inset-2 rounded-full border border-teal-500/20 animate-spin-slow" />
-                <div className="absolute inset-10 rounded-full border border-teal-400/10 animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '25s' }} />
-                <div className="absolute inset-20 rounded-full border border-[#CCFBF1]/5 border-dashed animate-spin-slow" />
-                
-                <svg className="absolute inset-0 w-full h-full -z-10 opacity-40" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <path d="M10,90 Q50,10 90,90" fill="none" stroke="#0D9488" strokeWidth="0.5" strokeDasharray="2 2" className="animate-pulse" />
-                  <path d="M20,80 Q50,20 80,80" fill="none" stroke="#B45309" strokeWidth="0.5" strokeDasharray="2 2" className="animate-pulse delay-300" />
-                </svg>
               </div>
             </div>
-          </FadeInView>
+          </div>
         </div>
       </section>
 
-      {/* ── SECTION 2: HOW IT WORKS ── */}
-      <section className="py-24 bg-[#0F172A] border-y border-white/5 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeInView>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">How MENTORA Works</h2>
-              <p className="text-[#F8FAFC]/50 text-lg">A continuous loop of measurement, adaptation, and improvement to accelerate your learning.</p>
-            </div>
-          </FadeInView>
+      {/* ── HOW IT WORKS ── */}
+      <section id="how-it-works" className="py-20 md:py-24 border-y border-border bg-card scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-5 md:px-6">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-heading">One loop, repeated until it sticks</h2>
+            <p className="mt-4 text-lg text-muted-foreground">Every concept goes through the same four steps. Each pass sharpens your knowledge profile, so the next lesson starts closer to where you are.</p>
+          </div>
+          <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
+            {loop.map((step, i) => (
+              <li key={step.title} className="bg-card p-6">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft text-sm font-bold text-primary-soft-foreground">{i + 1}</span>
+                <h3 className="mt-5 text-lg font-semibold text-foreground">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            {[
-              { icon: Activity, title: "Analyze Learning", desc: "We track how you solve problems to understand your thinking process." },
-              { icon: Target, title: "Detect Gaps", desc: "Our AI pinpoints exactly which concepts you're struggling with." },
-              { icon: Brain, title: "Generate Content", desc: "Get custom exercises explanations tailored to your weak points." },
-              { icon: TrendingUp, title: "Improve Mastery", desc: "Watch your skills grow as you conquer targeted challenges one by one." },
-            ].map((step, i) => (
-              <FadeInView key={i} delay={i * 150} direction="up">
-                <div className="group relative p-6 rounded-3xl bg-[#334155]/20 border border-white/5 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(13,148,136,0.15)] hover:border-teal-500/30 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-[#0F172A] border border-white/10 flex items-center justify-center text-teal-400 group-hover:scale-110 group-hover:bg-teal-500/20 group-hover:border-teal-500/50 transition-all duration-300 mb-6 shadow-lg shadow-black/50">
-                    <step.icon className="w-6 h-6" />
+      {/* ── AGENTS ── */}
+      <section id="agents" className="py-20 md:py-24 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-5 md:px-6">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-heading">Four agents, one tutor</h2>
+            <p className="mt-4 text-lg text-muted-foreground">Each agent owns one part of teaching. They share your knowledge profile, so what one learns about you, the others use.</p>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {agents.map((a) => (
+              <article key={a.name} className="surface-card p-6 md:p-7">
+                <div className="flex items-start gap-4">
+                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${a.tone}`}><a.icon className="h-5 w-5" /></span>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">{a.name}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
-                  <p className="text-[#F8FAFC]/50 text-sm leading-relaxed">{step.desc}</p>
                 </div>
-              </FadeInView>
+                <ul className="mt-5 grid gap-2 border-t border-border pt-5 sm:grid-cols-3">
+                  {a.points.map((p) => (
+                    <li key={p} className="flex items-start gap-2 text-sm text-foreground/80"><Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />{p}</li>
+                  ))}
+                </ul>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 3: FEATURES GRID ── */}
-      <section className="py-24 bg-gradient-to-b from-[#0F172A] to-[#334155]/10 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeInView>
-            <div className="mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">Everything you need to succeed</h2>
-              <p className="text-[#F8FAFC]/50 text-lg max-w-2xl">Powerful features designed to replace traditional static courses with a dynamic, AI-driven curriculum.</p>
-            </div>
-          </FadeInView>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: Brain, title: "AI Generated Lessons", desc: "Lessons created on the fly based on what you need to learn next, avoiding repetitive content." },
-              { icon: Code, title: "Coding Exercises", desc: "Practical programming tasks generated specifically to test your current edge of understanding." },
-              { icon: Bug, title: "Debugging Challenges", desc: "Find and fix errors in code injected by the AI to build real-world debugging intuition." },
-              { icon: BookOpen, title: "Personalized Study Plans", desc: "A continuous roadmap to mastery, automatically adjusted as you progress through topics." },
-              { icon: Zap, title: "Real-time Adaptation", desc: "The difficulty of problems adjusts dynamically based on your success rate and time taken." },
-              { icon: BarChart3, title: "Progress Tracking", desc: "Visualize your growth with detailed analytics, skill trees, and predictive scoring." },
-            ].map((feat, i) => (
-              <FadeInView key={i} delay={i * 100} direction="up">
-                <div className="group p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] hover:border-teal-500/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(13,148,136,0.1)] transition-all duration-300 h-full backdrop-blur-sm">
-                  <feat.icon className="w-8 h-8 text-teal-400 mb-5 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
-                  <h3 className="text-xl font-bold mb-3 text-[#F8FAFC]">{feat.title}</h3>
-                  <p className="text-[#F8FAFC]/50 text-sm leading-relaxed">{feat.desc}</p>
-                </div>
-              </FadeInView>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 4: AI PERSONALIZATION (UNIQUE SELLING POINT) ── */}
-      <section className="py-24 bg-[#0F172A] relative overflow-hidden z-10">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-teal-600/5 rounded-full blur-[150px] -z-10 animate-glow-pulse" />
-        
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-          <FadeInView direction="left">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-bold tracking-wider uppercase">
-                <Award className="w-4 h-4" /> Personalization Engine
-              </div>
-              <h2 className="text-4xl md:text-5xl font-black leading-tight">
-                Not generic learning.<br />MENTORA adapts to YOU.
-              </h2>
-              <p className="text-[#F8FAFC]/60 text-lg">
-                Stop watching identical pre-recorded videos. Our AI builds a unique curriculum based entirely on your interactions.
+      {/* ── RESEARCH ── */}
+      <section id="research" className="px-5 md:px-6 pb-20 md:pb-24 scroll-mt-16">
+        <div className="relative max-w-6xl mx-auto overflow-hidden rounded-3xl bg-forest px-7 py-12 md:px-14 md:py-16 text-white">
+          <svg aria-hidden className="pointer-events-none absolute -right-16 -bottom-24 h-96 w-96 text-white/[0.05]" viewBox="0 0 200 200" fill="none">
+            <path d="M100 10c40 30 70 70 60 120-10 40-50 60-60 60s-50-20-60-60C30 80 60 40 100 10Z" fill="currentColor" />
+          </svg>
+          <div className="relative grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+            <div>
+              <p className="flex items-center gap-2 text-sm font-medium text-white/70"><FlaskConical className="h-4 w-4" /> Research project R26-SE-030, SLIIT</p>
+              <h2 className="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">Built and evaluated as academic research</h2>
+              <p className="mt-4 max-w-xl text-white/80 leading-relaxed">
+                Mentora is developed at the Sri Lanka Institute of Information Technology to study how cooperating AI agents can personalise programming education and measure real mastery.
               </p>
-              <ul className="space-y-4">
-                {[
-                  "Based on your specific past errors",
-                  "Adapted to your exact skill level",
-                  "Aligned with your career goals",
-                  "Adjusted dynamically in real-time"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-[#F8FAFC]">
-                    <div className="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center shrink-0">
-                      <Check className="w-3.5 h-3.5 text-teal-400" />
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/signup" className="inline-flex items-center gap-2 text-teal-400 font-bold hover:text-[#CCFBF1] transition-colors leading-relaxed group">
-                See it in action <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-stretch">
+              <a
+                href="https://mentora-website.kaweesha.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-white text-[#14532d] font-semibold hover:bg-[#e8f8ed] transition-colors"
+              >
+                Read the research <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <Link
+                href="/signup"
+                className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-white/10 text-white font-semibold ring-1 ring-white/25 hover:bg-white/15 transition-colors"
+              >
+                Create a free account
               </Link>
             </div>
-          </FadeInView>
-
-          <FadeInView delay={200} direction="right">
-            <div className="relative rounded-2xl border border-white/10 overflow-hidden bg-[#0F172A] shadow-2xl shadow-teal-900/40 transform lg:-rotate-2 hover:rotate-0 transition-transform duration-500">
-              {/* Mac Window Header */}
-              <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/10 bg-[#334155]/40 backdrop-blur-md">
-                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-              </div>
-              <div className="relative aspect-[16/10] bg-[#0F172A] p-6 flex flex-col gap-4">
-                {/* Mockup Dashboard Content instead of duplicating the logo */}
-                <div className="w-full flex gap-4 h-full">
-                   {/* Sidebar mockup */}
-                   <div className="w-1/4 h-full bg-white/5 rounded-lg border border-white/5 space-y-3 p-3">
-                      <div className="w-full h-2 bg-white/10 rounded-full" />
-                      <div className="w-3/4 h-2 bg-white/10 rounded-full" />
-                      <div className="w-5/6 h-2 bg-white/10 rounded-full" />
-                   </div>
-                   {/* Main content mockup */}
-                   <div className="flex-1 h-full flex flex-col gap-4">
-                      {/* Top stats */}
-                      <div className="flex gap-4 h-1/4">
-                         <div className="flex-1 bg-white/5 rounded-lg border border-white/5" />
-                         <div className="flex-1 bg-white/5 rounded-lg border border-white/5" />
-                         <div className="flex-1 bg-white/5 rounded-lg border border-white/5" />
-                      </div>
-                      {/* Main chart area */}
-                      <div className="flex-1 bg-white/5 rounded-lg border border-white/5 p-4 flex items-end gap-2 justify-between">
-                         <div className="w-6 h-[40%] bg-teal-500/50 rounded-t-sm" />
-                         <div className="w-6 h-[60%] bg-teal-500/50 rounded-t-sm" />
-                         <div className="w-6 h-[30%] bg-teal-500/50 rounded-t-sm" />
-                         <div className="w-6 h-[80%] bg-teal-500/80 rounded-t-sm" />
-                         <div className="w-6 h-[50%] bg-teal-500/50 rounded-t-sm" />
-                         <div className="w-6 h-[90%] bg-teal-500/90 rounded-t-sm" />
-                      </div>
-                   </div>
-                </div>
-                
-                <div className="absolute inset-0 bg-[#0F172A]/10" />
-                
-                {/* Animated Highlight */}
-                <div className="absolute top-[25%] left-[15%] w-[35%] h-[25%] border-2 border-[#B45309] rounded-lg shadow-[0_0_20px_rgba(180,83,9,0.4)] animate-pulse z-10" />
-                <div className="absolute top-[20%] left-[15%] px-2.5 py-1 bg-[#B45309] text-[10px] font-bold text-white rounded shadow-lg z-20 flex items-center gap-1">
-                  <Target className="w-3 h-3" /> Weak Concept Detected
-                </div>
-              </div>
-            </div>
-          </FadeInView>
-        </div>
-      </section>
-
-      {/* ── SECTION 5: WHY MENTORA ── */}
-      <section className="py-24 bg-[#0F172A] relative z-10 border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeInView>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">Why choose AI over traditional?</h2>
-            </div>
-          </FadeInView>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <FadeInView direction="up">
-              <div className="p-8 rounded-3xl bg-[#334155]/20 border border-white/5 h-full">
-                <div className="flex items-center gap-3 mb-6">
-                  <XCircle className="w-8 h-8 text-white/40" />
-                  <h3 className="text-2xl font-bold text-white/50">Traditional Learning</h3>
-                </div>
-                <ul className="space-y-5">
-                  {["Static, pre-recorded content", "Same curriculum for everyone", "No real-time personalization", "Passive watching, low engagement"].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-white/40">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-white/20 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </FadeInView>
-
-            <FadeInView delay={200} direction="up">
-              <div className="relative p-8 rounded-3xl bg-teal-900/10 border border-teal-500/30 h-full shadow-[0_0_30px_rgba(13,148,136,0.1)]">
-                <div className="absolute top-0 right-8 -translate-y-1/2 px-4 py-1 bg-teal-600 text-xs font-bold rounded-full shadow-lg">The Mentora Way</div>
-                <div className="flex items-center gap-3 mb-6">
-                  <CheckCircle2 className="w-8 h-8 text-teal-400" />
-                  <h3 className="text-2xl font-bold text-white">MENTORA AI</h3>
-                </div>
-                <ul className="space-y-5">
-                  {["AI-generated dynamic content", "Personalized paths for you", "Adaptive difficulty in real-time", "Active coding and instant feedback"].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-teal-50">
-                      <div className="mt-1 w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </FadeInView>
           </div>
         </div>
-      </section>
-
-      {/* ── SECTION 6: ACHIEVEMENT / TRUST ── */}
-      <section className="py-24 bg-[#0F172A] relative overflow-hidden z-10">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#B45309]/10 rounded-full blur-[120px] -z-10" />
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <FadeInView>
-            <h2 className="text-3xl md:text-5xl font-black mb-16">
-              Improve your <span className="text-[#B45309]">programming mastery</span>
-            </h2>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { label: "Active Learners", value: "10K+" },
-                { label: "Success Rate", value: "98%" },
-                { label: "Exercises Generated", value: "500K+" },
-                { label: "Concepts Mastered", value: "2M+" },
-              ].map((stat, i) => (
-                <div key={i} className="space-y-2">
-                  <p className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-[#334155]">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm font-semibold text-[#B45309] uppercase tracking-wider">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </FadeInView>
-        </div>
-      </section>
-
-      {/* ── SECTION 7: CTA ── */}
-      <section className="py-24 px-6 relative z-10">
-        <FadeInView>
-          <div className="max-w-5xl mx-auto rounded-3xl p-12 md:p-20 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-900/40 to-[#B45309]/20 border border-white/10 rounded-3xl" />
-            <div className="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-sm rounded-3xl" />
-            
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">Start Learning Smarter Today</h2>
-              <p className="text-xl text-[#F8FAFC]/70 mb-10 max-w-2xl mx-auto font-light">
-                Join thousands of students who are mastering programming faster with MENTORA&apos;s personalized AI guidance.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link
-                  href="/signup"
-                  className="px-8 py-4 text-lg font-bold text-white bg-teal-600 rounded-xl border border-teal-500/50 shadow-[0_0_20px_rgba(13,148,136,0.4)] hover:bg-teal-500 hover:scale-105 transition-all"
-                >
-                  Create Free Account
-                </Link>
-                <Link
-                  href="/login"
-                  className="px-8 py-4 text-lg font-bold text-white bg-[#334155]/50 backdrop-blur-md rounded-xl border border-white/20 hover:bg-[#334155] transition-all"
-                >
-                  Log In
-                </Link>
-              </div>
-            </div>
-          </div>
-        </FadeInView>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-white/5 bg-[#0F172A] py-12 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            <div className="md:col-span-2 space-y-4">
-              <MentoraLogo size="sm" />
-              <p className="text-white/40 text-sm max-w-sm leading-relaxed mt-4">
-                MENTORA is an AI-powered personalized learning system designed to adapt to your unique educational needs in real-time.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold text-white mb-4">Platform</h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li><Link href="#" className="hover:text-teal-400 transition-colors">Features</Link></li>
-                <li><Link href="#" className="hover:text-teal-400 transition-colors">Pricing</Link></li>
-                <li><Link href="#" className="hover:text-teal-400 transition-colors">About Us</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li><Link href="#" className="hover:text-teal-400 transition-colors">Privacy Policy</Link></li>
-                <li><Link href="#" className="hover:text-teal-400 transition-colors">Terms of Service</Link></li>
-                <li><Link href="#" className="hover:text-teal-400 transition-colors">Contact</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/30 text-xs">
-              © {new Date().getFullYear()} Mentora AI. All rights reserved.
+      <footer className="border-t border-border bg-card">
+        <div className="max-w-6xl mx-auto px-5 md:px-6 py-10 grid gap-8 md:grid-cols-[2fr_1fr_1fr]">
+          <div>
+            <MentoraLogo size="sm" />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              An agentic, multi-agent tutoring system for personalised learning and mastery assessment in programming education.
             </p>
-            <div className="flex gap-4 opacity-50">
-              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center pointer-events-none" />
-              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center pointer-events-none" />
-              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center pointer-events-none" />
-            </div>
           </div>
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">Product</h3>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li><a href="#how-it-works" className="hover:text-primary transition-colors">How it works</a></li>
+              <li><a href="#agents" className="hover:text-primary transition-colors">Agents</a></li>
+              <li><Link href="/login" className="hover:text-primary transition-colors">Log in</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-foreground">Project</h3>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li><a href="https://mentora-website.kaweesha.com/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">Research website</a></li>
+              <li><a href="https://github.com/mentora-ai-tutor" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary transition-colors"><GitHubIcon className="h-3.5 w-3.5" /> GitHub</a></li>
+              <li><a href="https://mentora-website.kaweesha.com/contact.html" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-border">
+          <p className="max-w-6xl mx-auto px-5 md:px-6 py-5 text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Mentora, R26-SE-030. Department of Software Engineering, Faculty of Computing, SLIIT.
+          </p>
         </div>
       </footer>
     </div>

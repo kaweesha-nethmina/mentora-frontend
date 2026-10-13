@@ -31,7 +31,7 @@ export default function BottomNav({
         <button
           onClick={onNext}
           disabled={savingProgress}
-          className="px-8 py-3 bg-teal-600 hover:bg-teal-500 disabled:bg-teal-800 disabled:opacity-50 text-white font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(13,148,136,0.2)] flex items-center gap-2 group"
+          className="px-8 py-3 bg-primary hover:bg-primary-hover disabled:bg-teal-800 disabled:opacity-50 text-primary-foreground font-bold rounded-xl transition-all flex items-center gap-2 group"
         >
           {savingProgress ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
           Next Concept <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

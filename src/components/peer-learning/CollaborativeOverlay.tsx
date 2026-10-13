@@ -171,13 +171,13 @@ export default function CollaborativeOverlay({
 
   return (
     <div className="absolute inset-0 z-20 pointer-events-none">
-      <div className="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-1 rounded-xl border border-white/10 bg-[#0F172A]/95 p-1.5 shadow-xl pointer-events-auto">
+      <div className="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-1 rounded-xl border border-border bg-background/95 p-1.5 shadow-raised pointer-events-auto">
         {toolItems.map(({ id, label, icon: Icon }) => (
-          <button key={id} type="button" title={label} onClick={() => onToolChange(id)} className={`p-2 rounded-lg transition-colors ${drawMode === id ? 'bg-teal-500/20 text-teal-300' : 'text-white/50 hover:bg-white/10 hover:text-white'}`}>
+          <button key={id} type="button" title={label} onClick={() => onToolChange(id)} className={`p-2 rounded-lg transition-colors ${drawMode === id ? 'bg-teal-500/20 text-teal-700 dark:text-teal-300' : 'text-muted-foreground hover:bg-surface-3 hover:text-foreground'}`}>
             <Icon className="w-3.5 h-3.5" />
           </button>
         ))}
-        <button type="button" title="Clear board" onClick={onClear} className="p-2 rounded-lg text-red-300/70 hover:bg-red-500/10 hover:text-red-300 transition-colors">
+        <button type="button" title="Clear board" onClick={onClear} className="p-2 rounded-lg text-red-700 dark:text-red-300/70 hover:bg-red-500/10 hover:text-red-700 dark:hover:text-red-300 transition-colors">
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
       </div>
@@ -198,8 +198,8 @@ export default function CollaborativeOverlay({
         {previewElement && renderElement(previewElement, true)}
         {cursors.map((cursor) => (
           <g key={cursor.id} transform={`translate(${cursor.x * 100}%, ${cursor.y * 100}%)`} className="pointer-events-none">
-            <path d="M0 0 L0 17 L5 12 L10 22 L14 20 L9 10 L17 10 Z" fill={cursor.color} stroke="#0F172A" strokeWidth="1" />
-            <text x="19" y="8" fill={cursor.color} fontSize="12" fontWeight="700" stroke="#0F172A" strokeWidth="3" paintOrder="stroke">{cursor.name} • {cursor.role}</text>
+            <path d="M0 0 L0 17 L5 12 L10 22 L14 20 L9 10 L17 10 Z" fill={cursor.color} stroke="var(--background)" strokeWidth="1" />
+            <text x="19" y="8" fill={cursor.color} fontSize="12" fontWeight="700" stroke="var(--background)" strokeWidth="3" paintOrder="stroke">{cursor.name} • {cursor.role}</text>
           </g>
         ))}
       </svg>

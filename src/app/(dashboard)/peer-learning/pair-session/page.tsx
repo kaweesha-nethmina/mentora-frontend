@@ -403,48 +403,48 @@ export default function PairSessionPage() {
   return (
     <div className="space-y-3 animate-slide-up">
       {/* ═══ Session Header Bar ═══ */}
-      <div className="rounded-2xl border border-white/10 bg-[#1e293b]/55 px-5 py-3">
+      <div className="rounded-2xl border border-border bg-card/55 px-5 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-white/40 uppercase tracking-wider font-bold">Session</span>
-              <span className="text-xs text-white/60 font-mono">{roomId}</span>
+              <span className="text-[10px] text-subtle-foreground uppercase tracking-wider font-bold">Session</span>
+              <span className="text-xs text-muted-foreground font-mono">{roomId}</span>
             </div>
-            <div className="w-px h-4 bg-white/10" />
+            <div className="w-px h-4 bg-surface-3" />
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-white/40 uppercase tracking-wider font-bold">Learner</span>
-              <span className="text-xs text-teal-400 font-semibold">{studentId}</span>
-              <span className="text-[10px] text-white/30">({studentName})</span>
+              <span className="text-[10px] text-subtle-foreground uppercase tracking-wider font-bold">Learner</span>
+              <span className="text-xs text-teal-700 dark:text-teal-400 font-semibold">{studentId}</span>
+              <span className="text-[10px] text-subtle-foreground">({studentName})</span>
             </div>
-            <div className="w-px h-4 bg-white/10" />
+            <div className="w-px h-4 bg-surface-3" />
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-white/40 uppercase tracking-wider font-bold">{isAiSession ? 'AI Teacher' : 'Peer Teacher'}</span>
-              <span className="text-xs text-amber-400 font-semibold">{peerId}</span>
-              <span className="text-[10px] text-white/30">({peerNameParam})</span>
+              <span className="text-[10px] text-subtle-foreground uppercase tracking-wider font-bold">{isAiSession ? 'AI Teacher' : 'Peer Teacher'}</span>
+              <span className="text-xs text-amber-700 dark:text-amber-400 font-semibold">{peerId}</span>
+              <span className="text-[10px] text-subtle-foreground">({peerNameParam})</span>
             </div>
-            <div className="w-px h-4 bg-white/10" />
+            <div className="w-px h-4 bg-surface-3" />
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-white/40 uppercase tracking-wider font-bold">Topic</span>
-              <span className="text-xs text-teal-400 font-semibold">{topic}</span>
+              <span className="text-[10px] text-subtle-foreground uppercase tracking-wider font-bold">Topic</span>
+              <span className="text-xs text-teal-700 dark:text-teal-400 font-semibold">{topic}</span>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 text-[10px]">
               {(connected || (isAiSession && codingTask)) ? (
                 <>
-                  <Wifi className="w-3 h-3 text-emerald-400" />
-                  <span className="text-emerald-400">Connected</span>
+                  <Wifi className="w-3 h-3 text-emerald-700 dark:text-emerald-400" />
+                  <span className="text-emerald-700 dark:text-emerald-400">Connected</span>
                 </>
               ) : (
                 <>
-                  <WifiOff className="w-3 h-3 text-white/30" />
-                  <span className="text-white/30">Connecting...</span>
+                  <WifiOff className="w-3 h-3 text-subtle-foreground" />
+                  <span className="text-subtle-foreground">Connecting...</span>
                 </>
               )}
             </div>
             <button
               onClick={handleEndSession}
-              className="px-4 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5"
+              className="px-4 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/20 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5"
             >
               <StopCircle className="w-3.5 h-3.5" />
               End Session
@@ -459,37 +459,37 @@ export default function PairSessionPage() {
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
               <div className="px-3 py-1 bg-teal-500/20 border border-teal-500/30 rounded-lg">
-                <span className="text-xs font-bold text-teal-400 uppercase">{codingTask.task_type.replace(/_/g, ' ')}</span>
+                <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase">{codingTask.task_type.replace(/_/g, ' ')}</span>
               </div>
-              <h3 className="text-base font-black text-white">Java Coding Task</h3>
+              <h3 className="text-base font-extrabold text-foreground">Java Coding Task</h3>
               {totalTasks > 0 && (
-                <span className="text-[10px] text-white/40 font-mono">
+                <span className="text-[10px] text-subtle-foreground font-mono">
                   Task {currentTask} of {totalTasks}
                 </span>
               )}
             </div>
             <div className="flex items-center gap-2">
               {sequenceComplete ? (
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400">
                   Complete
                 </span>
               ) : (
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-amber-500/10 border-amber-500/20 text-amber-400">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-amber-500/10 border-amber-500/20 text-amber-700 dark:text-amber-400">
                   In Progress
                 </span>
               )}
             </div>
           </div>
 
-          <p className="text-sm text-white/70 leading-relaxed mb-3">{codingTask.task_description}</p>
+          <p className="text-sm text-foreground/80 leading-relaxed mb-3">{codingTask.task_description}</p>
 
           {codingTask.requirements.length > 0 && (
             <div className="mb-3">
-              <p className="text-[10px] font-bold text-white/40 uppercase tracking-wider mb-1.5">Requirements</p>
+              <p className="text-[10px] font-bold text-subtle-foreground uppercase tracking-wider mb-1.5">Requirements</p>
               <ul className="space-y-1">
                 {codingTask.requirements.map((req, i) => (
-                  <li key={i} className="text-xs text-white/60 flex items-start gap-2">
-                    <span className="text-teal-400 mt-0.5">{i + 1}.</span>
+                  <li key={i} className="text-xs text-muted-foreground flex items-start gap-2">
+                    <span className="text-teal-700 dark:text-teal-400 mt-0.5">{i + 1}.</span>
                     {req}
                   </li>
                 ))}
@@ -502,7 +502,7 @@ export default function PairSessionPage() {
               {!hintsRevealed ? (
                 <button
                   onClick={() => setHintsRevealed(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 rounded-lg text-xs font-semibold text-amber-400 transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 rounded-lg text-xs font-semibold text-amber-700 dark:text-amber-400 transition-colors"
                 >
                   <ChevronRight className="w-3.5 h-3.5" />
                   Show Hint ({codingTask.hints.length})
@@ -511,14 +511,14 @@ export default function PairSessionPage() {
                 <div className="space-y-1.5">
                   <button
                     onClick={() => setHintsRevealed(false)}
-                    className="flex items-center gap-2 text-[10px] font-bold text-amber-400 uppercase tracking-wider"
+                    className="flex items-center gap-2 text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider"
                   >
                     <ChevronDown className="w-3 h-3" />
                     Hints
                   </button>
                   {codingTask.hints.map((hint, i) => (
                     <div key={i} className="px-3 py-2 bg-amber-500/5 border border-amber-500/10 rounded-lg">
-                      <p className="text-xs text-amber-300/80">{hint}</p>
+                      <p className="text-xs text-amber-700 dark:text-amber-300/80">{hint}</p>
                     </div>
                   ))}
                 </div>
@@ -531,9 +531,9 @@ export default function PairSessionPage() {
       {/* ═══ AI Session Loading ═══ */}
       {isAiSession && aiLoading && !codingTask && (
         <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-8 flex flex-col items-center gap-3">
-          <Loader2 className="w-6 h-6 text-amber-400 animate-spin" />
-          <p className="text-sm text-amber-300 font-semibold">Generating your first diagnostic task...</p>
-          <p className="text-xs text-white/40">The AI teacher is preparing a personalized coding challenge.</p>
+          <Loader2 className="w-6 h-6 text-amber-700 dark:text-amber-400 animate-spin" />
+          <p className="text-sm text-amber-700 dark:text-amber-300 font-semibold">Generating your first diagnostic task...</p>
+          <p className="text-xs text-subtle-foreground">The AI teacher is preparing a personalized coding challenge.</p>
         </div>
       )}
 
@@ -541,24 +541,24 @@ export default function PairSessionPage() {
       {isAiSession && aiSessionComplete && aiSessionSummary && (
         <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
           <div className="flex items-center gap-2 mb-3">
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-            <h3 className="text-base font-black text-white">Diagnostic Session Complete</h3>
+            <CheckCircle2 className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
+            <h3 className="text-base font-extrabold text-foreground">Diagnostic Session Complete</h3>
           </div>
           <div className="grid grid-cols-3 gap-3 mb-3">
-            <div className="rounded-xl bg-[#0F172A] border border-white/5 p-3 text-center">
-              <p className="text-[10px] text-white/40 uppercase mb-1">Tasks Completed</p>
-              <p className="text-lg font-black text-emerald-400">{aiSessionSummary.tasks_passed}/{aiSessionSummary.total_tasks}</p>
+            <div className="rounded-xl bg-background border border-border p-3 text-center">
+              <p className="text-[10px] text-subtle-foreground uppercase mb-1">Tasks Completed</p>
+              <p className="text-lg font-extrabold text-emerald-700 dark:text-emerald-400">{aiSessionSummary.tasks_passed}/{aiSessionSummary.total_tasks}</p>
             </div>
-            <div className="rounded-xl bg-[#0F172A] border border-white/5 p-3 text-center">
-              <p className="text-[10px] text-white/40 uppercase mb-1">Mastery Score</p>
-              <p className="text-lg font-black text-amber-400">{aiSessionSummary.mastery_score}%</p>
+            <div className="rounded-xl bg-background border border-border p-3 text-center">
+              <p className="text-[10px] text-subtle-foreground uppercase mb-1">Mastery Score</p>
+              <p className="text-lg font-extrabold text-amber-700 dark:text-amber-400">{aiSessionSummary.mastery_score}%</p>
             </div>
-            <div className="rounded-xl bg-[#0F172A] border border-white/5 p-3 text-center">
-              <p className="text-[10px] text-white/40 uppercase mb-1">Status</p>
-              <p className="text-sm font-bold text-emerald-400">Passed</p>
+            <div className="rounded-xl bg-background border border-border p-3 text-center">
+              <p className="text-[10px] text-subtle-foreground uppercase mb-1">Status</p>
+              <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">Passed</p>
             </div>
           </div>
-          <p className="text-xs text-white/50">You can continue chatting with the AI teacher or end the session.</p>
+          <p className="text-xs text-muted-foreground">You can continue chatting with the AI teacher or end the session.</p>
         </div>
       )}
 
@@ -586,9 +586,9 @@ export default function PairSessionPage() {
         </div>
 
         {/* Right: Collaboration Panel */}
-        <div className="flex flex-col rounded-xl border border-white/10 bg-[#1e293b]/55 overflow-hidden min-h-[400px] lg:min-h-0">
+        <div className="flex flex-col rounded-xl border border-border bg-card/55 overflow-hidden min-h-[400px] lg:min-h-0">
           {/* Tab bar */}
-          <div className="flex border-b border-white/5">
+          <div className="flex border-b border-border">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -598,8 +598,8 @@ export default function PairSessionPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold transition-colors ${
                     isActive
-                      ? 'text-teal-400 border-b-2 border-teal-400 bg-teal-500/5'
-                      : 'text-white/40 hover:text-white/60 hover:bg-white/[0.02]'
+                      ? 'text-teal-700 dark:text-teal-400 border-b-2 border-teal-400 bg-teal-500/5'
+                      : 'text-subtle-foreground hover:text-muted-foreground hover:bg-muted'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -645,7 +645,7 @@ export default function PairSessionPage() {
           </div>
 
           {/* Participant Details - always visible */}
-          <div className="border-t border-white/5 p-3">
+          <div className="border-t border-border p-3">
             <ParticipantDetails
               learner={{
                 id: studentId,

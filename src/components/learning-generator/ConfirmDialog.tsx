@@ -50,13 +50,13 @@ export default function ConfirmDialog({
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={isDeleting ? undefined : onCancel}
       />
-      <div className="relative w-full max-w-md rounded-2xl border border-red-500/20 bg-[var(--lmg-bg-surface-elevated)] p-6 shadow-2xl animate-slide-up transition-colors duration-200">
+      <div className="relative w-full max-w-md rounded-2xl border border-red-500/20 bg-[var(--lmg-bg-surface-elevated)] p-6 shadow-overlay animate-slide-up transition-colors duration-200">
         <div className="flex items-start gap-4">
           <div className="w-11 h-11 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center shrink-0">
             <AlertTriangle className="w-5 h-5 text-red-500 dark:text-red-400" />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-black text-[var(--lmg-text-primary)]">{title}</h3>
+            <h3 className="text-lg font-extrabold text-[var(--lmg-text-primary)]">{title}</h3>
             <p className="mt-1.5 text-sm leading-6 text-[var(--lmg-text-muted)]">{message}</p>
             {error && (
               <div className="mt-3 rounded-xl bg-red-500/10 border border-red-500/20 px-3 py-2 text-sm text-red-600 dark:text-red-300">

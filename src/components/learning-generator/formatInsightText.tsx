@@ -15,7 +15,7 @@ export const formatInsightText = (text: string) => {
     segments.forEach((seg, segIdx) => {
       if (seg.startsWith('**') && seg.endsWith('**')) {
         parts.push(
-          <span key={`${idx}-${segIdx}`} className="text-teal-300 font-bold">
+          <span key={`${idx}-${segIdx}`} className="text-teal-700 dark:text-teal-300 font-bold">
             {seg.slice(2, -2)}
           </span>
         );

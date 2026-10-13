@@ -391,7 +391,7 @@ export default function MaterialWorkspace() {
           <h2 className="text-xl font-bold text-[var(--lmg-text-primary)] mb-2">{error || "Material not found"}</h2>
           <a
             href="/learning-generator"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-500 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary-hover transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg> Back to Generator
           </a>

@@ -18,7 +18,7 @@ const GAP_STYLES: Record<string, string> = {
   FUNDAMENTAL_GAP: "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300 font-medium",
   PARTIAL_GAP: "bg-amber-500/10 border-amber-500/30 text-amber-800 dark:text-amber-300 font-medium",
   SURFACE_GAP: "bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300 font-medium",
-  default: "bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70",
+  default: "bg-muted border-border text-foreground/80",
 };
 
 function masteryLevel(score: number): string {
@@ -122,168 +122,177 @@ export default function DashboardHome() {
     },
   ];
 
+  const modules = [
+    { tag: "Knowledge Assist", href: "/knowledge-assist", icon: Brain, desc: "Analyse your GitHub work and see where your understanding stands.", cta: "Open knowledge profile", tone: "bg-primary-soft text-primary-soft-foreground" },
+    { tag: "Material Generator", href: "/learning-generator", icon: FileText, desc: "Lessons, quizzes and flashcards written for your gaps.", cta: "Generate learning plan", tone: "bg-info-soft text-info" },
+    { tag: "Assessment & Mastery", href: "/assessment", icon: Target, desc: "Adaptive questions that measure what you have mastered.", cta: "Start an assessment", tone: "bg-warning-soft text-warning" },
+    { tag: "Peer Learning", href: "/peer-learning", icon: Users, desc: "Pair up with a classmate and solve problems together.", cta: "Find a study partner", tone: "bg-violet-500/10 text-violet-700 dark:text-violet-300" },
+  ];
+
   return (
     <div className="space-y-8 animate-slide-up">
 
-      {/* ── WELCOME SECTION ── */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white flex items-center gap-3">
-            Welcome back, {mounted ? (user?.name?.split(' ')[0] || "User") : "..."}
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-500"></span>
-            </span>
-          </h1>
-          <p className="text-slate-600 dark:text-[#F8FAFC]/60 mt-1">
-            {loading
-              ? "Loading your latest learning insights..."
-              : "Your AI tutor has generated new insights based on your learning activity."}
-          </p>
+      {/* ── WELCOME BAND ── */}
+      <section className="relative overflow-hidden rounded-2xl bg-forest text-white px-6 py-7 md:px-8 md:py-8 shadow-raised">
+        <svg aria-hidden className="pointer-events-none absolute -right-10 -top-16 h-72 w-72 text-white/[0.06]" viewBox="0 0 200 200" fill="none">
+          <path d="M100 10c40 30 70 70 60 120-10 40-50 60-60 60s-50-20-60-60C30 80 60 40 100 10Z" fill="currentColor" />
+          <path d="M100 30v160" stroke="currentColor" strokeWidth="3" />
+        </svg>
+        <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            <p className="text-sm font-medium text-white/70">Your learning space</p>
+            <h1 className="mt-1 text-3xl md:text-4xl font-bold tracking-tight">
+              Welcome back, {mounted ? (user?.name?.split(' ')[0] || "User") : "..."}
+            </h1>
+            <p className="mt-2 text-white/80">
+              {loading
+                ? "Loading your latest learning insights..."
+                : goal
+                ? <>Today&apos;s focus is <span className="font-semibold text-white">{goal}</span>. Your tutor has prepared material and practice for it.</>
+                : "Your AI tutor has generated new insights based on your learning activity."}
+            </p>
+          </div>
+          <div className="flex items-center gap-4 rounded-xl bg-white/10 px-5 py-4 ring-1 ring-white/15 backdrop-blur-sm">
+            <Award className="h-8 w-8 text-[#9be7c1]" />
+            <div>
+              <p className="text-xs text-white/70">Mastery</p>
+              <p className="text-2xl font-bold leading-tight">
+                {masteryScore !== null ? `${Math.round(masteryScore)}%` : "Not measured"}
+              </p>
+              <p className="text-xs text-white/70">{masteryScore !== null ? masteryLevel(masteryScore) : "Take an assessment"}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {loading ? (
-        <div className="flex items-center justify-center py-24">
-          <Loader2 className="w-8 h-8 text-teal-600 dark:text-teal-400 animate-spin" />
+        <div className="flex items-center justify-center py-24" role="status">
+          <Loader2 className="w-8 h-8 text-brand animate-spin" />
         </div>
       ) : (
         <>
       <div className="grid lg:grid-cols-3 gap-6">
 
-        {/* ── LEARNER INSIGHT CARD (Left/Main Content area) ── */}
-        <div className="col-span-1 lg:col-span-2 relative p-[1px] rounded-2xl overflow-hidden group">
-          {/* Animated border effect */}
-          <div className="absolute inset-[-50%] bg-gradient-to-r from-teal-500/0 via-teal-500/40 dark:via-teal-500 to-teal-500/0 group-hover:rotate-180 transition-transform duration-1000 ease-linear animate-pulse" />
-
-          <div className="relative h-full bg-white dark:bg-[#1e293b]/90 border border-slate-200 dark:border-white/10 shadow-xs backdrop-blur-xl rounded-2xl p-6 lg:p-8 flex flex-col justify-between">
-            <div className="flex items-start justify-between mb-8">
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-700 dark:text-teal-400 text-[10px] font-bold tracking-wider uppercase mb-3 shadow-[0_0_10px_rgba(13,148,136,0.15)]">
-                  <Sparkles className="w-3 h-3" /> AI Insight
-                </div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {goal || "No goal detected yet"}
-                </h2>
-                <p className="text-sm text-slate-500 dark:text-white/50 mt-1">Current Learning Goal</p>
-              </div>
-
-              <div className="text-right">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-[#B45309] font-bold">
-                  <Award className="w-4 h-4" /> Mastery {masteryScore !== null ? masteryLevel(masteryScore) : "N/A"}
-                </div>
-              </div>
-            </div>
-
+        {/* ── LEARNER INSIGHT CARD ── */}
+        <div className="lg:col-span-2 surface-card p-6 lg:p-7 flex flex-col">
+          <div className="flex items-start justify-between gap-4 mb-6">
             <div>
-              <p className="text-sm font-semibold text-slate-500 dark:text-white/40 mb-3 uppercase tracking-wider">Detected Weak Concepts</p>
-              {gaps.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
-                  {visibleGaps.map((g) => (
-                    <span
-                      key={g.topic}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-medium border ${GAP_STYLES[g.gap_type] || GAP_STYLES.default}`}
-                    >
-                      {g.topic}
-                    </span>
-                  ))}
-                  {extraGaps > 0 && (
-                    <span className="px-3 py-1.5 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white/70 rounded-lg text-sm font-medium">
-                      +{extraGaps} more
-                    </span>
-                  )}
-                </div>
-              ) : (
-                <p className="text-sm text-slate-500 dark:text-white/40">
-                  No weak concepts detected yet. Complete a knowledge analysis to generate insights.
-                </p>
-              )}
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-soft text-primary-soft-foreground text-xs font-semibold mb-3">
+                <Sparkles className="w-3.5 h-3.5" /> AI insight
+              </div>
+              <h2 className="text-xl md:text-2xl font-bold text-heading">
+                {goal || "No goal detected yet"}
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1">Current learning goal</p>
             </div>
+            <span className="inline-flex shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-lg bg-warning-soft text-warning text-sm font-semibold">
+              <Award className="w-4 h-4" /> {masteryScore !== null ? masteryLevel(masteryScore) : "Level N/A"}
+            </span>
+          </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-white/10 flex items-center justify-between">
-              <p className="text-sm text-slate-700 dark:text-teal-100">
-                {generalAdvice || "Submit a learning profile to get personalized recommendations."}
+          <div>
+            <h3 className="text-sm font-semibold text-foreground mb-3">Concepts to strengthen</h3>
+            {gaps.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {visibleGaps.map((g) => (
+                  <span
+                    key={g.topic}
+                    className={`px-3 py-1.5 rounded-lg text-sm border ${GAP_STYLES[g.gap_type] || GAP_STYLES.default}`}
+                  >
+                    {g.topic}
+                  </span>
+                ))}
+                {extraGaps > 0 && (
+                  <span className="px-3 py-1.5 bg-muted border border-border text-muted-foreground rounded-lg text-sm font-medium">
+                    +{extraGaps} more
+                  </span>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                No weak concepts detected yet. Run a knowledge analysis to see what to work on next.
+              </p>
+            )}
+          </div>
+
+          <div className="mt-auto pt-6">
+            <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl bg-muted px-4 py-3.5">
+              <p className="text-sm text-foreground/80">
+                {generalAdvice || "Submit a learning profile to get personalised recommendations."}
               </p>
               {goal && (
                 <Link
                   href="/learning-generator"
-                  className="px-5 py-2 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-500 hover:scale-105 hover:shadow-[0_0_20px_rgba(13,148,136,0.3)] transition-all shrink-0"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:bg-primary-hover transition-colors shrink-0"
                 >
-                  Start Now
+                  Start now <ChevronRight className="w-4 h-4" />
                 </Link>
               )}
             </div>
           </div>
         </div>
 
-        {/* ── PROGRESS OVERVIEW (Right area) ── */}
-        <div className="col-span-1 bg-white dark:bg-[#334155]/30 border border-slate-200 dark:border-white/5 rounded-2xl p-6 flex flex-col justify-between hover:bg-slate-50 dark:hover:bg-[#334155]/50 transition-colors shadow-xs">
-          <div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-              <Activity className="w-5 h-5 text-teal-600 dark:text-teal-400" /> Course Progress
-            </h3>
+        {/* ── PROGRESS OVERVIEW ── */}
+        <div className="surface-card p-6 flex flex-col">
+          <h3 className="text-base font-semibold text-foreground mb-6 flex items-center gap-2">
+            <Activity className="w-5 h-5 text-brand" /> Course progress
+          </h3>
 
-            <div className="space-y-5">
-              {bars.map((bar) => (
-                <div key={bar.label}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-slate-600 dark:text-white/70 font-medium">{bar.label}</span>
-                    <span className="text-teal-700 dark:text-teal-400 font-bold">{bar.value !== null ? `${bar.value}%` : "—"}</span>
-                  </div>
-                  <div className="h-2 w-full bg-slate-100 dark:bg-[#0F172A] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-teal-600 to-teal-400 rounded-full relative transition-all duration-700"
-                      style={{ width: `${Math.min(Math.max(bar.value ?? 0, 0), 100)}%` }}
-                    >
-                      <div className="absolute top-0 right-0 bottom-0 w-8 bg-white/20 animate-shimmer" />
-                    </div>
-                  </div>
+          <div className="space-y-5">
+            {bars.map((bar) => (
+              <div key={bar.label}>
+                <div className="flex justify-between gap-3 text-sm mb-1.5">
+                  <span className="text-muted-foreground">{bar.label}</span>
+                  <span className="text-foreground font-semibold tabular-nums">{bar.value !== null ? `${bar.value}%` : "—"}</span>
                 </div>
-              ))}
-            </div>
+                <div className="h-2 w-full bg-muted rounded-full overflow-hidden ring-1 ring-inset ring-border">
+                  <div
+                    className="h-full bg-action rounded-full transition-all duration-700"
+                    style={{ width: `${Math.min(Math.max(bar.value ?? 0, 0), 100)}%` }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
 
           <Link
             href="/assessment"
-            className="w-full mt-6 py-2.5 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-white/80 font-semibold rounded-xl transition-colors border border-slate-200 dark:border-white/5 text-center block"
+            className="mt-auto pt-6"
           >
-            View Analytics
+            <span className="flex w-full items-center justify-center gap-1.5 py-2.5 bg-card hover:bg-muted text-foreground text-sm font-semibold rounded-lg transition-colors border border-border-strong">
+              View analytics <ChevronRight className="w-4 h-4" />
+            </span>
           </Link>
         </div>
       </div>
 
-      {/* ── QUICK ACCESS MODULE CARDS ── */}
-      <div>
-        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Core Modules</h3>
+      {/* ── MODULES ── */}
+      <section>
+        <h2 className="text-lg font-bold text-heading mb-4">Your tutoring agents</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { tag: "Knowledge Assist", href: "/knowledge-assist", icon: Brain, desc: "Ask questions, get explanations", cta: "Ask AI" },
-            { tag: "Material Generator", href: "/learning-generator", icon: FileText, desc: "Personalized tutorials & exercises", cta: "Generate Learning Plan" },
-            { tag: "Assessment & Mastery", href: "/assessment", icon: Target, desc: "Evaluate and track mastery", cta: "Start Assessment" },
-            { tag: "Peer Learning", href: "/peer-learning", icon: Users, desc: "Collaborate with other learners", cta: "Explore Community" },
-          ].map((mod, i) => (
+          {modules.map((mod) => (
             <Link
-              key={i} href={mod.href}
-              className="group p-5 bg-white dark:bg-[#334155]/20 hover:bg-slate-50 dark:hover:bg-[#334155]/40 border border-slate-200 dark:border-white/5 hover:border-teal-500/30 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(13,148,136,0.1)] flex flex-col h-full shadow-xs"
+              key={mod.href} href={mod.href}
+              className="group surface-card p-5 flex flex-col h-full transition-[border-color,box-shadow] duration-200 hover:border-border-strong hover:shadow-raised"
             >
-              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-[#0F172A] border border-slate-200 dark:border-white/5 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-teal-500/50 group-hover:bg-teal-50 dark:group-hover:bg-teal-500/10 transition-all text-slate-700 dark:text-white/70 group-hover:text-teal-600 dark:group-hover:text-teal-400">
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-4 ${mod.tone}`}>
                 <mod.icon className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-slate-900 dark:text-white mb-1.5">{mod.tag}</h4>
-              <p className="text-xs text-slate-600 dark:text-white/50 mb-6 flex-1 leading-relaxed">{mod.desc}</p>
-              <div className="flex items-center text-teal-700 dark:text-teal-400 text-sm font-bold mt-auto group-hover:underline">
-                {mod.cta} <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-              </div>
+              <h3 className="font-semibold text-foreground mb-1.5">{mod.tag}</h3>
+              <p className="text-sm text-muted-foreground mb-5 flex-1 leading-relaxed">{mod.desc}</p>
+              <span className="inline-flex items-center text-primary text-sm font-semibold mt-auto">
+                {mod.cta} <ChevronRight className="w-4 h-4 ml-0.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
             </Link>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* ── AI GENERATED CONTENT PREVIEW ── */}
-      <div>
+      <section>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white">Just for you</h3>
-          <span className="text-xs text-slate-500 dark:text-white/40">
+          <h2 className="text-lg font-bold text-heading">Just for you</h2>
+          <span className="text-xs text-muted-foreground">
             {recentMaterials.length > 0
               ? `Generated ${timeAgo(recentMaterials[0].structured_material.generated_at)}`
               : "No materials yet"}
@@ -295,41 +304,43 @@ export default function DashboardHome() {
             {recentMaterials.map((m) => {
               const sm = m.structured_material;
               return (
-                <div key={m._id} className="p-4 rounded-2xl bg-white dark:bg-gradient-to-br dark:from-[#334155]/30 dark:to-[#0F172A] border border-slate-200 dark:border-white/5 hover:border-teal-500/20 transition-all group shadow-xs">
-                  <div className="inline-flex items-center gap-1.5 mb-3 px-2 py-0.5 rounded bg-teal-500/10 text-teal-700 dark:text-teal-400 text-[10px] font-bold uppercase tracking-wider">
-                    <Sparkles className="w-3 h-3" /> AI Generated
+                <div key={m._id} className="surface-card p-5 flex flex-col">
+                  <div className="inline-flex w-fit items-center gap-1.5 mb-3 px-2 py-0.5 rounded-md bg-primary-soft text-primary-soft-foreground text-xs font-medium">
+                    <Sparkles className="w-3 h-3" /> AI generated
                   </div>
-                  <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-slate-400 dark:text-white/50 shrink-0" />
+                  <h3 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-subtle-foreground shrink-0" />
                     <span className="truncate" title={sm.topic}>{sm.topic}</span>
-                  </h4>
-                  <p className="text-xs text-slate-600 dark:text-white/50 mb-4 line-clamp-2 leading-relaxed">{materialIntro(m)}</p>
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2 leading-relaxed">{materialIntro(m)}</p>
                   <Link
                     href={`/learning-generator/materials/${m._id}`}
-                    className="block w-full py-2 bg-teal-50 dark:bg-teal-600/10 hover:bg-teal-100 dark:hover:bg-teal-600/20 text-teal-700 dark:text-teal-400 text-xs font-bold rounded-lg transition-colors border border-teal-200 dark:border-teal-500/20 text-center"
+                    className="mt-auto block w-full py-2 bg-primary-soft hover:bg-primary-soft/70 text-primary-soft-foreground text-sm font-semibold rounded-lg transition-colors text-center"
                   >
-                    Read Concept
+                    Read concept
                   </Link>
                 </div>
               );
             })}
           </div>
         ) : (
-          <div className="p-12 bg-white dark:bg-[#334155]/10 border border-slate-200 dark:border-white/5 rounded-2xl text-center shadow-xs">
-            <BookOpen className="w-12 h-12 text-slate-300 dark:text-white/20 mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-slate-700 dark:text-white/60 mb-2">No AI-generated materials yet</h3>
-            <p className="text-sm text-slate-500 dark:text-white/40 mb-4">
-              Submit a learning profile to generate personalized tutorials and exercises.
+          <div className="surface-card px-6 py-12 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary-soft-foreground">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-semibold text-foreground mb-1.5">No learning material yet</h3>
+            <p className="text-sm text-muted-foreground mb-5 max-w-md mx-auto">
+              Submit a learning profile and Mentora will write tutorials and exercises for the concepts you need most.
             </p>
             <Link
               href="/learning-generator"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold rounded-xl transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-primary-foreground text-sm font-semibold rounded-lg transition-colors"
             >
-              <FileText className="w-4 h-4" /> Generate Learning Plan
+              <FileText className="w-4 h-4" /> Generate learning plan
             </Link>
           </div>
         )}
-      </div>
+      </section>
         </>
       )}
 
