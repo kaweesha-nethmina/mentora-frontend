@@ -119,7 +119,7 @@ export default function Header({ scrolled, mounted, onProfileToggle, profileOpen
                 </div>
                 <div className="p-1.5">
                   <Link
-                    href="/profile"
+                    href="/settings"
                     onClick={onProfileToggle}
                     className="flex items-center gap-3 w-full px-3 py-2 text-sm text-foreground hover:bg-muted rounded-lg transition-colors"
                   >

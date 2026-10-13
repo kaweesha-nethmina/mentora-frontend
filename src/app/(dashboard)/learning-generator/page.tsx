@@ -28,7 +28,7 @@ import {
   SearchX,
   X,
 } from "lucide-react";
-import JobCard, { ActiveJobsList } from "@/components/learning-generator/JobCard";
+import { ActiveJobsList } from "@/components/learning-generator/JobCard";
 import ProgressStatsCards from "@/components/learning-generator/ProgressStats";
 import KnowledgeGapCard from "@/components/learning-generator/KnowledgeGapCard";
 import MaterialCard from "@/components/learning-generator/MaterialCard";
@@ -131,8 +131,6 @@ export default function LearningGeneratorDashboard() {
   const [closingJobs, setClosingJobs] = useState<string[]>([]);
   const [conceptCoverage, setConceptCoverage] = useState<ConceptCoverageData | null>(null);
 
-  const [sampleJobDismissed, setSampleJobDismissed] = useState(false);
-
   const fetchData = useCallback(async () => {
     if (!user?.student_id) return;
     try {
@@ -229,10 +227,6 @@ export default function LearningGeneratorDashboard() {
   }, [user?.student_id]);
 
   const handleDismissJob = async (jobId: string) => {
-    if (jobId === "JOB_1788208482233") {
-      setSampleJobDismissed(true);
-      return;
-    }
     setClosingJobs((prev) => [...prev, jobId]);
     try {
       await learningGeneratorApi.closeJob(jobId);
@@ -348,20 +342,6 @@ export default function LearningGeneratorDashboard() {
   const implicitMaterials = materials.filter(
     (m) => m.structured_material.generation_source === "implicit_prerequisite"
   );
-
-  // Sample completed background job if none currently active
-  const fallbackSampleJob: GenerationJob = {
-    job_id: "JOB_1788208482233",
-    student_id: user?.student_id || "kaweesha",
-    profile_id: "profile_adaptive_01",
-    status: "completed",
-    gaps_total: 9,
-    gaps_completed: 9,
-    gaps_failed: 0,
-    materials_generated: 9,
-    materials_failed: 0,
-    created_at: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-  };
 
   /* ───────────────────────── UI-only derived values ───────────────────────── */
   const usingSampleGaps = !(profile?.knowledge_gaps && profile.knowledge_gaps.length > 0);
@@ -551,11 +531,9 @@ export default function LearningGeneratorDashboard() {
       </section>
 
       {/* ── BACKGROUND GENERATION STATUS ───────────────────────────── */}
-      {activeJobs.length > 0 ? (
+      {activeJobs.length > 0 && (
         <ActiveJobsList jobs={activeJobs} onDismiss={handleDismissJob} closingJobs={closingJobs} />
-      ) : !sampleJobDismissed ? (
-        <JobCard job={fallbackSampleJob} onDismiss={handleDismissJob} closingJobs={[]} />
-      ) : null}
+      )}
 
       {/* ── PROGRESS ───────────────────────────────────────────────── */}
       <ProgressStatsCards stats={progressStats} progress={materialProgress} materials={materials} />

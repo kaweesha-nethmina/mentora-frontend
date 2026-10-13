@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   X, Settings, LogOut,
   LayoutDashboard, Brain, BookOpen, Target, Users, TrendingUp, ChevronDown, PanelLeftClose, PanelLeftOpen
@@ -11,6 +12,8 @@ import MentoraLogo from "@/components/auth/MentoraLogo";
 import { useAuth } from "@/contexts/AuthContext";
 import GitHubStatusControl from "@/components/dashboard/GitHubStatusControl";
 import { useActiveReview } from "@/contexts/ActiveReviewContext";
+import { learningGeneratorApi } from "@/lib/api/learningGenerator";
+import { getGapCounts } from "@/components/learning-generator/GapFilters";
 
 type NavSubItem = {
   name: string;
@@ -44,7 +47,7 @@ const navItems: NavItem[] = [
     icon: BookOpen,
     subItems: [
       { name: "Overview", href: "/learning-generator", hasDot: true },
-      { name: "Knowledge Gaps", href: "/learning-generator/knowledge-gaps", badge: "6" },
+      { name: "Knowledge Gaps", href: "/learning-generator/knowledge-gaps" },
       { name: "Generated Materials", href: "/learning-generator/materials" },
       { name: "Learn Code Sandbox", href: "/learning-generator/workspace" },
     ],
@@ -75,8 +78,24 @@ interface SidebarProps {
 export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, setExpandedMenu, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { isReviewRunning, sandboxHref } = useActiveReview();
+  const [gapCount, setGapCount] = useState<number>(0);
+
+  useEffect(() => {
+    if (!user?.student_id) return;
+    let cancelled = false;
+    learningGeneratorApi
+      .getProfile(user.student_id)
+      .then((res) => {
+        if (cancelled || !res?.success) return;
+        setGapCount(getGapCounts(res.data as any).ALL);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.student_id]);
 
   const isActive = (item: NavItem) => {
     if (item.href) return pathname === item.href;
@@ -215,6 +234,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
                         {subItem.badge !== undefined && (
                           <span className="ml-2 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-muted text-muted-foreground">
                             {subItem.badge}
+                          </span>
+                        )}
+                        {subItem.href === "/learning-generator/knowledge-gaps" && gapCount > 0 && (
+                          <span className="ml-2 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-muted text-muted-foreground">
+                            {gapCount}
                           </span>
                         )}
                         {subActive && subItem.hasDot && (
