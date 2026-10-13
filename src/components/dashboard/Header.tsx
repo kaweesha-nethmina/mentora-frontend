@@ -64,12 +64,24 @@ export default function Header({ scrolled, mounted, onProfileToggle, profileOpen
             <>
               <span
                 aria-hidden
-                className={`absolute top-1 h-7 w-7 rounded-full bg-card shadow-raised ring-1 ring-border transition-transform duration-300 ${
-                  theme === "dark" ? "translate-x-[30px]" : "translate-x-0"
+                className={`absolute top-1 h-7 w-7 2xl:top-1.5 2xl:h-8 2xl:w-8 rounded-full bg-card shadow-raised ring-1 ring-border transition-transform duration-300 ease-in-out ${
+                  theme === "dark" ? "translate-x-[32px] 2xl:translate-x-[40px]" : "translate-x-0"
                 }`}
               />
-              <Sun className={`relative z-10 mx-1.5 w-4 h-4 transition-colors ${theme === "dark" ? "text-subtle-foreground" : "text-warning"}`} />
-              <Moon className={`relative z-10 ml-auto mr-1.5 w-4 h-4 transition-colors ${theme === "dark" ? "text-brand" : "text-subtle-foreground"}`} />
+              <Sun
+                className={`relative z-10 mx-1.5 w-4 h-4 2xl:w-5 2xl:h-5 transition-all duration-500 ${
+                  theme === "dark"
+                    ? "text-subtle-foreground scale-75 -rotate-90 opacity-60"
+                    : "text-warning scale-100 rotate-0"
+                }`}
+              />
+              <Moon
+                className={`relative z-10 ml-auto mr-1.5 w-4 h-4 2xl:w-5 2xl:h-5 transition-all duration-500 ${
+                  theme === "dark"
+                    ? "text-brand scale-100 rotate-0"
+                    : "text-subtle-foreground scale-75 rotate-90 opacity-60"
+                }`}
+              />
             </>
           ) : (
             <span className="w-full" />
