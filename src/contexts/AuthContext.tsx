@@ -9,6 +9,8 @@ interface AuthContextType {
   isAuthenticated: boolean;
   login: (data: LoginData) => Promise<{ success: boolean; message?: string }>;
   register: (data: RegisterData) => Promise<{ success: boolean; message?: string }>;
+  loginWithGoogle: () => void;
+  completeGoogleLogin: (ticket: string) => Promise<{ success: boolean; message?: string }>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
@@ -70,6 +72,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { success: false, message: result.message || 'Registration failed' };
   };
 
+  const loginWithGoogle = () => {
+    if (typeof window === 'undefined') return;
+    window.location.href = authApi.getGoogleAuthUrl();
+  };
+
+  const completeGoogleLogin = async (ticket: string) => {
+    const result = await authApi.googleExchange(ticket);
+    if (result.success) {
+      if (result.data?.user) setUser(result.data.user);
+      return { success: true };
+    }
+    return { success: false, message: result.message || 'Google sign-in failed' };
+  };
+
   const logout = async () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
@@ -89,6 +105,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         login,
         register,
+        loginWithGoogle,
+        completeGoogleLogin,
         logout,
         refreshUser,
       }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Sparkles } from "lucide-react";
@@ -22,12 +22,30 @@ const GoogleIcon = () => (
 
 export default function LoginForm() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({});
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const gerr = params.get("google_error");
+    if (gerr) {
+      const messages: Record<string, string> = {
+        access_denied: "Google sign-in was cancelled.",
+        state_expired: "Your Google sign-in session expired. Please try again.",
+        invalid_state: "Google sign-in could not be verified. Please try again.",
+        token_exchange_failed: "Could not complete Google sign-in. Please try again.",
+        invalid_id_token: "Could not complete Google sign-in. Please try again.",
+        account_error: "Could not complete Google sign-in. Please try again.",
+        account_disabled: "This account has been disabled.",
+        not_configured: "Google sign-in isn\u2019t configured yet. Please use email and password.",
+      };
+      setErrors({ general: messages[gerr] || "Google sign-in failed. Please try again." });
+    }
+  }, []);
 
   const validate = () => {
     const e: typeof errors = {};
@@ -73,7 +91,7 @@ export default function LoginForm() {
 
       {/* Social Buttons */}
       <div>
-        <SocialButton icon={<GoogleIcon />} label="Continue with Google" />
+        <SocialButton icon={<GoogleIcon />} label="Continue with Google" onClick={loginWithGoogle} />
       </div>
 
       <AuthDivider />

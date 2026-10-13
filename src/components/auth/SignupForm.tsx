@@ -24,7 +24,7 @@ const GoogleIcon = () => (
 
 export default function SignupForm() {
   const router = useRouter();
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const [showPw, setShowPw] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -115,7 +115,7 @@ export default function SignupForm() {
 
       {/* Social */}
       <div>
-        <SocialButton icon={<GoogleIcon />} label="Continue with Google" />
+        <SocialButton icon={<GoogleIcon />} label="Continue with Google" onClick={loginWithGoogle} />
       </div>
 
       <AuthDivider />
