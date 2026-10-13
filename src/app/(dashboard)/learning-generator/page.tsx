@@ -109,7 +109,6 @@ export default function LearningGeneratorDashboard() {
   const [profileHistory, setProfileHistory] = useState<any[]>([]);
   const [activeJobs, setActiveJobs] = useState<GenerationJob[]>([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
   const [progressStats, setProgressStats] = useState<ProgressStats | null>(null);
   const [materialProgress, setMaterialProgress] = useState<StudentProgress[]>([]);
   const [masteryGenerating, setMasteryGenerating] = useState(false);
@@ -123,7 +122,7 @@ export default function LearningGeneratorDashboard() {
   const fetchData = useCallback(async () => {
     if (!user?.student_id) return;
     try {
-      const [materialsRes, profileRes, historyRes, jobsRes, progressRes, progressStatsRes, coverageRes] =
+      const [materialsRes, profileRes, historyRes, jobsRes, progressRes, progressStatsRes] =
         await Promise.all([
           learningGeneratorApi.getMaterials(user.student_id),
           learningGeneratorApi.getProfile(user.student_id),
@@ -131,7 +130,6 @@ export default function LearningGeneratorDashboard() {
           learningGeneratorApi.getJobsByStudent(user.student_id),
           learningGeneratorApi.getProgressByStudent(user.student_id),
           learningGeneratorApi.getProgressStats(user.student_id),
-          learningGeneratorApi.getConceptCoverage(user.student_id),
         ]);
 
       if (materialsRes.success && materialsRes.data) {
@@ -145,37 +143,13 @@ export default function LearningGeneratorDashboard() {
       }
       if (jobsRes.success && jobsRes.data) {
         const jobsData = (jobsRes.data as any) || [];
-        const visible = jobsData.filter((j: GenerationJob) => j.status !== "closed");
-        setActiveJobs(visible);
-
-        if (!pollingInterval) {
-          const sid = user!.student_id!;
-          const interval = setInterval(async () => {
-            const [mRes, jRes] = await Promise.all([
-              learningGeneratorApi.getMaterials(sid),
-              learningGeneratorApi.getJobsByStudent(sid),
-            ]);
-            if (mRes.success && mRes.data) {
-              const mData = mRes.data as any;
-              setMaterials(mData.items || []);
-            }
-            if (jRes.success && jRes.data) {
-              const allJ = (jRes.data as any) || [];
-              const visibleJ = allJ.filter((j: GenerationJob) => j.status !== "closed");
-              setActiveJobs(visibleJ);
-            }
-          }, 5000);
-          setPollingInterval(interval);
-        }
+        setActiveJobs(jobsData.filter((j: GenerationJob) => j.status !== "closed"));
       }
       if (progressRes.success && progressRes.data) {
         setMaterialProgress(Array.isArray(progressRes.data) ? progressRes.data : []);
       }
       if (progressStatsRes.success && progressStatsRes.data) {
         setProgressStats(progressStatsRes.data);
-      }
-      if (coverageRes.success && coverageRes.data) {
-        setConceptCoverage(coverageRes.data);
       }
     } catch (err: any) {
       setError(err.message || "Failed to load data");
@@ -187,10 +161,63 @@ export default function LearningGeneratorDashboard() {
 
   useEffect(() => {
     if (user?.student_id) fetchData();
-    return () => {
-      if (pollingInterval) clearInterval(pollingInterval);
-    };
   }, [user?.student_id, fetchData]);
+
+  useEffect(() => {
+    if (!user?.student_id) return;
+    const sid = user.student_id;
+    let cancelled = false;
+    learningGeneratorApi
+      .getConceptCoverage(sid)
+      .then((res) => {
+        if (!cancelled && res.success && res.data) {
+          setConceptCoverage(res.data);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.student_id]);
+
+  useEffect(() => {
+    if (!user?.student_id) return;
+    const sid = user.student_id;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const poll = async () => {
+      try {
+        const [mRes, jRes] = await Promise.all([
+          learningGeneratorApi.getMaterials(sid),
+          learningGeneratorApi.getJobsByStudent(sid),
+        ]);
+        if (cancelled) return;
+        if (mRes.success && mRes.data) {
+          const mData = mRes.data as any;
+          setMaterials(mData.items || []);
+        }
+        let hasActiveJobs = false;
+        if (jRes.success && jRes.data) {
+          const allJ = (jRes.data as any) || [];
+          const visibleJ = allJ.filter((j: GenerationJob) => j.status !== "closed");
+          hasActiveJobs = visibleJ.length > 0;
+          setActiveJobs(visibleJ);
+        }
+        timer = setTimeout(poll, hasActiveJobs ? 5000 : 15000);
+      } catch {
+        if (!cancelled) {
+          timer = setTimeout(poll, 15000);
+        }
+      }
+    };
+
+    timer = setTimeout(poll, 5000);
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+    };
+  }, [user?.student_id]);
 
   const handleDismissJob = async (jobId: string) => {
     if (jobId === "JOB_1788208482233") {
