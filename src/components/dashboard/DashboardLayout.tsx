@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import GithubLinkCard, { GitHubIcon } from "@/components/onboarding/GithubLinkCard";
 import { githubApi } from "@/lib/api/github";
 import { toast } from "sonner";
+import InteractiveBackground from "../layout/InteractiveBackground";
 
 type NavSubItem = {
   name: string;
@@ -134,18 +135,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white flex overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground flex overflow-hidden">
 
       {/* ── SIDEBAR ── */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-[#0B1121] border-r border-white/5 transform transition-transform duration-300 ease-in-out flex flex-col ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-20"
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-sunken border-r border-border transform transition-transform duration-300 ease-in-out flex flex-col ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-20"
           }`}
       >
-        <div className="h-16 flex items-center justify-between px-4 border-b border-white/5 shrink-0">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-border shrink-0">
           <div className={`overflow-hidden transition-all ${!sidebarOpen && "lg:hidden"}`}>
             <MentoraLogo size="sm" />
           </div>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white/50 hover:text-white">
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-muted-foreground hover:text-foreground">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -164,14 +165,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     onClick={() => setExpandedMenu((prev) => (prev === item.name ? null : item.name))}
                     className={`relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300
                       ${active
-                        ? "bg-teal-500/10 text-teal-400 shadow-[inset_0_0_20px_rgba(13,148,136,0.1)]"
-                        : "text-white/60 hover:bg-[#334155]/30 hover:text-teal-200"
+                        ? "bg-teal-500/10 text-teal-700 dark:text-teal-400 "
+                        : "text-muted-foreground hover:bg-surface-3 hover:text-teal-800 dark:hover:text-teal-200"
                       }
                     `}
                     title={!sidebarOpen ? item.name : undefined}
                   >
                     {active && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full shadow-[0_0_10px_rgba(13,148,136,0.8)]" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full " />
                     )}
                     <item.icon className="w-5 h-5 shrink-0" />
                     <span className={`font-semibold text-sm whitespace-nowrap transition-opacity duration-300 ${!sidebarOpen && "lg:opacity-0 lg:hidden"}`}>
@@ -188,8 +189,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                           href={subItem.href}
                           className={`block px-3 py-2 rounded-lg text-sm transition-all
                             ${subActive
-                              ? "bg-teal-500/10 text-teal-300"
-                              : "text-white/50 hover:text-teal-200 hover:bg-[#334155]/30"
+                              ? "bg-teal-500/10 text-teal-700 dark:text-teal-300"
+                              : "text-muted-foreground hover:text-teal-800 dark:hover:text-teal-200 hover:bg-surface-3"
                             }
                           `}
                         >
@@ -208,14 +209,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 href={item.href}
                 className={`relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group
                   ${active
-                    ? "bg-teal-500/10 text-teal-400 shadow-[inset_0_0_20px_rgba(13,148,136,0.1)]"
-                    : "text-white/60 hover:bg-[#334155]/30 hover:text-teal-200"
+                    ? "bg-teal-500/10 text-teal-700 dark:text-teal-400 "
+                    : "text-muted-foreground hover:bg-surface-3 hover:text-teal-800 dark:hover:text-teal-200"
                   }
                 `}
                 title={!sidebarOpen ? item.name : undefined}
               >
                 {active && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full shadow-[0_0_10px_rgba(13,148,136,0.8)]" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full " />
                 )}
                 <item.icon className={`w-5 h-5 shrink-0 transition-transform duration-300 ${active ? "scale-110" : "group-hover:scale-110"}`} />
                 <span className={`font-semibold text-sm whitespace-nowrap transition-opacity duration-300 ${!sidebarOpen && "lg:opacity-0 lg:hidden"}`}>
@@ -226,7 +227,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/5 space-y-1.5 shrink-0">
+        <div className="p-4 border-t border-border space-y-1.5 shrink-0">
           {user && (
             <div className="relative">
               {githubMenuOpen && githubLinked && sidebarOpen && (
@@ -237,31 +238,31 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     className="fixed inset-0 z-30 cursor-default"
                     onClick={() => setGithubMenuOpen(false)}
                   />
-                  <div className="absolute bottom-full left-0 right-0 z-40 mb-2 rounded-xl border border-white/10 bg-[#111827] p-2 shadow-2xl">
-                    <div className="px-3 py-2 border-b border-white/10">
-                      <p className="text-xs font-semibold text-white">GitHub account</p>
-                      <p className="text-[10px] uppercase tracking-widest text-teal-300 truncate">
+                  <div className="absolute bottom-full left-0 right-0 z-40 mb-2 rounded-xl border border-border bg-popover p-2 shadow-overlay">
+                    <div className="px-3 py-2 border-b border-border">
+                      <p className="text-xs font-semibold text-foreground">GitHub account</p>
+                      <p className="text-[10px] uppercase tracking-widest text-teal-700 dark:text-teal-300 truncate">
                         {githubLogin ? `@${githubLogin}` : "Connected"}
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={handleChangeGithubAccount}
-                      className="mt-2 w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-white/80 hover:bg-teal-500/10 hover:text-teal-200 transition-colors"
+                      className="mt-2 w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-foreground/80 hover:bg-teal-500/10 hover:text-teal-800 dark:hover:text-teal-200 transition-colors"
                     >
                       Change account
                     </button>
                     <button
                       type="button"
                       onClick={handleRefreshGithubStatus}
-                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                     >
                       Check status
                     </button>
                     <button
                       type="button"
                       onClick={handleDisconnectGithub}
-                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-red-300/80 hover:bg-red-500/10 hover:text-red-200 transition-colors"
+                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-semibold text-red-700 dark:text-red-300/80 hover:bg-red-500/10 hover:text-red-800 dark:hover:text-red-200 transition-colors"
                     >
                       Disconnect account
                     </button>
@@ -274,8 +275,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 onClick={handleGithubStatusClick}
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl border transition-all group
                   ${githubLinked
-                    ? "border-teal-500/20 bg-teal-500/10 text-teal-200 hover:bg-teal-500/15"
-                    : "border-amber-500/20 bg-amber-500/10 text-amber-200 hover:bg-amber-500/15"
+                    ? "border-teal-500/20 bg-teal-500/10 text-teal-800 dark:text-teal-200 hover:bg-teal-500/15"
+                    : "border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-200 hover:bg-amber-500/15"
                   }
                 `}
                 title={
@@ -289,7 +290,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <span className="block text-sm font-semibold leading-tight">
                     {githubLinked ? "GitHub connected" : "Connect GitHub"}
                   </span>
-                  <span className="block truncate text-[10px] uppercase tracking-widest text-white/45 pt-0.5">
+                  <span className="block truncate text-[10px] uppercase tracking-widest text-subtle-foreground pt-0.5">
                     {githubLinked
                       ? githubLogin
                         ? `@${githubLogin}`
@@ -298,20 +299,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   </span>
                 </span>
                 {githubLinked ? (
-                  <CheckCircle2 className={`w-4 h-4 text-teal-300 ${!sidebarOpen && "lg:hidden"}`} />
+                  <CheckCircle2 className={`w-4 h-4 text-teal-700 dark:text-teal-300 ${!sidebarOpen && "lg:hidden"}`} />
                 ) : (
-                  <AlertCircle className={`w-4 h-4 text-amber-300 ${!sidebarOpen && "lg:hidden"}`} />
+                  <AlertCircle className={`w-4 h-4 text-amber-700 dark:text-amber-300 ${!sidebarOpen && "lg:hidden"}`} />
                 )}
               </button>
             </div>
           )}
-          <Link href="/settings" className={`flex items-center gap-3 px-3 py-3 rounded-xl text-white/50 hover:bg-[#334155]/30 hover:text-white transition-all group`}>
+          <Link href="/settings" className={`flex items-center gap-3 px-3 py-3 rounded-xl text-muted-foreground hover:bg-surface-3 hover:text-foreground transition-all group`}>
             <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
             <span className={`font-medium text-sm whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>Settings</span>
           </Link>
           <button
             onClick={async () => { await logout(); router.push("/login"); }}
-            className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-white/50 hover:bg-red-500/10 hover:text-red-400 transition-all group`}
+            className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-muted-foreground hover:bg-red-500/10 hover:text-red-700 dark:hover:text-red-400 transition-all group`}
           >
             <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
             <span className={`font-medium text-sm whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>Logout</span>
@@ -324,29 +325,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* HEADER */}
         <header className={`h-16 flex items-center justify-between px-4 lg:px-8 border-b border-transparent transition-all duration-300 z-30
-          ${scrolled ? "bg-[#0F172A]/80 backdrop-blur-md border-white/10 shadow-lg" : "bg-transparent"}
+          ${scrolled ? "bg-background/80 backdrop-blur-md border-border shadow-raised" : "bg-transparent"}
         `}>
           <div className="flex items-center gap-4">
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 -ml-2 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-colors">
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 -ml-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
               <Menu className="w-5 h-5" />
             </button>
-            <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-full focus-within:border-teal-500/50 focus-within:shadow-[0_0_15px_rgba(13,148,136,0.2)] transition-all">
-              <Search className="w-4 h-4 text-white/40" />
+            <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-muted border border-border rounded-full focus-within:border-teal-500/50 transition-all">
+              <Search className="w-4 h-4 text-subtle-foreground" />
               <input
                 type="text"
                 placeholder="Search..."
-                className="bg-transparent border-none outline-none text-sm text-white placeholder:text-white/40 w-48 focus:w-64 transition-all duration-300"
+                className="bg-transparent border-none outline-none text-sm text-foreground placeholder:text-subtle-foreground w-48 focus:w-64 transition-all duration-300"
               />
             </div>
           </div>
 
           <div className="flex items-center gap-3 md:gap-5">
-            <button className="relative p-2 rounded-full text-white/60 hover:text-teal-400 hover:bg-white/5 transition-all">
+            <button className="relative p-2 rounded-full text-muted-foreground hover:text-teal-700 dark:hover:text-teal-400 hover:bg-muted transition-all">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#B45309] shadow-[0_0_8px_rgba(180,83,9,0.8)] animate-pulse" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#B45309] animate-pulse" />
             </button>
 
-            <div className="h-6 w-px bg-white/10" />
+            <div className="h-6 w-px bg-surface-3" />
 
             <div className="relative">
               <div
@@ -354,10 +355,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 onClick={() => setProfileOpen(!profileOpen)}
               >
                 <div className="hidden md:block text-right">
-                  <p className="text-sm font-bold text-white group-hover:text-teal-200 transition-colors">{user?.name || "User"}</p>
-                  <p className="text-[10px] text-teal-400 uppercase tracking-widest font-semibold pb-0.5">{user?.role || "Student"}</p>
+                  <p className="text-sm font-bold text-foreground group-hover:text-teal-800 dark:group-hover:text-teal-200 transition-colors">{user?.name || "User"}</p>
+                  <p className="text-[10px] text-teal-700 dark:text-teal-400 uppercase tracking-widest font-semibold pb-0.5">{user?.role || "Student"}</p>
                 </div>
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-teal-800 border-2 border-[#0F172A] shadow-[0_0_0_1px_rgba(255,255,255,0.1)] flex items-center justify-center font-bold relative overflow-hidden transition-transform group-hover:scale-105">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-teal-800 border-2 border-background flex items-center justify-center font-bold relative overflow-hidden transition-transform ">
                   {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                 </div>
               </div>
@@ -366,12 +367,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               {profileOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)} />
-                  <div className="absolute right-0 top-full mt-3 w-48 bg-[#1e293b] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 animate-slide-up origin-top-right">
+                  <div className="absolute right-0 top-full mt-3 w-48 bg-card border border-border rounded-2xl shadow-overlay overflow-hidden z-50 animate-slide-up origin-top-right">
                     <div className="p-2 space-y-1">
                       <Link
                         href="/profile"
                         onClick={() => setProfileOpen(false)}
-                        className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium text-white/80 hover:text-teal-400 hover:bg-teal-500/10 rounded-xl transition-colors"
+                        className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium text-foreground/80 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-teal-500/10 rounded-xl transition-colors"
                       >
                         <User className="w-4 h-4" /> Profile
                       </Link>
@@ -394,22 +395,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </header>
 
         {/* PAGE CONTENT */}
-        <main className="flex-1 overflow-y-auto scrollbar-hide relative bg-[#0F172A]">
+        <main className="flex-1 overflow-y-auto scrollbar-hide relative bg-background">
+          <InteractiveBackground />
           {/* Subtle background glow for all pages */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-teal-600/5 rounded-full blur-[120px] pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-600/5 rounded-full blur-[100px] pointer-events-none" />
 
-          <div className="p-4 md:p-8 max-w-7xl mx-auto w-full relative z-10 animate-slide-up pb-24">
+          <div className="p-4 md:p-8 2xl:p-12 max-w-7xl 2xl:max-w-[1600px] min-[1920px]:max-w-[1800px] mx-auto w-full relative z-10 animate-slide-up pb-24">
             {children}
           </div>
 
           {/* FOOTER */}
-          <footer className="w-full text-center py-6 border-t border-white/5 text-xs text-white/30 z-10 relative">
+          <footer className="w-full text-center py-6 border-t border-border text-xs text-subtle-foreground z-10 relative">
             <p className="mb-2">MENTORA – AI-Powered Personalized Learning</p>
             <div className="flex justify-center gap-4">
-              <a href="#" className="hover:text-teal-400 transition-colors">Help</a>
-              <a href="#" className="hover:text-teal-400 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-teal-400 transition-colors">Contact</a>
+              <a href="#" className="hover:text-teal-700 dark:hover:text-teal-400 transition-colors">Help</a>
+              <a href="#" className="hover:text-teal-700 dark:hover:text-teal-400 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-teal-700 dark:hover:text-teal-400 transition-colors">Contact</a>
             </div>
           </footer>
         </main>

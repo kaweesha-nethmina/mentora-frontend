@@ -6,9 +6,9 @@ import { Loader2 } from "lucide-react";
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
   loading: () => (
-    <div className="flex items-center justify-center h-full bg-[#0F172A]">
-      <Loader2 className="w-5 h-5 text-teal-400 animate-spin" />
-      <span className="ml-2 text-sm text-white/40">Loading editor...</span>
+    <div className="flex items-center justify-center h-full bg-background">
+      <Loader2 className="w-5 h-5 text-teal-700 dark:text-teal-400 animate-spin" />
+      <span className="ml-2 text-sm text-subtle-foreground">Loading editor...</span>
     </div>
   ),
 });
@@ -29,7 +29,7 @@ export default function SandboxCodeEditor({
   readOnly = false,
 }: SandboxCodeEditorProps) {
   return (
-    <div className="rounded-xl border border-white/10 overflow-hidden bg-[#0F172A]">
+    <div className="rounded-xl border border-border overflow-hidden bg-background">
       <MonacoEditor
         height={height}
         language={language}
@@ -47,11 +47,11 @@ export default function SandboxCodeEditor({
               { token: "number", foreground: "fbbf24" },
             ],
             colors: {
-              "editor.background": "#0F172A",
+              "editor.background": "var(--background)",
               "editor.lineHighlightBackground": "#1e293b80",
               "editorLineNumber.foreground": "#475569",
               "editorLineNumber.activeForeground": "#94a3b8",
-              "editorCursor.foreground": "#2dd4bf",
+              "editorCursor.foreground": "#34c98a",
               "editor.selectionBackground": "#0d948840",
             },
           });

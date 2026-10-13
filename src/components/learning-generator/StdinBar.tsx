@@ -18,9 +18,9 @@ export default function StdinBar({ stdinInput, onInputChange, onClear }: StdinBa
         value={stdinInput}
         onChange={(e) => onInputChange(e.target.value)}
         placeholder="Enter input for Scanner (press Enter for newlines)..."
-        className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white outline-none font-mono placeholder:text-slate-400 dark:placeholder:text-white/40"
+        className="flex-1 bg-transparent text-xs text-foreground outline-none font-mono placeholder:text-subtle-foreground"
       />
-      <button onClick={onClear} className="text-slate-400 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-200 text-xs">Clear</button>
+      <button onClick={onClear} className="text-subtle-foreground hover:text-muted-foreground text-xs">Clear</button>
     </div>
   );
 }

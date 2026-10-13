@@ -50,7 +50,7 @@ export default function ContentRenderer({
           <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
             {currentStepId === "debug" ? <ShieldAlert className="w-5 h-5 text-red-500 dark:text-red-400" /> : <Brain className="w-5 h-5 text-teal-600 dark:text-teal-400" />}
           </div>
-          <h1 className="text-2xl font-black text-[var(--lmg-text-primary)]">{title || (currentStepId ? getStepTitle(currentStepId, sm) : '')}</h1>
+          <h1 className="text-2xl font-extrabold text-[var(--lmg-text-primary)]">{title || (currentStepId ? getStepTitle(currentStepId, sm) : '')}</h1>
         </div>
 
         <div className="prose prose-teal max-w-none">
@@ -86,7 +86,7 @@ export default function ContentRenderer({
               {sm.syntax_reference && (
                 <>
                   <h3 className="text-teal-600 dark:text-teal-400 font-bold mt-8 mb-4">Syntax Reference</h3>
-                  <pre className="p-4 bg-slate-50 dark:bg-[#0b1021] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-teal-200 font-mono text-sm shadow-xs">
+                  <pre className="p-4 bg-sunken border border-border rounded-xl text-slate-900 dark:text-teal-200 font-mono text-sm shadow-xs">
                     {sm.syntax_reference.basic_syntax}
                   </pre>
                   {sm.syntax_reference.syntax_breakdown && sm.syntax_reference.syntax_breakdown.length > 0 && (
@@ -139,7 +139,7 @@ export default function ContentRenderer({
                  >
                    {copiedCode ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Code2 className="w-3.5 h-3.5 text-[var(--lmg-text-muted)]" />}
                  </button>
-                 <pre className="p-4 bg-slate-50 dark:bg-[#0b1021] border border-slate-200 dark:border-white/10 rounded-xl font-mono text-sm text-slate-900 dark:text-teal-200 whitespace-pre-wrap wrap-break-word leading-relaxed overflow-x-auto shadow-xs">
+                 <pre className="p-4 bg-sunken border border-border rounded-xl font-mono text-sm text-slate-900 dark:text-teal-200 whitespace-pre-wrap wrap-break-word leading-relaxed overflow-x-auto shadow-xs">
                    {lesson.examples?.example_1.code}
                  </pre>
               </div>
@@ -160,14 +160,14 @@ export default function ContentRenderer({
                       <div className="p-4 bg-red-950/20 dark:bg-red-950/40 rounded-xl border border-red-500/20 font-mono text-xs">
                         <div className="flex items-center gap-2 mb-2">
                           <XCircle className="w-3.5 h-3.5 text-red-500" />
-                          <span className="text-[10px] uppercase text-red-500 font-black tracking-widest">Bad Pattern</span>
+                          <span className="text-[10px] uppercase text-red-500 font-extrabold tracking-widest">Bad Pattern</span>
                         </div>
                         <code className="text-red-700 dark:text-red-200/80 whitespace-pre-wrap wrap-break-word leading-relaxed block">{mistake.bad_code}</code>
                       </div>
                       <div className="p-4 bg-teal-950/20 dark:bg-teal-900/40 rounded-xl border border-teal-500/20 font-mono text-xs">
                         <div className="flex items-center gap-2 mb-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-teal-500 dark:text-teal-400" />
-                          <span className="text-[10px] uppercase text-teal-600 dark:text-teal-400 font-black tracking-widest">Correct Pattern</span>
+                          <span className="text-[10px] uppercase text-teal-600 dark:text-teal-400 font-extrabold tracking-widest">Correct Pattern</span>
                         </div>
                         <code className="text-teal-800 dark:text-teal-100/90 whitespace-pre-wrap wrap-break-word leading-relaxed block">{mistake.good_code}</code>
                       </div>
@@ -221,7 +221,7 @@ export default function ContentRenderer({
             disabled={insightType !== null}
             className={`px-4 py-2 border text-sm font-bold rounded-xl flex items-center gap-2 transition-all disabled:cursor-wait cursor-pointer shadow-xs ${
               insightActiveTab === "simpler"
-                ? "bg-teal-500/25 border-teal-500 text-teal-800 dark:text-teal-200 shadow-[0_0_15px_rgba(13,148,136,0.2)]"
+                ? "bg-teal-500/25 border-teal-500 text-teal-800 dark:text-teal-200 "
                 : "bg-teal-500/10 border-teal-500/30 text-teal-700 dark:text-teal-300 hover:bg-teal-500/20"
             }`}
           >
@@ -232,7 +232,7 @@ export default function ContentRenderer({
             disabled={insightType !== null}
             className={`px-4 py-2 border text-sm font-bold rounded-xl flex items-center gap-2 transition-all disabled:cursor-wait cursor-pointer shadow-xs ${
               insightActiveTab === "analogy"
-                ? "bg-amber-500/25 border-amber-500 text-amber-800 dark:text-amber-200 shadow-[0_0_15px_rgba(180,83,9,0.2)]"
+                ? "bg-amber-500/25 border-amber-500 text-amber-800 dark:text-amber-200 "
                 : "bg-[var(--lmg-bg-surface)] border-[var(--lmg-border)] text-[var(--lmg-text-secondary)] hover:bg-[var(--lmg-bg-surface-hover)]"
             }`}
           >

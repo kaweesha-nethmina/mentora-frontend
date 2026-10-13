@@ -65,16 +65,16 @@ export default function PeerLearningHome() {
       <div>
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
-            <Users className="w-5 h-5 text-teal-400" />
+            <Users className="w-5 h-5 text-teal-700 dark:text-teal-400" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-black text-white flex items-center gap-2">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-foreground flex items-center gap-2">
               Collaborative Peer Learning
-              <Sparkles className="w-5 h-5 text-amber-400" />
+              <Sparkles className="w-5 h-5 text-amber-700 dark:text-amber-400" />
             </h1>
           </div>
         </div>
-        <p className="text-sm text-white/50 mt-2 max-w-2xl leading-relaxed">
+        <p className="text-sm text-muted-foreground mt-2 max-w-2xl leading-relaxed">
           Our system analyzes your learning profile and finds the most suitable peer who can help with
           your current knowledge gap. Learn together through collaborative coding and guided discussions.
         </p>
@@ -86,7 +86,7 @@ export default function PeerLearningHome() {
       {/* Two-column layout: Workflow + Peer Matching */}
       <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)] gap-6">
         {/* Agent Workflow */}
-        <div className="rounded-2xl border border-white/10 bg-[#1e293b]/55 p-6">
+        <div className="rounded-2xl border border-border bg-card/55 p-6">
           <AgentWorkflow currentStage={currentStage} />
         </div>
 
@@ -129,20 +129,20 @@ export default function PeerLearningHome() {
       {/* Individual Verification Quiz */}
       <button
         onClick={() => router.push('/peer-learning/quiz')}
-        className="w-full group rounded-2xl border border-teal-500/20 bg-gradient-to-br from-[#1e293b]/80 to-teal-500/[0.04] p-6 flex items-center justify-between gap-4 transition-all hover:border-teal-500/40 hover:shadow-[0_0_30px_rgba(20,184,166,0.15)]"
+        className="w-full group rounded-2xl border border-teal-500/20 bg-gradient-to-br from-card/80 to-teal-500/[0.04] p-6 flex items-center justify-between gap-4 transition-all hover:border-teal-500/40 "
       >
         <div className="flex items-center gap-4">
           <div className="w-11 h-11 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
-            <ListChecks className="w-5 h-5 text-teal-400" />
+            <ListChecks className="w-5 h-5 text-teal-700 dark:text-teal-400" />
           </div>
           <div className="text-left">
-            <h3 className="text-lg font-black text-white">Verify Your Mastery</h3>
-            <p className="text-sm text-white/50">
+            <h3 className="text-lg font-extrabold text-foreground">Verify Your Mastery</h3>
+            <p className="text-sm text-muted-foreground">
               Take a 7-question code-based quiz targeting your knowledge gap, receive instant feedback, and get your mastery score.
             </p>
           </div>
         </div>
-        <ArrowRight className="w-5 h-5 text-teal-400 group-hover:translate-x-1 transition-transform shrink-0" />
+        <ArrowRight className="w-5 h-5 text-teal-700 dark:text-teal-400 group-hover:translate-x-1 transition-transform shrink-0" />
       </button>
     </div>
   );

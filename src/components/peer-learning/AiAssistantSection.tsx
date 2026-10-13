@@ -26,7 +26,7 @@ function RobotAvatar() {
         />
       </div>
       {/* Pulse dot */}
-      <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#1e293b]">
+      <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-border">
         <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-40" />
       </div>
     </div>
@@ -54,7 +54,7 @@ export default function AiAssistantSection({ analysis, user, onStartSession }: A
   };
 
   return (
-    <div className="rounded-2xl border border-amber-500/15 bg-gradient-to-br from-[#1e293b]/80 to-amber-500/[0.03] p-5">
+    <div className="rounded-2xl border border-amber-500/15 bg-gradient-to-br from-card/80 to-amber-500/[0.03] p-5">
       <div className="flex flex-col items-center text-center gap-3">
         {/* Robot Avatar */}
         <RobotAvatar />
@@ -62,16 +62,16 @@ export default function AiAssistantSection({ analysis, user, onStartSession }: A
         {/* Content */}
         <div className="w-full min-w-0">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <h3 className="text-xl font-black text-white">Java AI Assistant Teacher</h3>
+            <h3 className="text-xl font-extrabold text-foreground">Java AI Assistant Teacher</h3>
           </div>
-          <p className="text-sm text-white/55 leading-relaxed max-w-xl mx-auto mb-4">
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-xl mx-auto mb-4">
             When no suitable peer is available, the AI teacher can help you understand your Java knowledge gap with guided explanations and practice.
           </p>
 
           {/* CTA Button */}
           <button
             onClick={handleConnect}
-            className="w-full max-w-xl py-3.5 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.25)] flex items-center justify-center gap-2 text-base"
+            className="w-full max-w-xl py-3.5 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-base"
           >
             Connect with AI Assistant Teacher
             <ArrowRight className="w-4 h-4" />

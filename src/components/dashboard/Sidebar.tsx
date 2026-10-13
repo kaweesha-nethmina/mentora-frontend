@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   X, Settings, LogOut,
   LayoutDashboard, Brain, BookOpen, Target, Users, TrendingUp, ChevronDown, PanelLeftClose, PanelLeftOpen
@@ -11,10 +12,14 @@ import MentoraLogo from "@/components/auth/MentoraLogo";
 import { useAuth } from "@/contexts/AuthContext";
 import GitHubStatusControl from "@/components/dashboard/GitHubStatusControl";
 import { useActiveReview } from "@/contexts/ActiveReviewContext";
+import { learningGeneratorApi } from "@/lib/api/learningGenerator";
+import { getGapCounts } from "@/components/learning-generator/GapFilters";
 
 type NavSubItem = {
   name: string;
   href: string;
+  badge?: string | number;
+  hasDot?: boolean;
 };
 
 type NavItem = {
@@ -41,24 +46,23 @@ const navItems: NavItem[] = [
     name: "Material Generator",
     icon: BookOpen,
     subItems: [
-      { name: "Overview", href: "/learning-generator" },
+      { name: "Overview", href: "/learning-generator", hasDot: true },
       { name: "Knowledge Gaps", href: "/learning-generator/knowledge-gaps" },
-      { name: "Materials", href: "/learning-generator/materials" },
-      { name: "Learn Code", href: "/learning-generator/workspace" },
+      { name: "Generated Materials", href: "/learning-generator/materials" },
+      { name: "Learn Code Sandbox", href: "/learning-generator/workspace" },
     ],
   },
   {
-    name: "Assessment",
+    name: "Assessments",
     icon: Target,
     subItems: [
       { name: "Overview", href: "/assessment" },
       { name: "Questions & Answers", href: "/assessment/questions-answers" },
       { name: "Report", href: "/assessment/report" },
-     // { name: "Suggested Resources", href: "/assessment/resources" },
     ],
   },
   { name: "Peer Learning", href: "/peer-learning", icon: Users },
-  { name: "Progress", href: "/progress", icon: TrendingUp },
+  { name: "Progress Analytics", href: "/progress", icon: TrendingUp },
 ];
 
 const exactSubItemHrefs = new Set(["/knowledge-assist", "/learning-generator"]);
@@ -74,8 +78,24 @@ interface SidebarProps {
 export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, setExpandedMenu, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { isReviewRunning, sandboxHref } = useActiveReview();
+  const [gapCount, setGapCount] = useState<number>(0);
+
+  useEffect(() => {
+    if (!user?.student_id) return;
+    let cancelled = false;
+    learningGeneratorApi
+      .getProfile(user.student_id)
+      .then((res) => {
+        if (cancelled || !res?.success) return;
+        setGapCount(getGapCounts(res.data as any).ALL);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.student_id]);
 
   const isActive = (item: NavItem) => {
     if (item.href) return pathname === item.href;
@@ -89,20 +109,30 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
     return pathname === href || pathname.startsWith(href + "/");
   };
 
+  const itemBase =
+    "relative flex w-full items-center gap-3 2xl:gap-3.5 rounded-lg 2xl:rounded-xl px-3 py-2.5 2xl:px-4 2xl:py-3 text-sm 2xl:text-base transition-colors duration-150";
+  const itemIdle =
+    "text-sidebar-foreground hover:bg-muted hover:text-foreground";
+  const itemActive =
+    "bg-sidebar-accent text-sidebar-accent-foreground font-semibold";
+  const itemGuided =
+    "bg-info-soft text-info font-semibold ring-1 ring-info/40";
+
   return (
     <aside
-      className={`fixed lg:static inset-y-0 left-0 z-40 bg-white dark:bg-[#0B1121] border-r border-slate-200 dark:border-white/5 transition-all duration-300 ease-in-out flex flex-col ${
-        sidebarOpen ? "w-64 translate-x-0" : "w-0 -translate-x-full lg:w-20 lg:translate-x-0"
+      className={`fixed lg:static inset-y-0 left-0 z-40 bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out flex flex-col overflow-x-hidden ${
+        sidebarOpen ? "w-64 2xl:w-72 translate-x-0" : "w-64 -translate-x-full invisible lg:visible lg:w-[76px] 2xl:lg:w-[84px] lg:translate-x-0"
       }`}
     >
-      <div className="h-16 flex items-center justify-between px-2 border-b border-slate-200 dark:border-white/5 shrink-0">
+      <div className={`h-16 2xl:h-20 flex items-center shrink-0 border-b border-sidebar-border ${sidebarOpen ? "justify-between px-4 2xl:px-6" : "justify-center px-2"}`}>
         <div className={`overflow-hidden transition-all ${!sidebarOpen && "lg:hidden"}`}>
           <MentoraLogo size="sm" />
         </div>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className={`p-2 rounded-lg text-slate-400 dark:text-white/40 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all shrink-0 ${!sidebarOpen && "lg:mx-auto"}`}
+          className="hidden lg:inline-flex p-2 rounded-lg text-subtle-foreground hover:text-foreground hover:bg-muted transition-colors shrink-0"
           title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+          aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
           <div className="relative w-5 h-5">
             <PanelLeftClose
@@ -113,17 +143,17 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
             />
           </div>
         </button>
-        <button onClick={onMobileClose} className="lg:hidden text-slate-400 dark:text-white/50 hover:text-slate-700 dark:hover:text-white">
+        <button onClick={onMobileClose} className="lg:hidden p-2 rounded-lg text-subtle-foreground hover:text-foreground hover:bg-muted" aria-label="Close menu">
           <X className="w-5 h-5" />
         </button>
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1.5 scrollbar-hide">
+      <nav className="flex-1 overflow-y-auto py-5 px-3 space-y-1 scrollbar-hide" aria-label="Main navigation">
         {navItems.map((item) => {
           const active = isActive(item);
 
           if (item.subItems) {
-            const isExpanded = expandedMenu === item.name;
+            const isExpanded = expandedMenu === item.name || (item.name === "Assessments" && expandedMenu === "Assessment");
             const reviewGuided = isReviewRunning && item.name === "Knowledge Assist";
             const defaultHref = reviewGuided
               ? sandboxHref(undefined, "sidebar-active-review")
@@ -131,7 +161,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
             const isInGroup = item.subItems.some((subItem) => isSubActive(subItem.href));
 
             return (
-              <div key={item.name} className="space-y-1">
+              <div key={item.name} className="space-y-0.5">
                 <button
                   type="button"
                   onClick={() => {
@@ -148,42 +178,37 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
                       onMobileClose();
                     } else if (!isInGroup && defaultHref) {
                       router.push(defaultHref);
-
                     }
                     setExpandedMenu(isExpanded ? null : item.name);
                   }}
-                  className={`relative flex items-center gap-3 px-3 py-3 rounded-xl border transition-all duration-300
-                    ${reviewGuided
-                      ? "scale-[1.03] border-cyan-300/35 bg-cyan-400/15 text-cyan-100 shadow-[0_0_26px_rgba(34,211,238,0.28)]"
-                      : active
-                      ? "border-teal-500/20 bg-teal-50 dark:bg-teal-500/10 text-teal-700 dark:text-teal-400 shadow-sm dark:shadow-[inset_0_0_20px_rgba(13,148,136,0.1)]"
-                      : "border-transparent text-slate-600 dark:text-white/60 hover:bg-slate-100 dark:hover:bg-[#334155]/30 hover:text-teal-700 dark:hover:text-teal-200"
-                    }
+                  aria-expanded={isExpanded}
+                  className={`${itemBase} ${!sidebarOpen ? "lg:justify-center" : ""}
+                    ${reviewGuided ? itemGuided : active ? itemActive : itemIdle}
                   `}
                   title={!sidebarOpen ? (reviewGuided ? "Review running - open Sandbox" : item.name) : undefined}
                 >
                   {(active || reviewGuided) && (
-                    <div
-                      className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full ${
-                        reviewGuided
-                          ? "bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.9)]"
-                          : "bg-teal-500 shadow-[0_0_10px_rgba(13,148,136,0.8)]"
+                    <span
+                      aria-hidden
+                      className={`absolute -left-3 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full ${
+                        reviewGuided ? "bg-info" : "bg-brand"
                       }`}
                     />
                   )}
-                  <item.icon className={`w-5 h-5 shrink-0 transition-transform duration-300 ${reviewGuided ? "scale-125 animate-pulse" : ""}`} />
-                  <span className={`font-semibold text-sm whitespace-nowrap transition-opacity duration-300 flex-1 ${!sidebarOpen && "lg:opacity-0 lg:hidden"}`}>
+                  <item.icon className={`w-[18px] h-[18px] shrink-0 ${active ? "text-brand" : ""} ${reviewGuided ? "animate-pulse" : ""}`} />
+                  <span className={`whitespace-nowrap flex-1 text-left ${!sidebarOpen && "lg:hidden"}`}>
                     {item.name}
                   </span>
                   {!sidebarOpen ? null : (
-                    <ChevronDown className={`w-3.5 h-3.5 shrink-0 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`w-4 h-4 shrink-0 text-subtle-foreground transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
                   )}
                 </button>
 
-                <div className={`${!isExpanded || !sidebarOpen ? "hidden" : ""} pl-6 space-y-1`}>
+                <div className={`${!isExpanded || !sidebarOpen ? "hidden" : ""} ml-[21px] border-l border-sidebar-border pl-3 py-1 space-y-0.5`}>
                   {item.subItems.map((subItem) => {
                     const sandboxGuided =
                       isReviewRunning && subItem.href === "/knowledge-assist/sandbox";
+                    const subActive = isSubActive(subItem.href);
                     return (
                       <Link
                         key={subItem.href}
@@ -192,16 +217,33 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
                             ? sandboxHref(undefined, "sidebar-active-review")
                             : subItem.href
                         }
-                        className={`block px-3 py-2 rounded-lg text-sm transition-all
+                        aria-current={subActive ? "page" : undefined}
+                        className={`relative flex items-center justify-between rounded-md px-3 py-2 text-[13px] transition-colors
                           ${sandboxGuided
-                            ? "bg-cyan-400/15 text-cyan-100 ring-1 ring-cyan-300/30 shadow-[0_0_18px_rgba(34,211,238,0.22)]"
-                            : isSubActive(subItem.href)
-                            ? "bg-teal-50 dark:bg-teal-500/10 text-teal-700 dark:text-teal-300 font-medium"
-                            : "text-slate-500 dark:text-white/50 hover:text-teal-700 dark:hover:text-teal-200 hover:bg-slate-100 dark:hover:bg-[#334155]/30"
+                            ? "bg-info-soft text-info font-semibold ring-1 ring-info/40"
+                            : subActive
+                            ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
                           }
                         `}
                       >
-                        {subItem.name}
+                        {subActive && !sandboxGuided && (
+                          <span aria-hidden className="absolute -left-[13px] top-1/2 -translate-y-1/2 h-4 w-0.5 rounded-full bg-brand" />
+                        )}
+                        <span className="truncate">{subItem.name}</span>
+                        {subItem.badge !== undefined && (
+                          <span className="ml-2 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-muted text-muted-foreground">
+                            {subItem.badge}
+                          </span>
+                        )}
+                        {subItem.href === "/learning-generator/knowledge-gaps" && gapCount > 0 && (
+                          <span className="ml-2 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-muted text-muted-foreground">
+                            {gapCount}
+                          </span>
+                        )}
+                        {subActive && subItem.hasDot && (
+                          <span className="ml-2 w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
+                        )}
                       </Link>
                     );
                   })}
@@ -214,19 +256,17 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
             <Link
               key={item.href}
               href={item.href!}
-              className={`relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 group
-                ${active
-                  ? "bg-teal-50 dark:bg-teal-500/10 text-teal-700 dark:text-teal-400 shadow-sm dark:shadow-[inset_0_0_20px_rgba(13,148,136,0.1)]"
-                  : "text-slate-600 dark:text-white/60 hover:bg-slate-100 dark:hover:bg-[#334155]/30 hover:text-teal-700 dark:hover:text-teal-200"
-                }
+              aria-current={active ? "page" : undefined}
+              className={`${itemBase} group ${!sidebarOpen ? "lg:justify-center" : ""}
+                ${active ? itemActive : itemIdle}
               `}
               title={!sidebarOpen ? item.name : undefined}
             >
               {active && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full shadow-[0_0_10px_rgba(13,148,136,0.8)]" />
+                <span aria-hidden className="absolute -left-3 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-brand" />
               )}
-              <item.icon className={`w-5 h-5 shrink-0 transition-transform duration-300 ${active ? "scale-110" : "group-hover:scale-110"}`} />
-              <span className={`font-semibold text-sm whitespace-nowrap transition-opacity duration-300 ${!sidebarOpen && "lg:opacity-0 lg:hidden"}`}>
+              <item.icon className={`w-[18px] h-[18px] shrink-0 ${active ? "text-brand" : ""}`} />
+              <span className={`whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>
                 {item.name}
               </span>
             </Link>
@@ -234,18 +274,23 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, expandedMenu, set
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-200 dark:border-white/5 space-y-1.5 shrink-0">
+      <div className="p-3 border-t border-sidebar-border space-y-1 shrink-0">
         <GitHubStatusControl sidebarOpen={sidebarOpen} />
-        <Link href="/settings" className={`flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-white/50 hover:bg-slate-100 dark:hover:bg-[#334155]/30 hover:text-slate-900 dark:hover:text-white transition-all group`}>
-          <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
-          <span className={`font-medium text-sm whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>Settings</span>
+        <Link
+          href="/settings"
+          className={`${itemBase} ${itemIdle} group ${!sidebarOpen ? "lg:justify-center" : ""} ${pathname === "/settings" ? "!bg-sidebar-accent !text-sidebar-accent-foreground font-semibold" : ""}`}
+          title={!sidebarOpen ? "Settings" : undefined}
+        >
+          <Settings className="w-[18px] h-[18px] shrink-0 transition-transform duration-300 group-hover:rotate-45" />
+          <span className={`whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>Settings</span>
         </Link>
         <button
           onClick={async () => { await logout(); router.push("/login"); }}
-          className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-slate-500 dark:text-white/50 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 transition-all group`}
+          className={`${itemBase} text-sidebar-foreground hover:bg-danger-soft hover:text-danger group ${!sidebarOpen ? "lg:justify-center" : ""}`}
+          title={!sidebarOpen ? "Log out" : undefined}
         >
-          <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className={`font-medium text-sm whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>Logout</span>
+          <LogOut className="w-[18px] h-[18px] shrink-0" />
+          <span className={`whitespace-nowrap ${!sidebarOpen && "lg:hidden"}`}>Log out</span>
         </button>
       </div>
     </aside>

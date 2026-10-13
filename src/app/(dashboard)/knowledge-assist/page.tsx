@@ -29,7 +29,7 @@ const statusTone = {
   done: "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-200",
   partial: "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-200",
   failed: "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-200",
-  queued: "border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-white/45",
+  queued: "border-border bg-muted text-muted-foreground",
   error: "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-200",
 } as const;
 
@@ -90,7 +90,7 @@ export default function KnowledgeAssistPage() {
   if (loading) {
     return (
       <div className="flex min-h-[460px] items-center justify-center">
-        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 px-5 py-4 text-slate-700 dark:text-white/65 shadow-xs">
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card/55 px-5 py-4 text-foreground/80 shadow-xs">
           <CircleDashed className="h-5 w-5 animate-spin text-teal-600 dark:text-cyan-300" />
           Loading knowledge profile...
         </div>
@@ -111,7 +111,7 @@ export default function KnowledgeAssistPage() {
   return (
     <div className="space-y-5 pb-8">
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-linear-to-br from-teal-50/70 via-slate-50 to-white dark:from-[#10241f] dark:via-[#101c2b] dark:to-[#0F172A] p-6 shadow-xs">
+      <section className="relative overflow-hidden rounded-3xl border border-border bg-linear-to-br from-teal-50/70 via-muted to-background dark:from-[#10241f] p-6 shadow-xs">
         <div className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full bg-teal-500/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl" />
         <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -120,10 +120,10 @@ export default function KnowledgeAssistPage() {
               <Sparkles className="h-3.5 w-3.5" />
               Knowledge Profile
             </span>
-            <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-900 dark:text-white md:text-4xl">
+            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
               Your learning evidence
             </h1>
-            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-white/60">
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
               Quiz performance, GitHub reviews, and Sandbox attempts — synthesised into one
               profile your AI tutor reads to explain progress, weaknesses, and what to practice next.
             </p>
@@ -191,9 +191,9 @@ export default function KnowledgeAssistPage() {
             <p className="text-xs font-bold uppercase tracking-wider text-teal-700 dark:text-teal-200">
               Latest Java signal
             </p>
-            <p className="mt-0.5 text-lg font-black text-slate-900 dark:text-white">{review.latest_java_level}</p>
+            <p className="mt-0.5 text-lg font-extrabold text-foreground">{review.latest_java_level}</p>
             {review.latest_evidence && (
-              <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-white/60">{review.latest_evidence}</p>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">{review.latest_evidence}</p>
             )}
           </div>
         </section>
@@ -205,7 +205,7 @@ export default function KnowledgeAssistPage() {
         <section className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)]">
           {/* LEFT */}
           <div className="space-y-5">
-            <Panel icon={<Brain className="h-4 w-4 text-teal-300" />} title="Quiz performance"
+            <Panel icon={<Brain className="h-4 w-4 text-teal-700 dark:text-teal-300" />} title="Quiz performance"
               badge={quiz?.total_quizzes ? `${quiz.total_quizzes} completed` : undefined}>
               {quizResults.length === 0 ? (
                 <InlineEmpty
@@ -222,7 +222,7 @@ export default function KnowledgeAssistPage() {
               )}
             </Panel>
 
-            <Panel icon={<GitBranch className="h-4 w-4 text-cyan-300" />} title="Repository review evidence">
+            <Panel icon={<GitBranch className="h-4 w-4 text-cyan-700 dark:text-cyan-300" />} title="Repository review evidence">
               {(profile?.latest_reviews.length ?? 0) === 0 ? (
                 <InlineEmpty text="No GitHub reviews are saved yet." />
               ) : (
@@ -234,7 +234,7 @@ export default function KnowledgeAssistPage() {
               )}
             </Panel>
 
-            <Panel icon={<Code2 className="h-4 w-4 text-cyan-300" />} title="Sandbox code evidence">
+            <Panel icon={<Code2 className="h-4 w-4 text-cyan-700 dark:text-cyan-300" />} title="Sandbox code evidence">
               {(profile?.latest_sandbox_attempts.length ?? 0) === 0 ? (
                 <InlineEmpty text="No Sandbox attempts are saved yet." />
               ) : (
@@ -249,11 +249,11 @@ export default function KnowledgeAssistPage() {
 
           {/* RIGHT */}
           <aside className="space-y-5">
-            <Panel icon={<Target className="h-4 w-4 text-teal-300" />} title="Topic mastery">
+            <Panel icon={<Target className="h-4 w-4 text-teal-700 dark:text-teal-300" />} title="Topic mastery">
               <TopicMastery quiz={quiz} sandbox={sandbox} />
             </Panel>
 
-            <Panel icon={<Activity className="h-4 w-4 text-cyan-300" />} title="Evidence timeline">
+            <Panel icon={<Activity className="h-4 w-4 text-cyan-700 dark:text-cyan-300" />} title="Evidence timeline">
               {(profile?.timeline.length ?? 0) === 0 ? (
                 <InlineEmpty text="No evidence events yet." />
               ) : (
@@ -277,7 +277,7 @@ function ScoreRing({ value, size = 132, stroke = 12 }: { value: number; size?: n
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="currentColor" className="text-slate-200 dark:text-white/10" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="currentColor" className="text-subtle-foreground/70" strokeWidth={stroke} />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -291,17 +291,17 @@ function ScoreRing({ value, size = 132, stroke = 12 }: { value: number; size?: n
         />
         <defs>
           <linearGradient id="scoreRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0d9488" />
+            <stop offset="0%" stopColor="#0f8f55" />
             <stop offset="100%" stopColor="#06b6d4" />
           </linearGradient>
         </defs>
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-4xl font-black leading-none text-slate-900 dark:text-white">
+        <span className="text-4xl font-extrabold leading-none text-foreground">
           {Math.round(pct)}
-          <span className="text-lg text-slate-400 dark:text-white/45">%</span>
+          <span className="text-lg text-subtle-foreground">%</span>
         </span>
-        <span className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/40">avg score</span>
+        <span className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">avg score</span>
       </div>
     </div>
   );
@@ -310,7 +310,7 @@ function ScoreRing({ value, size = 132, stroke = 12 }: { value: number; size?: n
 function ScoreHeroCard({ quiz }: { quiz?: KnowledgeProfile["quiz_summary"] }) {
   const hasQuiz = (quiz?.total_quizzes ?? 0) > 0;
   return (
-    <article className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-teal-400/20 bg-white dark:bg-[#1e293b]/55 p-5 shadow-xs">
+    <article className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-teal-400/20 bg-card/55 p-5 shadow-xs">
       <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-teal-500/10 blur-3xl" />
       <div className="relative flex items-center gap-5">
         <ScoreRing value={hasQuiz ? quiz!.avg_score : 0} />
@@ -318,7 +318,7 @@ function ScoreHeroCard({ quiz }: { quiz?: KnowledgeProfile["quiz_summary"] }) {
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">Quiz mastery</p>
           {hasQuiz ? (
             <>
-              <p className="mt-1 text-sm text-slate-600 dark:text-white/70">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {quiz!.questions_correct}/{quiz!.questions_answered} answered correctly
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -331,7 +331,7 @@ function ScoreHeroCard({ quiz }: { quiz?: KnowledgeProfile["quiz_summary"] }) {
               </div>
             </>
           ) : (
-            <p className="mt-1 max-w-[16rem] text-sm leading-6 text-slate-500 dark:text-white/55">
+            <p className="mt-1 max-w-[16rem] text-sm leading-6 text-muted-foreground">
               Complete a Skill Check and your quiz mastery score appears here.
             </p>
           )}
@@ -355,13 +355,13 @@ function StatCard({
   tone: string;
 }) {
   return (
-    <article className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 transition-colors hover:border-teal-500/40 dark:hover:border-white/20 shadow-xs">
+    <article className="rounded-2xl border border-border bg-card/55 p-4 transition-colors hover:border-teal-500/40 dark:hover:border-white/20 shadow-xs">
       <div className={`flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider ${tone}`}>
         {icon}
         {label}
       </div>
-      <p className="mt-3 text-3xl font-black text-slate-900 dark:text-white">{value}</p>
-      <p className="mt-1 text-xs text-slate-500 dark:text-white/40">{helper}</p>
+      <p className="mt-3 text-3xl font-extrabold text-foreground">{value}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{helper}</p>
     </article>
   );
 }
@@ -378,14 +378,14 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
+    <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
+        <h2 className="flex items-center gap-2 text-base font-bold text-foreground">
           {icon}
           {title}
         </h2>
         {badge && (
-          <span className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-2 py-1 text-[11px] font-semibold text-slate-600 dark:text-white/55">
+          <span className="rounded-lg border border-border bg-muted px-2 py-1 text-[11px] font-semibold text-muted-foreground">
             {badge}
           </span>
         )}
@@ -398,11 +398,11 @@ function Panel({
 function QuizResultCard({ result }: { result: QuizResultSummary }) {
   const tone = toneFor(result.score_percent);
   return (
-    <article className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-[#0F172A] p-4">
+    <article className="rounded-xl border border-border bg-background p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-baseline gap-2">
-          <span className={`text-2xl font-black ${tone.text}`}>{pct100(result.score_percent)}</span>
-          <span className="text-sm text-slate-500 dark:text-white/50">{result.correct}/{result.total} correct</span>
+          <span className={`text-2xl font-extrabold ${tone.text}`}>{pct100(result.score_percent)}</span>
+          <span className="text-sm text-muted-foreground">{result.correct}/{result.total} correct</span>
         </div>
         <div className="flex items-center gap-2">
           <span
@@ -412,7 +412,7 @@ function QuizResultCard({ result }: { result: QuizResultSummary }) {
           >
             {result.difficulty_reached}
           </span>
-          <span className="text-[11px] text-slate-400 dark:text-white/35">{formatDateTime(result.completed_at)}</span>
+          <span className="text-[11px] text-subtle-foreground">{formatDateTime(result.completed_at)}</span>
         </div>
       </div>
 
@@ -437,7 +437,7 @@ function QuizResultCard({ result }: { result: QuizResultSummary }) {
             return (
               <span
                 key={tp.topic}
-                className={`rounded-md border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] px-2 py-0.5 text-[11px] ${toneFor(acc).text}`}
+                className={`rounded-md border border-border bg-muted px-2 py-0.5 text-[11px] ${toneFor(acc).text}`}
               >
                 {tp.topic} {tp.correct}/{tp.total}
               </span>
@@ -503,14 +503,14 @@ function MasteryBar({
 }) {
   const tone = toneFor(pct);
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-[#0F172A] p-3">
+    <div className="rounded-xl border border-border bg-background p-3">
       <div className="flex items-center justify-between gap-2 text-sm">
-        <span className="truncate font-semibold text-slate-900 dark:text-white">{label}</span>
-        <span className="shrink-0 text-slate-500 dark:text-white/50">
+        <span className="truncate font-semibold text-foreground">{label}</span>
+        <span className="shrink-0 text-muted-foreground">
           {correct}/{total} · <span className={tone.text}>{Math.round(pct)}%</span>
         </span>
       </div>
-      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-3">
         <div
           className={`h-full rounded-full bg-gradient-to-r ${tone.bar}`}
           style={{ width: `${Math.max(4, Math.min(100, pct))}%` }}
@@ -522,13 +522,13 @@ function MasteryBar({
 
 function ReviewEvidence({ job }: { job: ReviewJob }) {
   return (
-    <article className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-[#0F172A] p-4">
+    <article className="rounded-xl border border-border bg-background p-4">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+          <p className="truncate text-sm font-semibold text-foreground">
             {job.gh_login ? `@${job.gh_login}` : "GitHub review"}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500 dark:text-white/40">
+          <p className="mt-0.5 text-[11px] text-muted-foreground">
             {formatDateTime(job.updated_at ?? job.created_at)}
           </p>
         </div>
@@ -548,15 +548,15 @@ function ReviewEvidence({ job }: { job: ReviewJob }) {
 function RepoLine({ repo }: { repo: ReviewRepoResult }) {
   const findings = repo.review?.errors.length ?? 0;
   return (
-    <div className="rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-3">
+    <div className="rounded-lg border border-border bg-muted p-3">
       <div className="flex items-start justify-between gap-3">
-        <p className="min-w-0 truncate text-sm font-semibold text-slate-900 dark:text-white">{repo.full_name}</p>
+        <p className="min-w-0 truncate text-sm font-semibold text-foreground">{repo.full_name}</p>
         <span className={`shrink-0 rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase ${statusTone[repo.status]}`}>
           {repo.status} · {findings}
         </span>
       </div>
       {repo.review?.summary && (
-        <p className="mt-1.5 line-clamp-3 text-sm leading-6 text-slate-600 dark:text-white/55">{repo.review.summary}</p>
+        <p className="mt-1.5 line-clamp-3 text-sm leading-6 text-muted-foreground">{repo.review.summary}</p>
       )}
       {repo.error && <p className="mt-1.5 text-sm text-red-600 dark:text-red-200">{repo.error}</p>}
     </div>
@@ -565,11 +565,11 @@ function RepoLine({ repo }: { repo: ReviewRepoResult }) {
 
 function SandboxEvidence({ attempt }: { attempt: SandboxAttempt }) {
   return (
-    <article className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-[#0F172A] p-4">
+    <article className="rounded-xl border border-border bg-background p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">{attempt.title}</p>
-          <p className="mt-0.5 text-[11px] text-slate-500 dark:text-white/40">
+          <p className="truncate text-sm font-semibold text-foreground">{attempt.title}</p>
+          <p className="mt-0.5 text-[11px] text-muted-foreground">
             {attempt.topic} · attempt {attempt.attempt_number} · {formatDateTime(attempt.created_at)}
           </p>
         </div>
@@ -583,18 +583,18 @@ function SandboxEvidence({ attempt }: { attempt: SandboxAttempt }) {
           {attempt.passed ? "passed" : "needs fix"}
         </span>
       </div>
-      <pre className="mt-3 max-h-32 overflow-auto rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#050A16] p-3 font-mono text-[11px] leading-5 text-slate-900 dark:text-cyan-50/90">
+      <pre className="mt-3 max-h-32 overflow-auto rounded-lg border border-border bg-card p-3 font-mono text-[11px] leading-5 text-slate-900 dark:text-cyan-50/90">
         {attempt.code?.trim() || "No code captured."}
       </pre>
       <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <div className="rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-2.5">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/35">Output</p>
-          <pre className="mt-1 max-h-20 overflow-auto whitespace-pre-wrap font-mono text-[11px] text-slate-700 dark:text-white/65">
+        <div className="rounded-lg border border-border bg-muted p-2.5">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Output</p>
+          <pre className="mt-1 max-h-20 overflow-auto whitespace-pre-wrap font-mono text-[11px] text-foreground/80">
             {attempt.output?.trim() || "—"}
           </pre>
         </div>
-        <div className="rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-2.5">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white/35">Error</p>
+        <div className="rounded-lg border border-border bg-muted p-2.5">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Error</p>
           <pre className="mt-1 max-h-20 overflow-auto whitespace-pre-wrap font-mono text-[11px] text-rose-600 dark:text-rose-200/80">
             {attempt.error?.trim() || "—"}
           </pre>
@@ -613,16 +613,16 @@ const timelineConfig: Record<string, { icon: ReactNode; dot: string; tone: strin
 function Timeline({ events }: { events: KnowledgeProfile["timeline"] }) {
   return (
     <div className="relative space-y-3 pl-5">
-      <span className="absolute left-[5px] top-1 bottom-1 w-px bg-slate-200 dark:bg-white/10" aria-hidden />
+      <span className="absolute left-[5px] top-1 bottom-1 w-px bg-surface-3" aria-hidden />
       {events.map((event) => {
         const cfg = timelineConfig[event.type] ?? timelineConfig.sandbox_attempt;
         return (
           <div key={`${event.type}-${event.id}`} className="relative">
-            <span className={`absolute -left-5 top-1.5 h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-[#1e293b] ${cfg.dot}`} />
-            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-[#0F172A] p-3">
+            <span className={`absolute -left-5 top-1.5 h-2.5 w-2.5 rounded-full ring-2 ring-border-strong ${cfg.dot}`} />
+            <div className="rounded-xl border border-border bg-background p-3">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">{event.label}</p>
-                <span className="shrink-0 text-[11px] text-slate-500 dark:text-white/35">{formatDateTime(event.time)}</span>
+                <p className="text-sm font-semibold text-foreground">{event.label}</p>
+                <span className="shrink-0 text-[11px] text-muted-foreground">{formatDateTime(event.time)}</span>
               </div>
               <p className={`mt-1 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider ${cfg.tone}`}>
                 {cfg.icon}
@@ -639,8 +639,8 @@ function Timeline({ events }: { events: KnowledgeProfile["timeline"] }) {
 
 function InlineEmpty({ text, href, cta }: { text: string; href?: string; cta?: string }) {
   return (
-    <div className="rounded-xl border border-dashed border-slate-300 dark:border-white/12 bg-slate-50 dark:bg-[#0F172A] p-5 text-center">
-      <p className="text-sm text-slate-600 dark:text-white/55">{text}</p>
+    <div className="rounded-xl border border-dashed border-border-strong bg-background p-5 text-center">
+      <p className="text-sm text-muted-foreground">{text}</p>
       {href && cta && (
         <Link
           href={href}
@@ -656,19 +656,19 @@ function InlineEmpty({ text, href, cta }: { text: string; href?: string; cta?: s
 
 function EmptyProfileState() {
   return (
-    <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-8 text-center shadow-xs">
+    <section className="rounded-2xl border border-border bg-card/55 p-8 text-center shadow-xs">
       <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-teal-500/25 bg-teal-500/10 text-teal-700 dark:text-teal-200">
         <Sparkles className="h-6 w-6" />
       </span>
-      <h2 className="mt-4 text-xl font-black text-slate-900 dark:text-white">No saved evidence yet</h2>
-      <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-white/55">
+      <h2 className="mt-4 text-xl font-extrabold text-foreground">No saved evidence yet</h2>
+      <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
         Take a Java Skill Check, run a GitHub review, or complete Sandbox attempts. As soon as
         those finish, this profile fills with your scores, code, topic mastery, and timeline.
       </p>
       <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
         <Link
           href="/knowledge-assist/sandbox?source=profile-empty"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-teal-400 px-4 py-3 text-sm font-bold text-white transition-all hover:brightness-110 shadow-sm"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-action px-4 py-3 text-sm font-bold text-white transition-all hover:brightness-110 shadow-sm"
         >
           Start a Skill Check
           <ArrowRight className="h-4 w-4" />

@@ -24,7 +24,7 @@ const GoogleIcon = () => (
 
 export default function SignupForm() {
   const router = useRouter();
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const [showPw, setShowPw] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -84,12 +84,12 @@ export default function SignupForm() {
     return (
       <div className="space-y-6 text-center animate-slide-up py-4">
         <div className="mx-auto w-20 h-20 rounded-full bg-teal-500/15 border border-teal-500/30 flex items-center justify-center animate-bounce-subtle">
-          <Check className="w-10 h-10 text-teal-400" />
+          <Check className="w-10 h-10 text-teal-700 dark:text-teal-400" />
         </div>
         <div>
-          <h2 className="text-2xl font-black text-white mb-2">Account created!</h2>
-          <p className="text-white/50 text-sm">
-            Welcome to Mentora, <span className="text-teal-400 font-semibold">{form.name.split(" ")[0]}</span>!
+          <h2 className="text-2xl font-extrabold text-foreground mb-2">Account created!</h2>
+          <p className="text-muted-foreground text-sm">
+            Welcome to Mentora, <span className="text-teal-700 dark:text-teal-400 font-semibold">{form.name.split(" ")[0]}</span>!
             <br />Check your email to verify your account.
           </p>
         </div>
@@ -106,16 +106,16 @@ export default function SignupForm() {
     <div className="space-y-5 animate-slide-up">
       {/* Header */}
       <div className="space-y-1">
-        <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-400 bg-teal-400/10 border border-teal-400/20 rounded-full px-3 py-1">
-          <Sparkles className="w-3 h-3" /> Join 10,000+ learners
+        <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 dark:text-teal-400 bg-teal-400/10 border border-teal-400/20 rounded-full px-3 py-1">
+          <Sparkles className="w-3 h-3" /> Free for students
         </span>
-        <h1 className="text-2xl font-black text-white tracking-tight pt-1">Create your account</h1>
-        <p className="text-sm text-white/50">Start your AI-powered learning journey today</p>
+        <h1 className="text-2xl font-extrabold text-foreground tracking-tight pt-1">Create your account</h1>
+        <p className="text-sm text-muted-foreground">Start your AI-powered learning journey today</p>
       </div>
 
       {/* Social */}
       <div>
-        <SocialButton icon={<GoogleIcon />} label="Continue with Google" />
+        <SocialButton icon={<GoogleIcon />} label="Continue with Google" onClick={loginWithGoogle} />
       </div>
 
       <AuthDivider />
@@ -123,7 +123,7 @@ export default function SignupForm() {
       {/* Form */}
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
         {errors.general && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-700 dark:text-red-400 text-sm">
             {errors.general}
           </div>
         )}
@@ -153,36 +153,36 @@ export default function SignupForm() {
         <div className="relative">
           <label
             htmlFor="signup-country"
-            className="block text-xs font-medium text-white/70 mb-1.5 ml-1"
+            className="block text-sm font-medium text-foreground mb-1.5"
           >
             Country
           </label>
           <div className="relative">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-subtle-foreground pointer-events-none">
               <MapPin className="w-4 h-4" />
             </div>
             <select
               id="signup-country"
               value={form.country}
               onChange={set("country")}
-              className="w-full pl-10 pr-4 py-3 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-all appearance-none"
+              className="w-full h-11 pl-11 pr-10 rounded-lg border border-input bg-card dark:bg-sunken text-foreground focus:border-ring focus:ring-[3px] focus:ring-ring/20 outline-none transition-colors hover:border-border-strong appearance-none cursor-pointer"
             >
-              <option value="" className="bg-zinc-800">Select your country</option>
-              <option value="Sri Lanka" className="bg-zinc-800">Sri Lanka</option>
-              <option value="India" className="bg-zinc-800">India</option>
-              <option value="United States" className="bg-zinc-800">United States</option>
-              <option value="United Kingdom" className="bg-zinc-800">United Kingdom</option>
-              <option value="Australia" className="bg-zinc-800">Australia</option>
-              <option value="Canada" className="bg-zinc-800">Canada</option>
-              <option value="Germany" className="bg-zinc-800">Germany</option>
-              <option value="France" className="bg-zinc-800">France</option>
-              <option value="Japan" className="bg-zinc-800">Japan</option>
-              <option value="Singapore" className="bg-zinc-800">Singapore</option>
-              <option value="Malaysia" className="bg-zinc-800">Malaysia</option>
-              <option value="Other" className="bg-zinc-800">Other</option>
+              <option value="" className="bg-popover text-foreground">Select your country</option>
+              <option value="Sri Lanka" className="bg-popover text-foreground">Sri Lanka</option>
+              <option value="India" className="bg-popover text-foreground">India</option>
+              <option value="United States" className="bg-popover text-foreground">United States</option>
+              <option value="United Kingdom" className="bg-popover text-foreground">United Kingdom</option>
+              <option value="Australia" className="bg-popover text-foreground">Australia</option>
+              <option value="Canada" className="bg-popover text-foreground">Canada</option>
+              <option value="Germany" className="bg-popover text-foreground">Germany</option>
+              <option value="France" className="bg-popover text-foreground">France</option>
+              <option value="Japan" className="bg-popover text-foreground">Japan</option>
+              <option value="Singapore" className="bg-popover text-foreground">Singapore</option>
+              <option value="Malaysia" className="bg-popover text-foreground">Malaysia</option>
+              <option value="Other" className="bg-popover text-foreground">Other</option>
             </select>
           </div>
-          {errors.country && <p className="text-xs text-red-400 mt-1 ml-1">{errors.country}</p>}
+          {errors.country && <p className="text-xs text-red-700 dark:text-red-400 mt-1 ml-1">{errors.country}</p>}
         </div>
 
         <div>
@@ -198,7 +198,7 @@ export default function SignupForm() {
             icon={<Lock className="w-4 h-4" />}
             rightElement={
               <button type="button" tabIndex={-1} onClick={() => setShowPw((v) => !v)}
-                className="text-white/40 hover:text-white/70 transition-colors" aria-label="Toggle password">
+                className="text-subtle-foreground hover:text-foreground/80 transition-colors" aria-label="Toggle password">
                 {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             }
@@ -218,7 +218,7 @@ export default function SignupForm() {
           icon={<Lock className="w-4 h-4" />}
           rightElement={
             <button type="button" tabIndex={-1} onClick={() => setShowConfirm((v) => !v)}
-              className="text-white/40 hover:text-white/70 transition-colors" aria-label="Toggle confirm">
+              className="text-subtle-foreground hover:text-foreground/80 transition-colors" aria-label="Toggle confirm">
               {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
           }
@@ -232,16 +232,16 @@ export default function SignupForm() {
               id="terms"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 accent-teal-500 cursor-pointer"
+              className="mt-0.5 w-4 h-4 rounded border-border-strong bg-muted accent-teal-500 cursor-pointer"
             />
-            <span className="text-xs text-white/40 group-hover:text-white/60 transition-colors leading-relaxed">
+            <span className="text-xs text-subtle-foreground group-hover:text-muted-foreground transition-colors leading-relaxed">
               I agree to the{" "}
-              <Link href="#" className="text-teal-400 hover:text-teal-300 font-medium">Terms of Service</Link>
+              <Link href="#" className="text-teal-700 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-medium">Terms of Service</Link>
               {" "}and{" "}
-              <Link href="#" className="text-teal-400 hover:text-teal-300 font-medium">Privacy Policy</Link>
+              <Link href="#" className="text-teal-700 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-medium">Privacy Policy</Link>
             </span>
           </label>
-          {errors.agree && <p className="text-xs text-red-400 mt-1 ml-6">{errors.agree}</p>}
+          {errors.agree && <p className="text-xs text-red-700 dark:text-red-400 mt-1 ml-6">{errors.agree}</p>}
         </div>
 
         <AuthButton loading={loading} type="submit">
@@ -251,9 +251,9 @@ export default function SignupForm() {
         </AuthButton>
       </form>
 
-      <p className="text-center text-sm text-white/40">
+      <p className="text-center text-sm text-subtle-foreground">
         Already have an account?{" "}
-        <Link href="/login" className="text-teal-400 font-semibold hover:text-teal-300 transition-colors">
+        <Link href="/login" className="text-teal-700 dark:text-teal-400 font-semibold hover:text-teal-700 dark:hover:text-teal-300 transition-colors">
           Sign in
         </Link>
       </p>

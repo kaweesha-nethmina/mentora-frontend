@@ -56,7 +56,7 @@ export default function KnowledgeGapsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-10 h-10 text-teal-400 animate-spin" />
+        <Loader2 className="w-10 h-10 text-teal-700 dark:text-teal-400 animate-spin" />
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function KnowledgeGapsPage() {
             <AlertTriangle className="w-6 h-6 text-amber-500 dark:text-amber-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-[var(--lmg-text-primary)]">Knowledge Gaps</h1>
+            <h1 className="text-2xl font-extrabold text-[var(--lmg-text-primary)]">Knowledge Gaps</h1>
             <p className="text-sm text-[var(--lmg-text-muted)]">Detailed analysis of areas that need improvement.</p>
             {selectedProfileId && profile?.submitted_at && (
               <Link

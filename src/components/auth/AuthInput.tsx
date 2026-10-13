@@ -22,7 +22,7 @@ const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
         <Label
           htmlFor={id}
           className={`text-sm font-medium transition-colors duration-200 ${
-            focused ? "text-teal-400" : "text-white/70"
+            focused ? "text-primary" : "text-foreground"
           }`}
         >
           {label}
@@ -33,7 +33,7 @@ const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
           {icon && (
             <span
               className={`absolute left-3.5 top-1/2 -translate-y-1/2 z-10 transition-colors duration-200 ${
-                focused ? "text-teal-400" : "text-white/40"
+                focused ? "text-brand" : "text-subtle-foreground"
               }`}
             >
               {icon}
@@ -46,15 +46,14 @@ const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             className={`
-              h-12 w-full rounded-xl border transition-all duration-200
-              bg-white/[0.06] text-white placeholder:text-white/30
-              border-white/[0.12]
-              focus-visible:border-teal-500/70 focus-visible:ring-0 focus-visible:ring-offset-0
-              focus-visible:bg-white/[0.09]
-              hover:border-white/20 hover:bg-white/[0.08]
+              h-11 w-full rounded-lg border transition-colors duration-150
+              bg-card dark:bg-sunken text-foreground placeholder:text-subtle-foreground
+              border-input
+              focus-visible:border-ring focus-visible:ring-0 focus-visible:ring-offset-0
+              hover:border-border-strong
               ${icon ? "pl-11" : "pl-4"}
               ${rightElement ? "pr-12" : "pr-4"}
-              ${error ? "border-red-500/60 focus-visible:border-red-500" : ""}
+              ${error ? "border-danger/60 focus-visible:border-danger" : ""}
               ${className}
             `}
             {...props}
@@ -69,16 +68,16 @@ const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
 
           {/* focus glow */}
           <div
-            className={`absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none ${
+            className={`absolute inset-0 rounded-lg transition-shadow duration-150 pointer-events-none ${
               focused
-                ? "shadow-[0_0_0_2px_rgba(20,184,166,0.18),0_0_20px_rgba(13,148,136,0.12)]"
+                ? ""
                 : ""
             }`}
           />
         </div>
 
-        {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
-        {hint && !error && <p className="text-xs text-white/40 mt-1">{hint}</p>}
+        {error && <p className="text-xs text-danger mt-1">{error}</p>}
+        {hint && !error && <p className="text-xs text-subtle-foreground mt-1">{hint}</p>}
       </div>
     );
   }

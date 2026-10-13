@@ -29,12 +29,12 @@ export default function PasswordStrength({ password }: PasswordStrengthProps) {
           <div
             key={i}
             className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              i <= score ? color : "bg-white/10"
+              i <= score ? color : "bg-surface-3"
             }`}
           />
         ))}
       </div>
-      <p className={`text-xs font-medium transition-colors ${score <= 1 ? "text-red-400" : score === 2 ? "text-amber-400" : "text-teal-400"}`}>
+      <p className={`text-xs font-medium transition-colors ${score <= 1 ? "text-red-700 dark:text-red-400" : score === 2 ? "text-amber-700 dark:text-amber-400" : "text-teal-700 dark:text-teal-400"}`}>
         {label}
       </p>
     </div>

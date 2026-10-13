@@ -59,27 +59,27 @@ export default function NotificationPage() {
   };
 
   return (
-    <div className="h-screen w-full max-w-full bg-[#0F172A] flex flex-col overflow-hidden">
+    <div className="h-screen w-full max-w-full bg-background flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 bg-[#0F172A]/80 backdrop-blur-md border-b border-white/5">
+      <div className="flex-shrink-0 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-4xl mx-auto px-4 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard"
-              className="p-2 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:text-teal-400 hover:border-teal-500/30 transition-all active:scale-95"
+              className="p-2 rounded-xl bg-muted border border-border text-muted-foreground hover:text-teal-700 dark:hover:text-teal-400 hover:border-teal-500/30 transition-all active:scale-95"
             >
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-foreground flex items-center gap-3">
                 Notifications
                 {unreadCount > 0 && (
-                  <span className="flex items-center justify-center bg-[#B45309] text-white text-[10px] font-black px-1.5 py-0.5 rounded-sm animate-pulse">
+                  <span className="flex items-center justify-center bg-[#B45309] text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-sm animate-pulse">
                     {unreadCount} NEW
                   </span>
                 )}
               </h1>
-              <p className="text-xs text-white/40 font-medium uppercase tracking-widest mt-1">Updates from your learning journey</p>
+              <p className="text-xs text-subtle-foreground font-medium uppercase tracking-widest mt-1">Updates from your learning journey</p>
             </div>
           </div>
 
@@ -87,13 +87,13 @@ export default function NotificationPage() {
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/60 hover:text-teal-400 hover:bg-teal-500/10 rounded-xl transition-all"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-teal-700 dark:hover:text-teal-400 hover:bg-teal-500/10 rounded-xl transition-all"
               >
                 <CheckCheck className="w-4 h-4" />
                 <span className="hidden sm:inline">Mark all as read</span>
               </button>
             )}
-            <button className="p-2 text-white/40 hover:text-white transition-colors">
+            <button className="p-2 text-subtle-foreground hover:text-foreground transition-colors">
               <Settings className="w-5 h-5" />
             </button>
           </div>
@@ -106,7 +106,7 @@ export default function NotificationPage() {
           {loading ? (
             <div className="space-y-4 animate-pulse">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-32 bg-white/5 border border-white/10 rounded-2xl" />
+                <div key={i} className="h-32 bg-muted border border-border rounded-2xl" />
               ))}
             </div>
           ) : (

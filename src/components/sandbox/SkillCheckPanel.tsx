@@ -160,7 +160,7 @@ export default function SkillCheckPanel({
 
   return (
     <section
-      className={`rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs ${className}`}
+      className={`rounded-2xl border border-border bg-card/55 p-4 shadow-xs ${className}`}
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-3">
@@ -171,8 +171,8 @@ export default function SkillCheckPanel({
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">
               Java Skill Check
             </p>
-            <h2 className="mt-1 text-lg font-black text-slate-900 dark:text-white">{title}</h2>
-            <p className="mt-1 max-w-xl text-sm text-slate-600 dark:text-white/55">{subtitle}</p>
+            <h2 className="mt-1 text-lg font-extrabold text-foreground">{title}</h2>
+            <p className="mt-1 max-w-xl text-sm text-muted-foreground">{subtitle}</p>
           </div>
         </div>
 
@@ -183,7 +183,7 @@ export default function SkillCheckPanel({
             >
               {difficulty}
             </span>
-            <span className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] px-2.5 py-1 text-xs text-slate-600 dark:text-white/55">
+            <span className="rounded-lg border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground">
               {Math.min(answered + (phase === "question" ? 1 : 0), totalPlanned)} / {totalPlanned}
             </span>
           </div>
@@ -202,7 +202,7 @@ export default function SkillCheckPanel({
         <button
           type="button"
           onClick={start}
-          className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold px-4 py-3 text-sm transition-all shadow-sm hover:brightness-110"
+          className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-hover text-primary-foreground font-bold px-4 py-3 text-sm transition-all shadow-sm hover:brightness-110"
         >
           <Sparkles className="h-4 w-4" />
           Start skill check
@@ -211,7 +211,7 @@ export default function SkillCheckPanel({
 
       {/* ── STARTING ── */}
       {phase === "starting" && (
-        <div className="mt-4 flex items-center gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4 text-sm text-slate-600 dark:text-white/55">
+        <div className="mt-4 flex items-center gap-2 rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
           <CircleDashed className="h-4 w-4 animate-spin text-teal-600 dark:text-teal-300" />
           Generating your Java questions...
         </div>
@@ -220,13 +220,13 @@ export default function SkillCheckPanel({
       {/* ── QUESTION / ANSWERED ── */}
       {(phase === "question" || phase === "answered") && question && (
         <div className="mt-4 space-y-4">
-          <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4">
+          <div className="rounded-xl border border-border bg-background p-4">
             <div className="flex items-center justify-between">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white/35">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {question.topic}
                 {question.type === "predict_output" ? " · predict the output" : ""}
               </p>
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white/30">
+              <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {source === "seed" ? "Offline practice set" : (
                   <>
                     <Sparkles className="h-3 w-3 text-teal-600 dark:text-teal-300" />
@@ -235,11 +235,11 @@ export default function SkillCheckPanel({
                 )}
               </span>
             </div>
-            <p className="mt-2 text-sm font-semibold leading-6 text-slate-900 dark:text-white">
+            <p className="mt-2 text-sm font-semibold leading-6 text-foreground">
               {question.question}
             </p>
             {question.code_snippet && (
-              <pre className="mt-3 overflow-x-auto rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-[#050A16] p-3 font-mono text-xs leading-5 text-slate-900 dark:text-cyan-50">
+              <pre className="mt-3 overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-xs leading-5 text-slate-900 dark:text-cyan-50">
                 {question.code_snippet}
               </pre>
             )}
@@ -254,14 +254,14 @@ export default function SkillCheckPanel({
                 showAnswers && isSelected && !result.correct;
 
               let optionClass =
-                "border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172A] text-slate-800 dark:text-white/75 hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-50 dark:hover:bg-white/[0.04]";
+                "border-border bg-background text-foreground hover:border-border-strong hover:bg-muted";
               if (showAnswers) {
                 if (isCorrect) {
                   optionClass = "border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-100";
                 } else if (isChosenWrong) {
                   optionClass = "border-red-500/40 bg-red-50 dark:bg-red-500/10 text-red-800 dark:text-red-100";
                 } else {
-                  optionClass = "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] text-slate-400 dark:text-white/40";
+                  optionClass = "border-border bg-background text-subtle-foreground";
                 }
               } else if (isSelected) {
                 optionClass =
@@ -308,7 +308,7 @@ export default function SkillCheckPanel({
                 )}
                 {result.correct ? "Correct" : "Not quite"}
               </p>
-              <p className="mt-1 leading-6 text-slate-700 dark:text-white/75">{result.explanation}</p>
+              <p className="mt-1 leading-6 text-foreground/80">{result.explanation}</p>
             </div>
           )}
 
@@ -318,7 +318,7 @@ export default function SkillCheckPanel({
                 type="button"
                 onClick={submit}
                 disabled={!selected || submitting}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold px-5 py-2.5 text-sm transition-all shadow-xs disabled:cursor-not-allowed disabled:bg-slate-200 dark:disabled:bg-white/10 disabled:text-slate-400 dark:disabled:text-white/35"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-hover text-primary-foreground font-bold px-5 py-2.5 text-sm transition-all shadow-xs disabled:cursor-not-allowed disabled:bg-surface-3 disabled:text-subtle-foreground"
               >
                 {submitting ? (
                   <CircleDashed className="h-4 w-4 animate-spin" />
@@ -349,15 +349,15 @@ export default function SkillCheckPanel({
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-teal-700 dark:text-teal-300">
               Skill check complete
             </p>
-            <p className="text-4xl font-black text-slate-900 dark:text-white">{results.score_percent}%</p>
-            <p className="text-sm text-slate-600 dark:text-white/60">
+            <p className="text-4xl font-extrabold text-foreground">{results.score_percent}%</p>
+            <p className="text-sm text-muted-foreground">
               {results.correct} of {results.total} correct
             </p>
           </div>
 
           {results.quiz_performance.length > 0 && (
             <div className="space-y-2">
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-white/45">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                 By topic
               </p>
               {results.quiz_performance.map((perf) => {
@@ -367,15 +367,15 @@ export default function SkillCheckPanel({
                 return (
                   <div
                     key={perf.topic}
-                    className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-3"
+                    className="rounded-xl border border-border bg-background p-3"
                   >
                     <div className="flex items-center justify-between text-sm">
-                      <span className="font-semibold text-slate-900 dark:text-white">{perf.topic}</span>
-                      <span className="text-slate-600 dark:text-white/55">
+                      <span className="font-semibold text-foreground">{perf.topic}</span>
+                      <span className="text-muted-foreground">
                         {perf.correct}/{perf.total}
                       </span>
                     </div>
-                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surface-3">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-teal-500 to-teal-400"
                         style={{ width: `${pct}%` }}
@@ -390,7 +390,7 @@ export default function SkillCheckPanel({
           <button
             type="button"
             onClick={start}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-white/70 transition-colors hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-muted px-4 py-3 text-sm font-semibold text-foreground/80 transition-colors hover:bg-surface-3 hover:text-foreground"
           >
             <RotateCcw className="h-4 w-4" />
             New skill check

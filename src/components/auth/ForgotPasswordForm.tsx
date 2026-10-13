@@ -87,7 +87,7 @@ export default function ForgotPasswordForm() {
         {/* Back */}
         <Link
           href="/login"
-          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white/70 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-subtle-foreground hover:text-foreground/80 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign in
         </Link>
@@ -97,18 +97,18 @@ export default function ForgotPasswordForm() {
           ${isSent ? "bg-teal-500/15 border border-teal-500/30" : "bg-amber-500/10 border border-amber-500/20"}`}
         >
           {isSent
-            ? <ShieldCheck className="w-8 h-8 text-teal-400" />
-            : <KeyRound className="w-8 h-8 text-amber-400" />
+            ? <ShieldCheck className="w-8 h-8 text-teal-700 dark:text-teal-400" />
+            : <KeyRound className="w-8 h-8 text-amber-700 dark:text-amber-400" />
           }
         </div>
 
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
             {isSent ? "Check your inbox" : "Reset password"}
           </h1>
-          <p className="text-sm text-white/50 leading-relaxed">
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {isSent
-              ? <>We sent a 6-digit code to <span className="text-teal-400 font-semibold">{email}</span>. Enter it below to continue.</>
+              ? <>We sent a 6-digit code to <span className="text-teal-700 dark:text-teal-400 font-semibold">{email}</span>. Enter it below to continue.</>
               : "Enter your registered email and we'll send you a reset link."
             }
           </p>
@@ -143,7 +143,7 @@ export default function ForgotPasswordForm() {
             <button
               type="button"
               onClick={() => setStep("email")}
-              className="w-full text-sm text-white/40 hover:text-white/60 transition-colors flex items-center justify-center gap-1.5"
+              className="w-full text-sm text-subtle-foreground hover:text-muted-foreground transition-colors flex items-center justify-center gap-1.5"
             >
               <RefreshCw className="w-3.5 h-3.5" /> Wrong email? Try again
             </button>
@@ -158,19 +158,19 @@ export default function ForgotPasswordForm() {
       <div className="space-y-6 animate-slide-up">
         <button
           onClick={() => setStep("sent")}
-          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white/70 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-subtle-foreground hover:text-foreground/80 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back
         </button>
 
         <div className="mx-auto w-16 h-16 rounded-2xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center">
-          <ShieldCheck className="w-8 h-8 text-teal-400 animate-bounce-subtle" />
+          <ShieldCheck className="w-8 h-8 text-teal-700 dark:text-teal-400 animate-bounce-subtle" />
         </div>
 
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-black text-white">Enter OTP</h1>
-          <p className="text-sm text-white/50">
-            6-digit code sent to <span className="text-teal-400 font-semibold">{email}</span>
+          <h1 className="text-2xl font-extrabold text-foreground">Enter OTP</h1>
+          <p className="text-sm text-muted-foreground">
+            6-digit code sent to <span className="text-teal-700 dark:text-teal-400 font-semibold">{email}</span>
           </p>
         </div>
 
@@ -188,17 +188,17 @@ export default function ForgotPasswordForm() {
                 onChange={(e) => handleOtpChange(i, e.target.value)}
                 onKeyDown={(e) => handleOtpKeyDown(i, e)}
                 className={`w-full aspect-square max-w-[52px] text-center text-xl font-bold rounded-xl
-                  border bg-white/[0.06] text-white caret-teal-400
+                  border bg-muted text-foreground caret-teal-400
                   transition-all duration-200 outline-none
-                  focus:border-teal-500/70 focus:bg-white/[0.09]
-                  focus:shadow-[0_0_0_2px_rgba(20,184,166,0.18)] focus:ring-0
-                  ${digit ? "border-teal-500/50 bg-teal-500/10" : "border-white/10"}
+                  focus:border-teal-500/70 focus:bg-surface-3
+                   focus:ring-0
+                  ${digit ? "border-teal-500/50 bg-teal-500/10" : "border-border"}
                   ${otpError ? "border-red-500/60" : ""}
                 `}
               />
             ))}
           </div>
-          {otpError && <p className="text-xs text-red-400">{otpError}</p>}
+          {otpError && <p className="text-xs text-red-700 dark:text-red-400">{otpError}</p>}
 
           <AuthButton loading={loading} type="submit">
             <span className="flex items-center gap-2">
@@ -209,7 +209,7 @@ export default function ForgotPasswordForm() {
           <button
             type="button"
             onClick={handleResend}
-            className="w-full text-sm text-white/40 hover:text-teal-400 transition-colors flex items-center justify-center gap-1.5"
+            className="w-full text-sm text-subtle-foreground hover:text-teal-700 dark:hover:text-teal-400 transition-colors flex items-center justify-center gap-1.5"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             {resendCount > 0 ? `Resend code (${resendCount})` : "Didn't receive it? Resend"}
@@ -224,18 +224,18 @@ export default function ForgotPasswordForm() {
       <div className="space-y-6 animate-slide-up">
         <button
           onClick={() => setStep("otp")}
-          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white/70 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-subtle-foreground hover:text-foreground/80 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back
         </button>
 
         <div className="mx-auto w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-          <KeyRound className="w-8 h-8 text-amber-400" />
+          <KeyRound className="w-8 h-8 text-amber-700 dark:text-amber-400" />
         </div>
 
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-black text-white">New password</h1>
-          <p className="text-sm text-white/50">Choose a strong password for your account</p>
+          <h1 className="text-2xl font-extrabold text-foreground">New password</h1>
+          <p className="text-sm text-muted-foreground">Choose a strong password for your account</p>
         </div>
 
         <form onSubmit={handleResetSubmit} noValidate className="space-y-4">
@@ -275,11 +275,11 @@ export default function ForgotPasswordForm() {
   return (
     <div className="space-y-6 text-center animate-slide-up py-4">
       <div className="mx-auto w-20 h-20 rounded-full bg-teal-500/15 border border-teal-500/30 flex items-center justify-center animate-bounce-subtle">
-        <ShieldCheck className="w-10 h-10 text-teal-400" />
+        <ShieldCheck className="w-10 h-10 text-teal-700 dark:text-teal-400" />
       </div>
       <div>
-        <h2 className="text-2xl font-black text-white mb-2">All done!</h2>
-        <p className="text-white/50 text-sm">
+        <h2 className="text-2xl font-extrabold text-foreground mb-2">All done!</h2>
+        <p className="text-muted-foreground text-sm">
           Your password has been reset successfully.<br />
           You can now sign in with your new password.
         </p>

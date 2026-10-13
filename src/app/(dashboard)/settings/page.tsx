@@ -29,10 +29,10 @@ type Tab = "profile" | "security" | "preferences";
 const JAVA_LEVELS = ["beginner", "intermediate", "advanced"] as const;
 
 const inputClasses =
-  "h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-sm text-white placeholder:text-white/30 transition-all hover:border-white/20 hover:bg-white/[0.08] focus-visible:border-teal-500/70 focus-visible:ring-0 focus-visible:bg-white/[0.09] focus-visible:outline-none";
+  "h-11 w-full rounded-xl border border-border bg-muted px-4 text-sm text-foreground placeholder:text-subtle-foreground transition-all hover:border-border-strong hover:bg-surface-3 focus-visible:border-teal-500/70 focus-visible:ring-0 focus-visible:bg-surface-3 focus-visible:outline-none";
 
 const fieldLabel =
-  "block text-sm font-medium text-white/70 mb-1.5";
+  "block text-sm font-medium text-foreground/80 mb-1.5";
 
 function StatusBanner({
   kind,
@@ -46,8 +46,8 @@ function StatusBanner({
     <div
       className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium border ${
         kind === "success"
-          ? "bg-teal-500/10 border-teal-500/20 text-teal-300"
-          : "bg-red-500/10 border-red-500/20 text-red-300"
+          ? "bg-teal-500/10 border-teal-500/20 text-teal-700 dark:text-teal-300"
+          : "bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-300"
       }`}
     >
       {kind === "success" ? (
@@ -76,12 +76,12 @@ function Toggle({
   return (
     <div className="flex items-start justify-between gap-4 py-3">
       <div className="flex items-start gap-3">
-        <div className="w-9 h-9 rounded-lg bg-teal-500/10 border border-teal-500/20 text-teal-400 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 rounded-lg bg-teal-500/10 border border-teal-500/20 text-teal-700 dark:text-teal-400 flex items-center justify-center shrink-0">
           {icon}
         </div>
         <div>
-          <p className="text-sm font-semibold text-white">{label}</p>
-          <p className="text-xs text-white/40 mt-0.5">{description}</p>
+          <p className="text-sm font-semibold text-foreground">{label}</p>
+          <p className="text-xs text-subtle-foreground mt-0.5">{description}</p>
         </div>
       </div>
       <button
@@ -90,7 +90,7 @@ function Toggle({
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${
-          checked ? "bg-teal-500" : "bg-white/15"
+          checked ? "bg-teal-500" : "bg-border-strong"
         }`}
       >
         <span
@@ -296,11 +296,11 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center">
-          <SettingsIcon className="w-6 h-6 text-teal-400" />
+          <SettingsIcon className="w-6 h-6 text-teal-700 dark:text-teal-400" />
         </div>
         <div>
-          <h1 className="text-2xl font-black text-white">Settings</h1>
-          <p className="text-sm text-white/50">
+          <h1 className="text-2xl font-extrabold text-foreground">Settings</h1>
+          <p className="text-sm text-muted-foreground">
             Manage your profile, security and preferences.
           </p>
         </div>
@@ -314,8 +314,8 @@ export default function SettingsPage() {
             onClick={() => switchTab(t.key)}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-colors border ${
               tab === t.key
-                ? "bg-teal-500/10 border-teal-500/30 text-teal-400"
-                : "bg-white/[0.04] border-white/10 text-white/50 hover:text-white/80 hover:bg-white/[0.08]"
+                ? "bg-teal-500/10 border-teal-500/30 text-teal-700 dark:text-teal-400"
+                : "bg-muted border-border text-muted-foreground hover:text-foreground/80 hover:bg-surface-3"
             }`}
           >
             <t.icon className="w-4 h-4" />
@@ -326,9 +326,9 @@ export default function SettingsPage() {
 
       {tab === "profile" && (
         <div className="grid lg:grid-cols-2 gap-6">
-          <div className="p-6 bg-[#334155]/20 border border-white/5 rounded-2xl space-y-4">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <UserIcon className="w-5 h-5 text-teal-400" /> Personal Information
+          <div className="p-6 bg-surface-3/20 border border-border rounded-2xl space-y-4">
+            <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <UserIcon className="w-5 h-5 text-teal-700 dark:text-teal-400" /> Personal Information
             </h3>
 
             <div className="space-y-1.5">
@@ -378,8 +378,8 @@ export default function SettingsPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="p-6 bg-[#334155]/20 border border-white/5 rounded-2xl space-y-4">
-              <h3 className="text-lg font-bold text-white">Bio</h3>
+            <div className="p-6 bg-surface-3/20 border border-border rounded-2xl space-y-4">
+              <h3 className="text-lg font-bold text-foreground">Bio</h3>
               <div className="space-y-1.5">
                 <Label htmlFor="bio" className={fieldLabel}>About you</Label>
                 <textarea
@@ -391,7 +391,7 @@ export default function SettingsPage() {
                   placeholder="Tell your tutor a bit about yourself..."
                   className={`${inputClasses} h-auto py-3 resize-none`}
                 />
-                <p className="text-xs text-white/30 text-right">{form.bio.length}/500</p>
+                <p className="text-xs text-subtle-foreground text-right">{form.bio.length}/500</p>
               </div>
             </div>
 
@@ -400,7 +400,7 @@ export default function SettingsPage() {
               <Button
                 onClick={saveProfile}
                 disabled={profileSaving}
-                className="w-full h-11 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold cursor-pointer"
+                className="w-full h-11 rounded-xl bg-primary hover:bg-primary-hover text-primary-foreground font-bold cursor-pointer"
               >
                 {profileSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 Save Changes
@@ -412,9 +412,9 @@ export default function SettingsPage() {
 
       {tab === "security" && (
         <div className="grid lg:grid-cols-2 gap-6">
-          <div className="p-6 bg-[#334155]/20 border border-white/5 rounded-2xl space-y-4">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Shield className="w-5 h-5 text-teal-400" /> Change Password
+          <div className="p-6 bg-surface-3/20 border border-border rounded-2xl space-y-4">
+            <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <Shield className="w-5 h-5 text-teal-700 dark:text-teal-400" /> Change Password
             </h3>
 
             <div className="space-y-1.5">
@@ -435,7 +435,7 @@ export default function SettingsPage() {
               <Button
                 onClick={savePassword}
                 disabled={pwSaving || !pw.current || !pw.next}
-                className="w-full h-11 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold cursor-pointer"
+                className="w-full h-11 rounded-xl bg-primary hover:bg-primary-hover text-primary-foreground font-bold cursor-pointer"
               >
                 {pwSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
                 Update Password
@@ -444,10 +444,10 @@ export default function SettingsPage() {
           </div>
 
           <div className="p-6 bg-red-500/[0.04] border border-red-500/15 rounded-2xl space-y-4 h-fit">
-            <h3 className="text-lg font-bold text-red-400 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-red-700 dark:text-red-400 flex items-center gap-2">
               <Trash2 className="w-5 h-5" /> Danger Zone
             </h3>
-            <p className="text-sm text-white/50">
+            <p className="text-sm text-muted-foreground">
               Permanently delete your account and all associated data. This action
               cannot be undone.
             </p>
@@ -480,20 +480,20 @@ export default function SettingsPage() {
 
       {tab === "preferences" && (
         <div className="max-w-2xl space-y-6">
-          <div className="p-6 bg-[#334155]/20 border border-white/5 rounded-2xl">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-2">
-              <BellRing className="w-5 h-5 text-teal-400" /> Notifications
+          <div className="p-6 bg-surface-3/20 border border-border rounded-2xl">
+            <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-2">
+              <BellRing className="w-5 h-5 text-teal-700 dark:text-teal-400" /> Notifications
             </h3>
-            <p className="text-sm text-white/50 mb-3">
+            <p className="text-sm text-muted-foreground mb-3">
               Choose what updates you want to receive.
             </p>
             {prefsLoading ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-6 h-6 text-teal-400 animate-spin" />
+                <Loader2 className="w-6 h-6 text-teal-700 dark:text-teal-400 animate-spin" />
               </div>
             ) : (
               <>
-                <div className="divide-y divide-white/5">
+                <div className="divide-y divide-border">
                   <Toggle
                     label="Email notifications"
                     description="Progress reports and assessment results by email."
@@ -547,7 +547,7 @@ export default function SettingsPage() {
                   <Button
                     onClick={savePreferences}
                     disabled={prefsSaving}
-                    className="w-full sm:w-auto h-11 px-8 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold cursor-pointer"
+                    className="w-full sm:w-auto h-11 px-8 rounded-xl bg-primary hover:bg-primary-hover text-primary-foreground font-bold cursor-pointer"
                   >
                     {prefsSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                     Save Preferences

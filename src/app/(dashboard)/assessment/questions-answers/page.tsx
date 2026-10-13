@@ -43,21 +43,21 @@ interface QAItem {
 
 const getDifficultyMeta = (difficulty: string) => {
   switch (difficulty) {
-    case "Easy": return { dot: "bg-emerald-400", badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" };
-    case "Medium": return { dot: "bg-amber-400", badge: "bg-amber-500/10 text-amber-400 border-amber-500/30" };
-    case "Hard": return { dot: "bg-red-400", badge: "bg-red-500/10 text-red-400 border-red-500/30" };
-    default: return { dot: "bg-white/30", badge: "bg-white/5 text-white/50 border-white/10" };
+    case "Easy": return { dot: "bg-emerald-400", badge: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30" };
+    case "Medium": return { dot: "bg-amber-400", badge: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30" };
+    case "Hard": return { dot: "bg-red-400", badge: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/30" };
+    default: return { dot: "bg-white/30", badge: "bg-muted text-muted-foreground border-border" };
   }
 };
 
 const getTypeMeta = (type: string) => {
   switch (type) {
-    case "mcq": return { label: "MCQ", badge: "bg-blue-500/10 text-blue-400 border-blue-500/30" };
-    case "code_completion": return { label: "Completion", badge: "bg-purple-500/10 text-purple-400 border-purple-500/30" };
-    case "code_tracing": return { label: "Tracing", badge: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30" };
-    case "debugging": return { label: "Debugging", badge: "bg-orange-500/10 text-orange-400 border-orange-500/30" };
-    case "coding_challenge": return { label: "Challenge", badge: "bg-rose-500/10 text-rose-400 border-rose-500/30" };
-    default: return { label: type, badge: "bg-white/5 text-white/50 border-white/10" };
+    case "mcq": return { label: "MCQ", badge: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30" };
+    case "code_completion": return { label: "Completion", badge: "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/30" };
+    case "code_tracing": return { label: "Tracing", badge: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/30" };
+    case "debugging": return { label: "Debugging", badge: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/30" };
+    case "coding_challenge": return { label: "Challenge", badge: "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/30" };
+    default: return { label: type, badge: "bg-muted text-muted-foreground border-border" };
   }
 };
 
@@ -129,36 +129,36 @@ export default function QuestionsAnswersPage() {
     <div className="space-y-6 animate-slide-up">
 
       {/* ── HEADER ── */}
-      <div className="bg-[#1e293b]/90 backdrop-blur-xl border border-white/5 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
+      <div className="bg-card/90 backdrop-blur-xl border border-border rounded-2xl p-6 lg:p-8 relative overflow-hidden">
         <div className="absolute inset-[-50%] bg-gradient-to-r from-teal-500/0 via-teal-500/[0.03] to-teal-500/0 animate-pulse" />
         <div className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <div className="p-1.5 rounded-lg bg-teal-500/10">
-                  <BookOpen className="w-4 h-4 text-teal-400" />
+                  <BookOpen className="w-4 h-4 text-teal-700 dark:text-teal-400" />
                 </div>
-                <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider">Review</span>
+                <span className="text-[10px] font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider">Review</span>
               </div>
-              <h1 className="text-2xl lg:text-3xl font-black text-white">Questions & Answers</h1>
-              <p className="text-white/50 text-sm mt-1">Review every question with detailed explanations</p>
+              <h1 className="text-2xl lg:text-3xl font-extrabold text-foreground">Questions & Answers</h1>
+              <p className="text-muted-foreground text-sm mt-1">Review every question with detailed explanations</p>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="bg-[#0F172A] rounded-xl border border-white/5 px-4 py-2.5 text-center min-w-[90px]">
-                <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold">Accuracy</p>
-                <p className={`text-xl font-black ${accuracy >= 70 ? "text-emerald-400" : accuracy >= 40 ? "text-amber-400" : "text-red-400"}`}>
+              <div className="bg-background rounded-xl border border-border px-4 py-2.5 text-center min-w-[90px]">
+                <p className="text-[10px] text-subtle-foreground uppercase tracking-wider font-semibold">Accuracy</p>
+                <p className={`text-xl font-extrabold ${accuracy >= 70 ? "text-emerald-700 dark:text-emerald-400" : accuracy >= 40 ? "text-amber-700 dark:text-amber-400" : "text-red-700 dark:text-red-400"}`}>
                   {totalCount > 0 ? `${accuracy}%` : "—"}
                 </p>
               </div>
-              <div className="bg-[#0F172A] rounded-xl border border-white/5 px-4 py-2.5 text-center min-w-[90px]">
-                <p className="text-[10px] text-white/40 uppercase tracking-wider font-semibold">Questions</p>
-                <p className="text-xl font-black text-white">{totalCount}</p>
+              <div className="bg-background rounded-xl border border-border px-4 py-2.5 text-center min-w-[90px]">
+                <p className="text-[10px] text-subtle-foreground uppercase tracking-wider font-semibold">Questions</p>
+                <p className="text-xl font-extrabold text-foreground">{totalCount}</p>
               </div>
               {totalCount > 0 && (
                 <button
                   onClick={clearAll}
-                  className="px-3 py-2.5 bg-red-500/5 border border-red-500/20 text-red-400 rounded-xl text-sm font-semibold hover:bg-red-500/15 transition-colors flex items-center gap-1.5"
+                  className="px-3 py-2.5 bg-red-500/5 border border-red-500/20 text-red-700 dark:text-red-400 rounded-xl text-sm font-semibold hover:bg-red-500/15 transition-colors flex items-center gap-1.5"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   Clear
@@ -178,8 +178,8 @@ export default function QuestionsAnswersPage() {
                 onClick={() => setFilter(key as typeof filter)}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all border ${
                   filter === key
-                    ? "bg-teal-500/10 text-teal-400 border-teal-500/30 shadow-sm"
-                    : "bg-[#0F172A]/50 text-white/40 border-white/5 hover:text-white/70 hover:border-white/10"
+                    ? "bg-teal-500/10 text-teal-700 dark:text-teal-400 border-teal-500/30 shadow-sm"
+                    : "bg-background/50 text-subtle-foreground border-border hover:text-foreground/80 hover:border-border"
                 }`}
               >
                 {label} <span className="text-xs opacity-70">({count})</span>
@@ -191,23 +191,23 @@ export default function QuestionsAnswersPage() {
 
       {/* ── LOADING ── */}
       {loading ? (
-        <div className="bg-[#1e293b]/90 backdrop-blur-xl border border-white/5 rounded-2xl p-16 text-center">
+        <div className="bg-card/90 backdrop-blur-xl border border-border rounded-2xl p-16 text-center">
           <div className="w-12 h-12 border-4 border-teal-500/30 border-t-teal-500 rounded-full animate-spin mx-auto mb-4" />
-          <h3 className="text-lg font-bold text-white mb-1">Loading Questions...</h3>
-          <p className="text-white/40 text-sm">Fetching your assessment data</p>
+          <h3 className="text-lg font-bold text-foreground mb-1">Loading Questions...</h3>
+          <p className="text-subtle-foreground text-sm">Fetching your assessment data</p>
         </div>
       ) : totalCount === 0 ? (
-        <div className="bg-[#1e293b]/90 backdrop-blur-xl border border-white/5 rounded-2xl p-16 text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#0F172A] border border-white/5 flex items-center justify-center">
-            <HelpCircle className="w-8 h-8 text-white/20" />
+        <div className="bg-card/90 backdrop-blur-xl border border-border rounded-2xl p-16 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-background border border-border flex items-center justify-center">
+            <HelpCircle className="w-8 h-8 text-subtle-foreground/70" />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">No Questions Yet</h3>
-          <p className="text-white/40 text-sm mb-6 max-w-md mx-auto">
+          <h3 className="text-xl font-bold text-foreground mb-2">No Questions Yet</h3>
+          <p className="text-subtle-foreground text-sm mb-6 max-w-md mx-auto">
             Complete an assessment to see your questions and answers reviewed here.
           </p>
           <a
             href="/assessment"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white rounded-xl font-semibold transition-all shadow-lg shadow-teal-500/20"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-primary-foreground rounded-xl font-semibold transition-all shadow-raised "
           >
             Start Assessment
             <Zap className="w-4 h-4" />
@@ -222,37 +222,37 @@ export default function QuestionsAnswersPage() {
               const topicCorrect = topicQuestions.filter(q => q.is_correct).length;
               const topicTotal = topicQuestions.length;
               const topicAccuracy = Math.round((topicCorrect / topicTotal) * 100);
-              const accuracyColor = topicAccuracy >= 70 ? "text-emerald-400" : topicAccuracy >= 40 ? "text-amber-400" : "text-red-400";
+              const accuracyColor = topicAccuracy >= 70 ? "text-emerald-700 dark:text-emerald-400" : topicAccuracy >= 40 ? "text-amber-700 dark:text-amber-400" : "text-red-700 dark:text-red-400";
               const barColor = topicAccuracy >= 70 ? "bg-emerald-500" : topicAccuracy >= 40 ? "bg-amber-500" : "bg-red-500";
 
               return (
-                <div key={topic} className="bg-[#1e293b]/90 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden">
+                <div key={topic} className="bg-card/90 backdrop-blur-xl border border-border rounded-2xl overflow-hidden">
 
                   {/* Topic Header */}
-                  <div className="p-5 border-b border-white/5 bg-[#0F172A]/30">
+                  <div className="p-5 border-b border-border bg-background/30">
                     <div className="flex items-center justify-between flex-wrap gap-3">
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-xl bg-blue-500/10">
-                          <Layers className="w-5 h-5 text-blue-400" />
+                          <Layers className="w-5 h-5 text-blue-700 dark:text-blue-400" />
                         </div>
                         <div>
-                          <h3 className="text-lg font-bold text-white">{topic}</h3>
-                          <p className="text-xs text-white/40">{topicTotal} question{topicTotal !== 1 ? 's' : ''}</p>
+                          <h3 className="text-lg font-bold text-foreground">{topic}</h3>
+                          <p className="text-xs text-subtle-foreground">{topicTotal} question{topicTotal !== 1 ? 's' : ''}</p>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-4">
                           <div className="text-right">
-                            <p className={`text-lg font-black ${accuracyColor}`}>{topicAccuracy}%</p>
-                            <p className="text-[9px] text-white/30 uppercase tracking-wider">Accuracy</p>
+                            <p className={`text-lg font-extrabold ${accuracyColor}`}>{topicAccuracy}%</p>
+                            <p className="text-[9px] text-subtle-foreground uppercase tracking-wider">Accuracy</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-lg font-black text-white">{topicCorrect}<span className="text-sm text-white/30">/{topicTotal}</span></p>
-                            <p className="text-[9px] text-white/30 uppercase tracking-wider">Correct</p>
+                            <p className="text-lg font-extrabold text-foreground">{topicCorrect}<span className="text-sm text-subtle-foreground">/{topicTotal}</span></p>
+                            <p className="text-[9px] text-subtle-foreground uppercase tracking-wider">Correct</p>
                           </div>
                         </div>
-                        <div className="w-24 h-1.5 bg-[#0F172A] rounded-full overflow-hidden hidden sm:block">
+                        <div className="w-24 h-1.5 bg-background rounded-full overflow-hidden hidden sm:block">
                           <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${topicAccuracy}%` }} />
                         </div>
                       </div>
@@ -260,7 +260,7 @@ export default function QuestionsAnswersPage() {
                   </div>
 
                   {/* Question Rows */}
-                  <div className="divide-y divide-white/[0.03]">
+                  <div className="divide-y divide-border">
                     {topicQuestions.map((item) => {
                       const isExpanded = expandedItems[item.id];
                       const diffMeta = getDifficultyMeta(item.difficulty);
@@ -269,7 +269,7 @@ export default function QuestionsAnswersPage() {
                       return (
                         <div key={item.id}>
                           <div
-                            className="p-4 lg:p-5 cursor-pointer hover:bg-white/[0.015] transition-colors"
+                            className="p-4 lg:p-5 cursor-pointer hover:bg-muted transition-colors"
                             onClick={() => toggleExpand(item.id)}
                           >
                             <div className="flex items-start gap-4">
@@ -279,14 +279,14 @@ export default function QuestionsAnswersPage() {
                                   : "bg-red-500/10 border-red-500/20"
                               }`}>
                                 {item.is_correct
-                                  ? <CheckCircle className="w-5 h-5 text-emerald-400" />
-                                  : <XCircle className="w-5 h-5 text-red-400" />
+                                  ? <CheckCircle className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
+                                  : <XCircle className="w-5 h-5 text-red-700 dark:text-red-400" />
                                 }
                               </div>
 
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                                  <span className="text-xs font-bold text-white/30">Q{item.number}</span>
+                                  <span className="text-xs font-bold text-subtle-foreground">Q{item.number}</span>
                                   <span className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold border ${diffMeta.badge}`}>
                                     <span className={`w-1.5 h-1.5 rounded-full ${diffMeta.dot}`} />
                                     {item.difficulty}
@@ -296,15 +296,15 @@ export default function QuestionsAnswersPage() {
                                   </span>
                                 </div>
 
-                                <h4 className="text-white font-semibold text-sm leading-relaxed line-clamp-2">{item.question}</h4>
+                                <h4 className="text-foreground font-semibold text-sm leading-relaxed line-clamp-2">{item.question}</h4>
 
                                 <div className="flex items-center gap-3 mt-2">
-                                  <span className="flex items-center gap-1 text-[11px] text-white/30">
+                                  <span className="flex items-center gap-1 text-[11px] text-subtle-foreground">
                                     <Clock className="w-3 h-3" />
                                     {Math.floor(item.time_spent / 60)}m {item.time_spent % 60}s
                                   </span>
                                   <span className={`flex items-center gap-1 text-[11px] font-semibold ${
-                                    item.is_correct ? "text-emerald-400" : "text-red-400"
+                                    item.is_correct ? "text-emerald-700 dark:text-emerald-400" : "text-red-700 dark:text-red-400"
                                   }`}>
                                     {item.is_correct
                                       ? <><CheckCircle className="w-3 h-3" /> Correct</>
@@ -314,10 +314,10 @@ export default function QuestionsAnswersPage() {
                                 </div>
                               </div>
 
-                              <button className="shrink-0 p-1 rounded-lg hover:bg-white/5 transition-colors">
+                              <button className="shrink-0 p-1 rounded-lg hover:bg-muted transition-colors">
                                 {isExpanded
-                                  ? <ChevronUp className="w-4 h-4 text-white/30" />
-                                  : <ChevronDown className="w-4 h-4 text-white/30" />
+                                  ? <ChevronUp className="w-4 h-4 text-subtle-foreground" />
+                                  : <ChevronDown className="w-4 h-4 text-subtle-foreground" />
                                 }
                               </button>
                             </div>
@@ -329,30 +329,30 @@ export default function QuestionsAnswersPage() {
                               <div className="border-l-2 border-teal-500/30 pl-5 space-y-4">
 
                                 {item.code_snippet && (
-                                  <div className="bg-[#0F172A] rounded-xl border border-white/5 overflow-hidden">
-                                    <div className="flex items-center gap-1.5 px-4 py-2 bg-white/[0.02] border-b border-white/5">
-                                      <Code className="w-3.5 h-3.5 text-teal-400" />
-                                      <span className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Code</span>
+                                  <div className="bg-background rounded-xl border border-border overflow-hidden">
+                                    <div className="flex items-center gap-1.5 px-4 py-2 bg-muted border-b border-border">
+                                      <Code className="w-3.5 h-3.5 text-teal-700 dark:text-teal-400" />
+                                      <span className="text-[10px] font-semibold text-subtle-foreground uppercase tracking-wider">Code</span>
                                     </div>
-                                    <pre className="p-4 text-emerald-400/90 text-sm overflow-x-auto font-mono leading-relaxed"><code>{item.code_snippet}</code></pre>
+                                    <pre className="p-4 text-emerald-700 dark:text-emerald-400/90 text-sm overflow-x-auto font-mono leading-relaxed"><code>{item.code_snippet}</code></pre>
                                   </div>
                                 )}
 
                                 {item.options && (
                                   <div>
-                                    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-2">Options</p>
+                                    <p className="text-[10px] font-semibold text-subtle-foreground uppercase tracking-wider mb-2">Options</p>
                                     <div className="space-y-1.5">
                                       {item.options.map((option, idx) => {
                                         const isLearnerAnswer = option === item.learner_answer;
                                         const isCorrectAnswer = option === item.correct_answer;
-                                        let rowStyle = "bg-[#0F172A] border-white/5 text-white/50";
+                                        let rowStyle = "bg-background border-border text-muted-foreground";
                                         let indicator = null;
                                         if (isCorrectAnswer) {
-                                          rowStyle = "bg-emerald-500/10 border-emerald-500/30 text-emerald-300";
-                                          indicator = <CheckCircle className="w-3.5 h-3.5 text-emerald-400 ml-auto shrink-0" />;
+                                          rowStyle = "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300";
+                                          indicator = <CheckCircle className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 ml-auto shrink-0" />;
                                         } else if (isLearnerAnswer) {
-                                          rowStyle = "bg-red-500/10 border-red-500/30 text-red-300";
-                                          indicator = <XCircle className="w-3.5 h-3.5 text-red-400 ml-auto shrink-0" />;
+                                          rowStyle = "bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300";
+                                          indicator = <XCircle className="w-3.5 h-3.5 text-red-700 dark:text-red-400 ml-auto shrink-0" />;
                                         }
                                         return (
                                           <div key={idx} className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-sm ${rowStyle}`}>
@@ -366,51 +366,51 @@ export default function QuestionsAnswersPage() {
                                   </div>
                                 )}
 
-                                <div className="bg-[#0F172A] rounded-xl border border-white/5 p-4">
+                                <div className="bg-background rounded-xl border border-border p-4">
                                   <div className="flex items-center gap-2 mb-2">
                                     {item.is_correct
-                                      ? <CheckCircle className="w-4 h-4 text-emerald-400" />
-                                      : <XCircle className="w-4 h-4 text-red-400" />
+                                      ? <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+                                      : <XCircle className="w-4 h-4 text-red-700 dark:text-red-400" />
                                     }
-                                    <span className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Your Answer</span>
+                                    <span className="text-[10px] font-semibold text-subtle-foreground uppercase tracking-wider">Your Answer</span>
                                   </div>
                                   {item.type === 'coding_challenge' || item.type === 'code_completion' || item.type === 'code_tracing' || item.type === 'debugging' ? (
-                                    <pre className={`text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto ${item.is_correct ? "text-emerald-300" : "text-red-300"}`}>{item.learner_answer || "Not answered"}</pre>
+                                    <pre className={`text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto ${item.is_correct ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"}`}>{item.learner_answer || "Not answered"}</pre>
                                   ) : (
-                                    <p className={`text-sm ${item.is_correct ? "text-emerald-300" : "text-red-300"}`}>{item.learner_answer || "Not answered"}</p>
+                                    <p className={`text-sm ${item.is_correct ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"}`}>{item.learner_answer || "Not answered"}</p>
                                   )}
                                 </div>
 
                                 {!item.is_correct && (
                                   <div className="bg-emerald-500/5 rounded-xl border border-emerald-500/20 p-4">
                                     <div className="flex items-center gap-2 mb-2">
-                                      <CheckCircle className="w-4 h-4 text-emerald-400" />
-                                      <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">Correct Answer</span>
+                                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+                                      <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Correct Answer</span>
                                     </div>
                                     {item.type === 'coding_challenge' || item.type === 'code_completion' || item.type === 'code_tracing' || item.type === 'debugging' ? (
-                                      <pre className="text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto text-emerald-300">{item.correct_answer}</pre>
+                                      <pre className="text-xs font-mono whitespace-pre-wrap break-words leading-relaxed max-h-64 overflow-y-auto text-emerald-700 dark:text-emerald-300">{item.correct_answer}</pre>
                                     ) : (
-                                      <p className="text-sm text-emerald-300">{item.correct_answer}</p>
+                                      <p className="text-sm text-emerald-700 dark:text-emerald-300">{item.correct_answer}</p>
                                     )}
                                   </div>
                                 )}
 
                                 <div className="bg-amber-500/5 rounded-xl border border-amber-500/20 p-4">
                                   <div className="flex items-center gap-2 mb-2">
-                                    <Lightbulb className="w-4 h-4 text-amber-400" />
-                                    <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider">Explanation</span>
+                                    <Lightbulb className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                                    <span className="text-[10px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Explanation</span>
                                   </div>
                                   {Array.isArray(item.explanation) ? (
                                     <ul className="space-y-1">
                                       {item.explanation.map((point, idx) => (
-                                        <li key={idx} className="text-sm text-amber-200/80 leading-relaxed flex items-start gap-2">
+                                        <li key={idx} className="text-sm text-amber-800 dark:text-amber-200/80 leading-relaxed flex items-start gap-2">
                                           <span className="text-amber-400 mt-1.5 w-1 h-1 rounded-full bg-amber-400 shrink-0" />
                                           {point}
                                         </li>
                                       ))}
                                     </ul>
                                   ) : (
-                                    <p className="text-sm text-amber-200/80 leading-relaxed">{item.explanation}</p>
+                                    <p className="text-sm text-amber-800 dark:text-amber-200/80 leading-relaxed">{item.explanation}</p>
                                   )}
                                 </div>
 
@@ -427,27 +427,27 @@ export default function QuestionsAnswersPage() {
           </div>
 
           {/* ── SUMMARY FOOTER ── */}
-          <div className="bg-[#1e293b]/90 backdrop-blur-xl border border-white/5 rounded-2xl p-6">
+          <div className="bg-card/90 backdrop-blur-xl border border-border rounded-2xl p-6">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-xl bg-teal-500/10">
-                  <BarChart3 className="w-5 h-5 text-teal-400" />
+                  <BarChart3 className="w-5 h-5 text-teal-700 dark:text-teal-400" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-white">Assessment Summary</h3>
-                  <p className="text-xs text-white/40">
+                  <h3 className="text-base font-bold text-foreground">Assessment Summary</h3>
+                  <p className="text-xs text-subtle-foreground">
                     {correctCount} of {totalCount} correct &middot; {accuracy}% accuracy
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                  <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-xs font-bold text-emerald-400">{correctCount} Correct</span>
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+                  <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">{correctCount} Correct</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 rounded-lg border border-red-500/20">
-                  <XCircle className="w-3.5 h-3.5 text-red-400" />
-                  <span className="text-xs font-bold text-red-400">{totalCount - correctCount} Incorrect</span>
+                  <XCircle className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
+                  <span className="text-xs font-bold text-red-700 dark:text-red-400">{totalCount - correctCount} Incorrect</span>
                 </div>
               </div>
             </div>

@@ -169,20 +169,20 @@ export default function GithubLinkCard({
               <button
                 type="button"
                 onClick={onDismiss}
-                className="absolute right-0 top-0 p-2 rounded-full text-white/45 hover:text-white hover:bg-white/10 transition-colors"
+                className="absolute right-0 top-0 p-2 rounded-full text-subtle-foreground hover:text-foreground hover:bg-surface-3 transition-colors"
                 aria-label="Close GitHub account dialog"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-400 bg-teal-400/10 border border-teal-400/20 rounded-full px-3 py-1">
+            <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-700 dark:text-teal-400 bg-teal-400/10 border border-teal-400/20 rounded-full px-3 py-1">
               <Sparkles className="w-3 h-3" />
               {mode === "change" ? "Account management" : "One last step"}
             </span>
-            <h1 className="text-2xl font-black text-white tracking-tight">
+            <h1 className="text-2xl font-extrabold text-foreground tracking-tight">
               {mode === "change" ? "Change GitHub account" : "Connect your GitHub"}
             </h1>
-            <p className="text-sm text-white/60 leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               {mode === "change"
                 ? "Choose a different GitHub account in the popup. If GitHub opens the current account automatically, switch accounts inside GitHub before approving."
                 : "Mentora analyzes your public repository activity to personalize your learning path. We never push to your repos and you can disconnect anytime from settings."}
@@ -190,29 +190,29 @@ export default function GithubLinkCard({
           </div>
 
           {/* Permissions list */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 space-y-3">
+          <div className="rounded-2xl border border-border bg-muted p-4 space-y-3">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-lg bg-teal-500/15 border border-teal-500/30 flex items-center justify-center shrink-0">
-                <GitHubIcon className="w-4 h-4 text-teal-300" />
+                <GitHubIcon className="w-4 h-4 text-teal-700 dark:text-teal-300" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-sm font-semibold text-foreground">
                   Read your repository metadata
                 </p>
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-muted-foreground">
                   Repo names, languages, and commit history — read-only.
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
-                <Lock className="w-4 h-4 text-amber-300" />
+                <Lock className="w-4 h-4 text-amber-700 dark:text-amber-300" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-sm font-semibold text-foreground">
                   Encrypted at rest
                 </p>
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-muted-foreground">
                   Your access token is AES-256-GCM encrypted and never exposed
                   to the browser.
                 </p>
@@ -240,24 +240,24 @@ export default function GithubLinkCard({
             >
               <span className="flex items-center justify-between gap-3">
                 <span className="flex min-w-0 items-center gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cyan-400/30 bg-cyan-400/10 text-cyan-200">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cyan-400/30 bg-cyan-400/10 text-cyan-800 dark:text-cyan-200">
                     <Terminal className="h-4 w-4" />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm font-semibold text-cyan-100">
+                    <span className="block text-sm font-semibold text-cyan-800 dark:text-cyan-100">
                       Don&apos;t have a GitHub account?
                     </span>
-                    <span className="mt-0.5 block text-xs text-white/45">
+                    <span className="mt-0.5 block text-xs text-subtle-foreground">
                       Practice Java questions in the sandbox instead.
                     </span>
                   </span>
                 </span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-cyan-200" />
+                <ArrowRight className="h-4 w-4 shrink-0 text-cyan-800 dark:text-cyan-200" />
               </span>
             </button>
           )}
 
-          <p className="text-center text-[11px] text-white/30 leading-relaxed">
+          <p className="text-center text-[11px] text-subtle-foreground leading-relaxed">
             By connecting, you authorize Mentora to read your GitHub profile
             and repositories.
           </p>

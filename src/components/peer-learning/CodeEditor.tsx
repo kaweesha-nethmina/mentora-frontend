@@ -167,16 +167,16 @@ export default function CodeEditor({
   };
 
   return (
-    <div className="flex flex-col h-full rounded-xl border border-white/10 bg-[#0F172A] overflow-hidden">
+    <div className="flex flex-col h-full rounded-xl border border-border bg-background overflow-hidden">
       {/* Top Header Bar */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-[#1e293b]/60">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-card/60">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
-            <Code2 className="w-4 h-4 text-teal-400" />
-            <span className="text-xs font-bold text-white">Main.java</span>
+            <Code2 className="w-4 h-4 text-teal-700 dark:text-teal-400" />
+            <span className="text-xs font-bold text-foreground">Main.java</span>
           </div>
           {questionText && (
-            <span className="text-[10px] text-white/30 max-w-[200px] truncate hidden md:block">
+            <span className="text-[10px] text-subtle-foreground max-w-[200px] truncate hidden md:block">
               {questionText}
             </span>
           )}
@@ -185,11 +185,11 @@ export default function CodeEditor({
         {/* Action Controls & Toolbar */}
         <div className="flex items-center gap-3">
           {/* Drawing Tools */}
-          <div className="flex items-center gap-1.5 bg-white/5 px-2 py-1 rounded-lg border border-white/10">
+          <div className="flex items-center gap-1.5 bg-muted px-2 py-1 rounded-lg border border-border">
             <button
               onClick={toggleDrawingMode}
               className={`flex items-center gap-1 text-xs px-2 py-0.5 rounded transition-colors ${
-                isDrawingMode ? 'bg-rose-500 text-white font-semibold' : 'text-white/70 hover:text-white'
+                isDrawingMode ? 'bg-rose-500 text-white font-semibold' : 'text-foreground/80 hover:text-foreground'
               }`}
             >
               <Pencil className="w-3.5 h-3.5" />
@@ -198,7 +198,7 @@ export default function CodeEditor({
 
             {isDrawingMode && (
               <>
-                <div className="flex items-center gap-1 ml-1 border-l border-white/10 pl-2">
+                <div className="flex items-center gap-1 ml-1 border-l border-border pl-2">
                   {['#ef4444', '#10b981', '#f59e0b', '#3b82f6', '#ffffff'].map((c) => (
                     <button
                       key={c}
@@ -212,7 +212,7 @@ export default function CodeEditor({
                 </div>
                 <button
                   onClick={handleClearCanvas}
-                  className="p-1 text-white/40 hover:text-rose-400 transition-colors ml-1"
+                  className="p-1 text-subtle-foreground hover:text-rose-700 dark:hover:text-rose-400 transition-colors ml-1"
                   title="Clear Drawings"
                 >
                   <Eraser className="w-3.5 h-3.5" />
@@ -225,16 +225,16 @@ export default function CodeEditor({
           <div className="flex items-center gap-1.5 text-[10px]">
             {connected ? (
               <>
-                <Wifi className="w-3 h-3 text-emerald-400" />
-                <span className="text-emerald-400">Live</span>
-                <span className="text-white/30 ml-1">
+                <Wifi className="w-3 h-3 text-emerald-700 dark:text-emerald-400" />
+                <span className="text-emerald-700 dark:text-emerald-400">Live</span>
+                <span className="text-subtle-foreground ml-1">
                   {activeUsers} user{activeUsers !== 1 ? 's' : ''}
                 </span>
               </>
             ) : (
               <>
-                <WifiOff className="w-3 h-3 text-white/30" />
-                <span className="text-white/30">Offline</span>
+                <WifiOff className="w-3 h-3 text-subtle-foreground" />
+                <span className="text-subtle-foreground">Offline</span>
               </>
             )}
           </div>
@@ -242,9 +242,9 @@ export default function CodeEditor({
           {/* Copy Button */}
           <button
             onClick={handleCopy}
-            className="p-1.5 rounded-md hover:bg-white/5 text-white/40 hover:text-white/70 transition-colors"
+            className="p-1.5 rounded-md hover:bg-muted text-subtle-foreground hover:text-foreground/80 transition-colors"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>

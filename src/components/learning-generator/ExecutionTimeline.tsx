@@ -10,10 +10,10 @@ export default function ExecutionTimeline({ timeline }: ExecutionTimelineProps) 
   if (timeline.length === 0) return null;
 
   return (
-    <div className="border-t border-slate-200 dark:border-white/10 p-2 shrink-0 bg-slate-50 dark:bg-transparent">
+    <div className="border-t border-border p-2 shrink-0 bg-slate-50 dark:bg-transparent">
       <div className="flex items-center gap-1.5 mb-2">
-        <Clock className="w-3 h-3 text-slate-500 dark:text-slate-400" />
-        <span className="text-[10px] text-slate-600 dark:text-slate-400 font-bold uppercase">Execution Timeline</span>
+        <Clock className="w-3 h-3 text-muted-foreground" />
+        <span className="text-[10px] text-muted-foreground font-bold uppercase">Execution Timeline</span>
       </div>
       <div className="flex gap-0.5">
         {timeline.map((item, i) => (

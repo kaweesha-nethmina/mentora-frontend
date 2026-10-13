@@ -123,6 +123,27 @@ class AuthApi {
     }
   }
 
+  /** URL that begins the Google OAuth flow (full-page redirect). */
+  getGoogleAuthUrl(): string {
+    return `${API_BASE_URL}/api/auth/google/start`;
+  }
+
+  /** Exchange the one-time ticket from the Google callback for a real session. */
+  async googleExchange(ticket: string): Promise<AuthResponse> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/google/exchange`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticket }),
+      });
+
+      const result = await response.json();
+      return this.normalizeOutput(result);
+    } catch {
+      return { success: false, message: 'Network error. Please try again.' };
+    }
+  }
+
   async logout(): Promise<void> {
     const { accessToken } = this.getTokens();
     

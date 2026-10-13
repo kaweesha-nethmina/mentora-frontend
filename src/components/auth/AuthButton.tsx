@@ -20,28 +20,23 @@ export default function AuthButton({
   ...props
 }: AuthButtonProps) {
   const base =
-    "relative h-12 rounded-xl font-semibold text-sm tracking-wide transition-all duration-200 overflow-hidden group";
+    "relative h-11 rounded-lg font-semibold text-sm transition-[filter,background-color,border-color,color] duration-150 overflow-hidden group";
 
   const variants = {
     primary: `
-      bg-gradient-to-r from-teal-600 to-teal-500
-      text-white shadow-lg shadow-teal-900/30
-      hover:from-teal-500 hover:to-teal-400
-      hover:shadow-teal-600/40 hover:scale-[1.01]
-      active:scale-[0.99]
-      disabled:from-teal-900/50 disabled:to-teal-800/40 disabled:shadow-none disabled:scale-100
+      bg-action text-white shadow-xs
+      hover:brightness-110
+      active:brightness-95
+      disabled:opacity-60 disabled:brightness-100
     `,
     secondary: `
-      bg-gradient-to-r from-amber-700 to-amber-600
-      text-white shadow-lg shadow-amber-900/30
-      hover:from-amber-600 hover:to-amber-500
-      hover:shadow-amber-600/40 hover:scale-[1.01]
-      active:scale-[0.99]
+      bg-forest text-white shadow-xs
+      hover:brightness-125
+      active:brightness-95
     `,
     ghost: `
-      bg-white/[0.06] border border-white/10 text-white/80
-      hover:bg-white/[0.1] hover:border-white/20 hover:text-white
-      hover:scale-[1.01] active:scale-[0.99]
+      bg-card border border-border-strong text-foreground
+      hover:bg-muted
     `,
   };
 
@@ -56,13 +51,6 @@ export default function AuthButton({
       disabled={disabled || loading}
       {...props}
     >
-      {/* shimmer sweep on primary */}
-      {variant === "primary" && (
-        <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <span className="absolute inset-0 animate-shimmer" />
-        </span>
-      )}
-
       {loading ? (
         <span className="flex items-center gap-2">
           <svg

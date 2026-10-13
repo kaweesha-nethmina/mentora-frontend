@@ -39,13 +39,13 @@ function renderQuestionText(text: string) {
       const isMultiLine = seg.content.includes('\n');
       if (isMultiLine) {
         return (
-          <pre key={i} className="rounded-lg bg-[#0a0f1a] border border-white/5 px-3 py-2.5 my-2 overflow-x-auto">
-            <code className="text-teal-300 text-xs font-mono leading-relaxed whitespace-pre">{seg.content}</code>
+          <pre key={i} className="rounded-lg bg-[#0a0f1a] border border-border px-3 py-2.5 my-2 overflow-x-auto">
+            <code className="text-teal-700 dark:text-teal-300 text-xs font-mono leading-relaxed whitespace-pre">{seg.content}</code>
           </pre>
         );
       }
       return (
-        <code key={i} className="px-1.5 py-0.5 rounded bg-teal-500/10 border border-teal-500/20 text-teal-300 text-xs font-mono">
+        <code key={i} className="px-1.5 py-0.5 rounded bg-teal-500/10 border border-teal-500/20 text-teal-700 dark:text-teal-300 text-xs font-mono">
           {seg.content}
         </code>
       );
@@ -71,10 +71,10 @@ export default function QuestionDisplay({ question, generating, onStartCollab, s
     return (
       <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6">
         <div className="flex items-center gap-3">
-          <Loader2 className="w-5 h-5 text-amber-400 animate-spin" />
+          <Loader2 className="w-5 h-5 text-amber-700 dark:text-amber-400 animate-spin" />
           <div>
-            <p className="text-sm font-bold text-amber-400">Generating Question</p>
-            <p className="text-xs text-white/50">Generating a question based on your learning gap...</p>
+            <p className="text-sm font-bold text-amber-700 dark:text-amber-400">Generating Question</p>
+            <p className="text-xs text-muted-foreground">Generating a question based on your learning gap...</p>
           </div>
         </div>
       </div>
@@ -93,47 +93,47 @@ export default function QuestionDisplay({ question, generating, onStartCollab, s
   const getOptionStyle = (option: string) => {
     if (!isAnswered) {
       if (selectedOption === option) {
-        return 'border-teal-500/50 bg-teal-500/10 text-teal-400 cursor-pointer';
+        return 'border-teal-500/50 bg-teal-500/10 text-teal-700 dark:text-teal-400 cursor-pointer';
       }
-      return 'border-white/5 bg-[#0F172A] text-white/80 cursor-pointer hover:border-white/20 hover:bg-white/[0.03]';
+      return 'border-border bg-background text-foreground/80 cursor-pointer hover:border-border-strong hover:bg-muted';
     }
     if (isAnswered && gradedResult) {
       if (option === gradedResult.correct_answer) {
-        return 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300';
+        return 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300';
       }
       if (option === gradedResult.selected_option && !gradedResult.is_correct) {
-        return 'border-red-500/40 bg-red-500/10 text-red-300';
+        return 'border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-300';
       }
-      return 'border-white/5 bg-[#0F172A] text-white/30';
+      return 'border-border bg-background text-subtle-foreground';
     }
-    return 'border-white/5 bg-[#0F172A] text-white/80';
+    return 'border-border bg-background text-foreground/80';
   };
 
   const getOptionIcon = (option: string) => {
     if (!isAnswered || !gradedResult) return null;
     if (option === gradedResult.correct_answer) {
-      return <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />;
+      return <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />;
     }
     if (option === gradedResult.selected_option && !gradedResult.is_correct) {
-      return <XCircle className="w-4 h-4 text-red-400 shrink-0" />;
+      return <XCircle className="w-4 h-4 text-red-700 dark:text-red-400 shrink-0" />;
     }
     return null;
   };
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#1e293b]/55 p-5">
+    <div className="rounded-2xl border border-border bg-card/55 p-5">
       <div className="flex items-center gap-2 mb-4">
-        <ClipboardList className="w-5 h-5 text-amber-400" />
-        <h3 className="text-lg font-bold text-white">Learning Question</h3>
+        <ClipboardList className="w-5 h-5 text-amber-700 dark:text-amber-400" />
+        <h3 className="text-lg font-bold text-foreground">Learning Question</h3>
       </div>
 
-      <div className="rounded-xl bg-[#0F172A] border border-white/5 p-4 mb-4">
-        <p className="text-white text-sm font-semibold leading-relaxed">{renderQuestionText(question.text)}</p>
+      <div className="rounded-xl bg-background border border-border p-4 mb-4">
+        <p className="text-foreground text-sm font-semibold leading-relaxed">{renderQuestionText(question.text)}</p>
       </div>
 
       {question.options.length > 0 && (
         <div className="space-y-2 mb-4">
-          <p className="text-[10px] text-white/40 uppercase tracking-wider">
+          <p className="text-[10px] text-subtle-foreground uppercase tracking-wider">
             {isAnswered ? 'Your Answer' : 'Select Your Answer'}
           </p>
           {question.options.map((option, index) => (
@@ -165,17 +165,17 @@ export default function QuestionDisplay({ question, generating, onStartCollab, s
         }`}>
           <div className="flex items-center gap-2 mb-1">
             {gradedResult.is_correct ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             ) : (
-              <XCircle className="w-4 h-4 text-red-400" />
+              <XCircle className="w-4 h-4 text-red-700 dark:text-red-400" />
             )}
-            <p className={`text-sm font-bold ${gradedResult.is_correct ? 'text-emerald-400' : 'text-red-400'}`}>
+            <p className={`text-sm font-bold ${gradedResult.is_correct ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'}`}>
               {gradedResult.is_correct ? 'Correct!' : 'Incorrect'}
             </p>
           </div>
-          <p className="text-xs text-white/60">{gradedResult.feedback}</p>
+          <p className="text-xs text-muted-foreground">{gradedResult.feedback}</p>
           {!gradedResult.is_correct && gradedResult.correct_answer && (
-            <p className="text-xs text-emerald-300/70 mt-1">
+            <p className="text-xs text-emerald-700 dark:text-emerald-300/70 mt-1">
               Correct answer: {renderQuestionText(gradedResult.correct_answer)}
             </p>
           )}
@@ -186,7 +186,7 @@ export default function QuestionDisplay({ question, generating, onStartCollab, s
         <button
           onClick={handleSubmit}
           disabled={evaluating}
-          className="w-full py-3 bg-teal-600 hover:bg-teal-500 disabled:opacity-50 text-white font-bold rounded-xl transition-all hover:shadow-[0_0_20px_rgba(13,148,136,0.3)] flex items-center justify-center gap-2"
+          className="w-full py-3 bg-primary hover:bg-primary-hover disabled:opacity-50 text-primary-foreground font-bold rounded-xl transition-all flex items-center justify-center gap-2"
         >
           {evaluating ? (
             <>
@@ -202,7 +202,7 @@ export default function QuestionDisplay({ question, generating, onStartCollab, s
       {!isAnswered && !selectedOption && (
         <button
           disabled
-          className="w-full py-3 bg-white/5 text-white/30 font-bold rounded-xl border border-white/5 cursor-not-allowed"
+          className="w-full py-3 bg-muted text-subtle-foreground font-bold rounded-xl border border-border cursor-not-allowed"
         >
           Select an answer to continue
         </button>
@@ -211,7 +211,7 @@ export default function QuestionDisplay({ question, generating, onStartCollab, s
       {isAnswered && !started && (
         <button
           onClick={onStartCollab}
-          className="w-full py-3 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl transition-all hover:shadow-[0_0_20px_rgba(13,148,136,0.3)]"
+          className="w-full py-3 bg-primary hover:bg-primary-hover text-primary-foreground font-bold rounded-xl transition-all "
         >
           Start Collaborative Work
         </button>

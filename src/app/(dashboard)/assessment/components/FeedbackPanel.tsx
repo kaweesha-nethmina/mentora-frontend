@@ -113,24 +113,24 @@ export default function FeedbackPanel({
   const getResultBanner = () => {
     if (data.is_correct) {
       return {
-        icon: <CheckCircle className="w-8 h-8 text-green-400" />,
+        icon: <CheckCircle className="w-8 h-8 text-green-700 dark:text-green-400" />,
         title: "Correct!",
         bgColor: "bg-green-500/10 border-green-500/30",
-        textColor: "text-green-200"
+        textColor: "text-green-800 dark:text-green-200"
       };
     } else if (data.partial_credit) {
       return {
-        icon: <Minus className="w-8 h-8 text-yellow-400" />,
+        icon: <Minus className="w-8 h-8 text-yellow-700 dark:text-yellow-400" />,
         title: `Partially Correct (${data.correctness_score}%)`,
         bgColor: "bg-yellow-500/10 border-yellow-500/30",
-        textColor: "text-yellow-200"
+        textColor: "text-yellow-800 dark:text-yellow-200"
       };
     } else {
       return {
-        icon: <X className="w-8 h-8 text-red-400" />,
+        icon: <X className="w-8 h-8 text-red-700 dark:text-red-400" />,
         title: "Incorrect",
         bgColor: "bg-red-500/10 border-red-500/30",
-        textColor: "text-red-200"
+        textColor: "text-red-800 dark:text-red-200"
       };
     }
   };
@@ -144,31 +144,31 @@ export default function FeedbackPanel({
     return (
       <div className="space-y-6 animate-in fade-in duration-500">
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold text-white">Review Question</h3>
+          <h3 className="text-xl font-bold text-foreground">Review Question</h3>
         </div>
 
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="bg-muted/50 border-border">
           <CardContent className="p-6">
             <div className="space-y-6">
               <div>
-                <h4 className="text-sm font-semibold text-teal-400 uppercase tracking-wider mb-2">The Question</h4>
-                <p className="text-base text-white leading-relaxed">
+                <h4 className="text-sm font-semibold text-teal-700 dark:text-teal-400 uppercase tracking-wider mb-2">The Question</h4>
+                <p className="text-base text-foreground leading-relaxed">
                   {data.question_text || "Question text not available."}
                 </p>
               </div>
 
-              <div className="p-4 bg-[#0F172A] rounded-xl border border-white/5">
-                <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Your Answer</h4>
-                <p className="text-white font-medium">
+              <div className="p-4 bg-background rounded-xl border border-border">
+                <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">Your Answer</h4>
+                <p className="text-foreground font-medium">
                   {data.learner_answer || "No answer recorded."}
                 </p>
               </div>
 
               <div className={`p-4 rounded-xl border ${data.is_correct ? 'bg-green-500/10 border-green-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
-                <h4 className={`text-sm font-semibold uppercase tracking-wider mb-2 ${data.is_correct ? 'text-green-400' : 'text-red-400'}`}>
+                <h4 className={`text-sm font-semibold uppercase tracking-wider mb-2 ${data.is_correct ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
                   Result
                 </h4>
-                <p className={data.is_correct ? 'text-green-200' : 'text-red-200'}>
+                <p className={data.is_correct ? 'text-green-800 dark:text-green-200' : 'text-red-800 dark:text-red-200'}>
                   {data.is_correct ? "You answered correctly!" : "This answer was incorrect."}
                 </p>
               </div>
@@ -179,7 +179,7 @@ export default function FeedbackPanel({
         <div className="text-center pt-4">
           <Button
             onClick={() => setShowQuestion(false)}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 font-semibold rounded-lg"
+            className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-3 font-semibold rounded-lg"
           >
             Return to Feedback Panel
           </Button>
@@ -197,7 +197,7 @@ export default function FeedbackPanel({
           <div className="flex items-center gap-4">
             {result.icon}
             <div>
-              <h3 className="text-xl font-bold text-white">{result.title}</h3>
+              <h3 className="text-xl font-bold text-foreground">{result.title}</h3>
               <p className={result.textColor}>{data.evaluation_summary}</p>
             </div>
           </div>
@@ -206,12 +206,12 @@ export default function FeedbackPanel({
 
       {/* Sandbox Execution Output (code questions) */}
       {data.sandbox_execution && data.sandbox_execution.attempted !== false && (
-        <Card className="bg-[#0F172A] border-white/10">
+        <Card className="bg-background border-border">
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-teal-400" />
-                <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                <Terminal className="w-4 h-4 text-teal-700 dark:text-teal-400" />
+                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Code Execution Result
                 </h4>
               </div>
@@ -221,8 +221,8 @@ export default function FeedbackPanel({
                     variant="outline"
                     className={
                       data.sandbox_execution.compiled
-                        ? "border-emerald-500/30 text-emerald-400"
-                        : "border-red-500/30 text-red-400"
+                        ? "border-emerald-500/30 text-emerald-700 dark:text-emerald-400"
+                        : "border-red-500/30 text-red-700 dark:text-red-400"
                     }
                   >
                     {data.sandbox_execution.compiled ? "Compiled" : "Compile Error"}
@@ -233,10 +233,10 @@ export default function FeedbackPanel({
                     variant="outline"
                     className={
                       data.sandbox_execution.executed_successfully
-                        ? "border-emerald-500/30 text-emerald-400"
+                        ? "border-emerald-500/30 text-emerald-700 dark:text-emerald-400"
                         : data.sandbox_execution.status === "sandbox_unavailable"
-                        ? "border-amber-500/30 text-amber-400"
-                        : "border-red-500/30 text-red-400"
+                        ? "border-amber-500/30 text-amber-700 dark:text-amber-400"
+                        : "border-red-500/30 text-red-700 dark:text-red-400"
                     }
                   >
                     {data.sandbox_execution.status}
@@ -248,27 +248,27 @@ export default function FeedbackPanel({
             <div className="font-mono text-sm space-y-3 max-h-72 overflow-y-auto">
               {data.sandbox_execution.compile_output && (
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1">Compile Output</p>
-                  <pre className="whitespace-pre-wrap break-words text-amber-300 leading-relaxed">{data.sandbox_execution.compile_output}</pre>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-1">Compile Output</p>
+                  <pre className="whitespace-pre-wrap break-words text-amber-700 dark:text-amber-300 leading-relaxed">{data.sandbox_execution.compile_output}</pre>
                 </div>
               )}
               {data.sandbox_execution.stdout && (
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">stdout</p>
-                  <pre className="whitespace-pre-wrap break-words text-white leading-relaxed">{data.sandbox_execution.stdout}</pre>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">stdout</p>
+                  <pre className="whitespace-pre-wrap break-words text-foreground leading-relaxed">{data.sandbox_execution.stdout}</pre>
                 </div>
               )}
               {data.sandbox_execution.stderr && (
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-red-400 mb-1">stderr</p>
-                  <pre className="whitespace-pre-wrap break-words text-red-300 leading-relaxed">{data.sandbox_execution.stderr}</pre>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-red-700 dark:text-red-400 mb-1">stderr</p>
+                  <pre className="whitespace-pre-wrap break-words text-red-700 dark:text-red-300 leading-relaxed">{data.sandbox_execution.stderr}</pre>
                 </div>
               )}
               {!hasSandboxOutput(data.sandbox_execution) && (
-                <p className="text-slate-500 italic">No output produced.</p>
+                <p className="text-subtle-foreground italic">No output produced.</p>
               )}
               {(data.sandbox_execution.time_seconds || data.sandbox_execution.memory_kb) && (
-                <p className="text-slate-500 text-xs pt-2 border-t border-white/5">
+                <p className="text-subtle-foreground text-xs pt-2 border-t border-border">
                   {data.sandbox_execution.time_seconds ? `Time: ${data.sandbox_execution.time_seconds}s` : ""}
                   {data.sandbox_execution.time_seconds && data.sandbox_execution.memory_kb ? " · " : ""}
                   {data.sandbox_execution.memory_kb ? `Memory: ${data.sandbox_execution.memory_kb} KB` : ""}
@@ -276,7 +276,7 @@ export default function FeedbackPanel({
               )}
             </div>
 
-            <p className="mt-3 text-xs text-slate-500">
+            <p className="mt-3 text-xs text-subtle-foreground">
               {data.sandbox_execution.sandbox_mode === "reference_snippet"
                 ? "The question's reference snippet was executed in a secure sandbox — this is the program's actual output, used by the evaluator to grade your traced answer."
                 : "Your submitted code was compiled and executed in a secure sandbox. The evaluator used this real output when grading."}
@@ -289,9 +289,9 @@ export default function FeedbackPanel({
       <div className="space-y-4">
 
         {/* Immediate Feedback */}
-        <Card className="bg-slate-800/30 border-slate-700">
+        <Card className="bg-muted/30 border-border">
           <CardContent className="p-4">
-            <p className="text-white">{data.immediate_feedback}</p>
+            <p className="text-foreground">{data.immediate_feedback}</p>
           </CardContent>
         </Card>
 
@@ -299,10 +299,10 @@ export default function FeedbackPanel({
         <Card className="bg-blue-500/10 border-blue-500/30">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <BookOpen className="w-4 h-4 text-blue-400" />
-              <h4 className="text-blue-300 font-semibold">Concept Explanation</h4>
+              <BookOpen className="w-4 h-4 text-blue-700 dark:text-blue-400" />
+              <h4 className="text-blue-700 dark:text-blue-300 font-semibold">Concept Explanation</h4>
             </div>
-            <p className="text-blue-200">{data.concept_explanation}</p>
+            <p className="text-blue-800 dark:text-blue-200">{data.concept_explanation}</p>
           </CardContent>
         </Card>
 
@@ -311,10 +311,10 @@ export default function FeedbackPanel({
           <Card className="bg-green-500/10 border-green-500/30">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
-                <ThumbsUp className="w-4 h-4 text-green-400" />
-                <h4 className="text-green-300 font-semibold">What You Got Right</h4>
+                <ThumbsUp className="w-4 h-4 text-green-700 dark:text-green-400" />
+                <h4 className="text-green-700 dark:text-green-300 font-semibold">What You Got Right</h4>
               </div>
-              <p className="text-green-200">{data.what_is_correct}</p>
+              <p className="text-green-800 dark:text-green-200">{data.what_is_correct}</p>
             </CardContent>
           </Card>
         )}
@@ -324,19 +324,19 @@ export default function FeedbackPanel({
           <Card className="bg-red-500/10 border-red-500/30">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
-                <ThumbsDown className="w-4 h-4 text-red-400" />
-                <h4 className="text-red-300 font-semibold">What Was Wrong</h4>
+                <ThumbsDown className="w-4 h-4 text-red-700 dark:text-red-400" />
+                <h4 className="text-red-700 dark:text-red-300 font-semibold">What Was Wrong</h4>
               </div>
-              <p className="text-red-200">{data.mistake_analysis}</p>
+              <p className="text-red-800 dark:text-red-200">{data.mistake_analysis}</p>
             </CardContent>
           </Card>
         )}
 
         {/* The Correct Answer */}
-        <Card className="bg-slate-800/30 border-slate-700">
+        <Card className="bg-muted/30 border-border">
           <CardContent className="p-4">
-            <h4 className="text-white font-semibold mb-2">The Correct Answer</h4>
-            <p className="text-slate-200">{data.correct_explanation}</p>
+            <h4 className="text-foreground font-semibold mb-2">The Correct Answer</h4>
+            <p className="text-foreground/90">{data.correct_explanation}</p>
           </CardContent>
         </Card>
 
@@ -344,19 +344,19 @@ export default function FeedbackPanel({
         <Card className="bg-amber-500/10 border-amber-500/30">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-2">
-              <Pencil className="w-4 h-4 text-amber-400" />
-              <h4 className="text-amber-300 font-semibold">Improvement Tip</h4>
+              <Pencil className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <h4 className="text-amber-700 dark:text-amber-300 font-semibold">Improvement Tip</h4>
             </div>
-            <p className="text-amber-200">{data.improvement_tip}</p>
+            <p className="text-amber-800 dark:text-amber-200">{data.improvement_tip}</p>
           </CardContent>
         </Card>
 
         {/* Hint for Next Attempt */}
         {data.hint_for_retry && (
-          <Card className="bg-slate-700/50 border-slate-600">
+          <Card className="bg-surface-3/50 border-border-strong">
             <CardContent className="p-4">
-              <h4 className="text-slate-300 font-semibold mb-2">Hint for Next Attempt</h4>
-              <p className="text-slate-400">{data.hint_for_retry}</p>
+              <h4 className="text-muted-foreground font-semibold mb-2">Hint for Next Attempt</h4>
+              <p className="text-muted-foreground">{data.hint_for_retry}</p>
             </CardContent>
           </Card>
         )}
@@ -366,10 +366,10 @@ export default function FeedbackPanel({
           <Card className="bg-indigo-500/10 border-indigo-500/30">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Lightbulb className="w-4 h-4 text-indigo-400" />
-                <h4 className="text-indigo-300 font-semibold">Deeper Insight</h4>
+                <Lightbulb className="w-4 h-4 text-indigo-700 dark:text-indigo-400" />
+                <h4 className="text-indigo-700 dark:text-indigo-300 font-semibold">Deeper Insight</h4>
               </div>
-              <p className="text-indigo-200">{data.deeper_insight}</p>
+              <p className="text-indigo-800 dark:text-indigo-200">{data.deeper_insight}</p>
             </CardContent>
           </Card>
         )}
@@ -379,10 +379,10 @@ export default function FeedbackPanel({
           <Card className="bg-amber-500/10 border-amber-500/30">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle className="w-4 h-4 text-amber-400" />
-                <h4 className="text-amber-300 font-semibold">Remediation Update</h4>
+                <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                <h4 className="text-amber-700 dark:text-amber-300 font-semibold">Remediation Update</h4>
               </div>
-              <p className="text-amber-200">{data.remediation_note}</p>
+              <p className="text-amber-800 dark:text-amber-200">{data.remediation_note}</p>
             </CardContent>
           </Card>
         )}
@@ -390,18 +390,18 @@ export default function FeedbackPanel({
         {/* Encouragement */}
         <Card className="bg-teal-500/10 border-teal-500/30">
           <CardContent className="p-4">
-            <p className="text-teal-200 italic">{data.encouragement}</p>
+            <p className="text-teal-800 dark:text-teal-200 italic">{data.encouragement}</p>
           </CardContent>
         </Card>
 
         {/* Suggested Resources */}
         {data.suggested_resources.length > 0 && (
-          <Card className="bg-slate-800/30 border-slate-700">
+          <Card className="bg-muted/30 border-border">
             <CardContent className="p-4">
-              <h4 className="text-white font-semibold mb-3">Suggested Resources</h4>
+              <h4 className="text-foreground font-semibold mb-3">Suggested Resources</h4>
               <div className="flex flex-wrap gap-2">
                 {data.suggested_resources.map((resource, index) => (
-                  <Badge key={index} variant="outline" className="border-slate-500 text-slate-300 cursor-pointer hover:border-teal-500 hover:text-teal-300">
+                  <Badge key={index} variant="outline" className="border-slate-500 text-muted-foreground cursor-pointer hover:border-teal-500 hover:text-teal-700 dark:hover:text-teal-300">
                     <ExternalLink className="w-3 h-3 mr-1" />
                     {resource}
                   </Badge>
@@ -414,7 +414,7 @@ export default function FeedbackPanel({
       </div>
 
       {/* Mastery Progress Update */}
-      <Card className="bg-[#1e293b]/90 backdrop-blur-xl border border-white/5 overflow-hidden">
+      <Card className="bg-card/90 backdrop-blur-xl border border-border overflow-hidden">
         <CardContent className="p-6">
           <div className="flex items-center gap-3 mb-6">
             <div className={`p-2 rounded-xl ${
@@ -424,17 +424,17 @@ export default function FeedbackPanel({
             }`}>
               <Target className={`w-5 h-5 ${
                 data.mastery_update.after_mastery >= data.mastery_update.target
-                  ? "text-emerald-400"
-                  : "text-teal-400"
+                  ? "text-emerald-700 dark:text-emerald-400"
+                  : "text-teal-700 dark:text-teal-400"
               }`} />
             </div>
             <div>
-              <h4 className="text-white font-bold">Mastery Progress</h4>
-              <p className="text-white/40 text-xs">{data.mastery_update.topic}</p>
+              <h4 className="text-foreground font-bold">Mastery Progress</h4>
+              <p className="text-subtle-foreground text-xs">{data.mastery_update.topic}</p>
             </div>
             {data.mastery_update.after_mastery >= data.mastery_update.target && (
               <div className="ml-auto px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-                <p className="text-emerald-400 text-xs font-bold">MASTERED</p>
+                <p className="text-emerald-700 dark:text-emerald-400 text-xs font-bold">MASTERED</p>
               </div>
             )}
           </div>
@@ -443,29 +443,29 @@ export default function FeedbackPanel({
           <div className="mb-6">
             <div className="flex items-center justify-between mb-3">
               <div className="text-center">
-                <p className="text-white/40 text-[10px] uppercase tracking-wider">Before</p>
-                <p className="text-2xl font-black text-white/60">{data.mastery_update.before_mastery}%</p>
+                <p className="text-subtle-foreground text-[10px] uppercase tracking-wider">Before</p>
+                <p className="text-2xl font-extrabold text-muted-foreground">{data.mastery_update.before_mastery}%</p>
               </div>
 
               <div className="flex-1 mx-6 relative">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <ArrowRight className="w-5 h-5 text-teal-400" />
+                  <ArrowRight className="w-5 h-5 text-teal-700 dark:text-teal-400" />
                 </div>
               </div>
 
               <div className="text-center">
-                <p className="text-white/40 text-[10px] uppercase tracking-wider">After</p>
-                <p className={`text-2xl font-black ${
+                <p className="text-subtle-foreground text-[10px] uppercase tracking-wider">After</p>
+                <p className={`text-2xl font-extrabold ${
                   data.mastery_update.after_mastery >= data.mastery_update.target
-                    ? "text-emerald-400"
-                    : "text-teal-400"
+                    ? "text-emerald-700 dark:text-emerald-400"
+                    : "text-teal-700 dark:text-teal-400"
                 }`}>{data.mastery_update.after_mastery}%</p>
               </div>
             </div>
 
             {/* Progress Bar */}
             <div className="relative mt-4">
-              <div className="w-full h-3 bg-[#0F172A] rounded-full overflow-visible">
+              <div className="w-full h-3 bg-background rounded-full overflow-visible">
                 <div
                   className={`h-full rounded-full transition-all duration-700 ${
                     data.mastery_update.after_mastery >= data.mastery_update.target
@@ -483,7 +483,7 @@ export default function FeedbackPanel({
               >
                 <div className="relative -translate-x-1/2">
                   <div className="w-0.5 h-5 bg-amber-400 rounded-full" />
-                  <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] text-amber-400 font-bold whitespace-nowrap">
+                  <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] text-amber-700 dark:text-amber-400 font-bold whitespace-nowrap">
                     TARGET {data.mastery_update.target}%
                   </p>
                 </div>
@@ -495,11 +495,11 @@ export default function FeedbackPanel({
                 style={{ left: `${Math.min(data.mastery_update.after_mastery, 100)}%` }}
               >
                 <div className="relative -translate-x-1/2">
-                  <div className={`w-3 h-3 rounded-full border-2 border-[#0F172A] ${
+                  <div className={`w-3 h-3 rounded-full border-2 border-background ${
                     data.mastery_update.after_mastery >= data.mastery_update.target
                       ? "bg-emerald-400"
                       : "bg-teal-400"
-                  } shadow-lg`} />
+                  } shadow-raised`} />
                 </div>
               </div>
             </div>
@@ -507,8 +507,8 @@ export default function FeedbackPanel({
             {/* Status Message */}
             <p className={`text-center text-sm font-medium mt-8 ${
               data.mastery_update.after_mastery >= data.mastery_update.target
-                ? "text-emerald-400"
-                : "text-white/60"
+                ? "text-emerald-700 dark:text-emerald-400"
+                : "text-muted-foreground"
             }`}>
               {data.mastery_update.after_mastery >= data.mastery_update.target
                 ? "🎉 Congratulations! You've mastered this topic!"
@@ -524,15 +524,15 @@ export default function FeedbackPanel({
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               {data.remediation_status.entered ? (
-                <AlertTriangle className="w-5 h-5 text-amber-400" />
+                <AlertTriangle className="w-5 h-5 text-amber-700 dark:text-amber-400" />
               ) : (
-                <Trophy className="w-5 h-5 text-green-400" />
+                <Trophy className="w-5 h-5 text-green-700 dark:text-green-400" />
               )}
-              <p className={`font-semibold ${data.remediation_status.entered ? 'text-amber-300' : 'text-green-300'}`}>
+              <p className={`font-semibold ${data.remediation_status.entered ? 'text-amber-700 dark:text-amber-300' : 'text-green-700 dark:text-green-300'}`}>
                 {data.remediation_status.entered ? "Entered Remediation Mode" : "Exited Remediation Mode"}
               </p>
             </div>
-            <p className={`mt-2 ${data.remediation_status.entered ? 'text-amber-200' : 'text-green-200'}`}>
+            <p className={`mt-2 ${data.remediation_status.entered ? 'text-amber-800 dark:text-amber-200' : 'text-green-800 dark:text-green-200'}`}>
               {data.remediation_status.message}
             </p>
           </CardContent>
@@ -547,7 +547,7 @@ export default function FeedbackPanel({
             : "bg-amber-500/10 border-amber-500/30"
         }`}>
           <p className={`text-sm font-medium ${
-            data.difficulty_change.next_difficulty === "Harder" ? "text-green-300" : "text-amber-300"
+            data.difficulty_change.next_difficulty === "Harder" ? "text-green-700 dark:text-green-300" : "text-amber-700 dark:text-amber-300"
           }`}>
             Next question: {data.difficulty_change.next_difficulty} ({data.difficulty_change.bloom_level_change})
           </p>
@@ -559,14 +559,14 @@ export default function FeedbackPanel({
         <Button
           onClick={() => setShowQuestion(true)}
           variant="outline"
-          className="border-teal-500/30 text-teal-400 hover:bg-teal-500/10 px-6 py-3 font-semibold rounded-lg order-2 sm:order-1"
+          className="border-teal-500/30 text-teal-700 dark:text-teal-400 hover:bg-teal-500/10 px-6 py-3 font-semibold rounded-lg order-2 sm:order-1"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Review Question
         </Button>
         <Button
           onClick={onNext}
-          className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 font-semibold rounded-lg order-1 sm:order-2"
+          className="bg-primary hover:bg-primary-hover text-primary-foreground px-6 py-3 font-semibold rounded-lg order-1 sm:order-2"
         >
           {data.next_action === "continue" && "Next Question →"}
           {data.next_action === "next_topic" && `Next Topic: ${data.next_topic_name} →`}

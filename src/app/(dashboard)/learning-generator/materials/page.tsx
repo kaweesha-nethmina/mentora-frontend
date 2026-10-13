@@ -102,7 +102,7 @@ export default function MaterialsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-10 h-10 text-teal-400 animate-spin" />
+        <Loader2 className="w-10 h-10 text-teal-700 dark:text-teal-400 animate-spin" />
       </div>
     );
   }
@@ -119,7 +119,7 @@ export default function MaterialsPage() {
               <BookOpen className="w-6 h-6 text-teal-600 dark:text-teal-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-[var(--lmg-text-primary)]">Learning Materials</h1>
+              <h1 className="text-2xl font-extrabold text-[var(--lmg-text-primary)]">Learning Materials</h1>
               <p className="text-sm text-[var(--lmg-text-muted)]">All AI-generated personalized learning content.</p>
             </div>
           </div>
@@ -139,23 +139,23 @@ export default function MaterialsPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 bg-[var(--lmg-bg-surface)] border border-[var(--lmg-border)] rounded-2xl shadow-sm">
-          <p className="text-3xl font-black text-[var(--lmg-text-primary)]">{materials.length}</p>
+          <p className="text-3xl font-extrabold text-[var(--lmg-text-primary)]">{materials.length}</p>
           <p className="text-xs text-[var(--lmg-text-muted)] mt-1">Total Materials</p>
         </div>
         <div className="p-5 bg-red-500/5 border border-red-500/10 rounded-2xl">
-          <p className="text-3xl font-black text-red-600 dark:text-red-400">
+          <p className="text-3xl font-extrabold text-red-600 dark:text-red-400">
             {materials.filter((m) => m.structured_material.gap_type === "FUNDAMENTAL_GAP").length}
           </p>
           <p className="text-xs text-red-600/70 dark:text-red-400/60 mt-1">Fundamental</p>
         </div>
         <div className="p-5 bg-amber-500/5 border border-amber-500/10 rounded-2xl">
-          <p className="text-3xl font-black text-amber-600 dark:text-amber-400">
+          <p className="text-3xl font-extrabold text-amber-600 dark:text-amber-400">
             {materials.filter((m) => m.structured_material.gap_type === "PARTIAL_GAP").length}
           </p>
           <p className="text-xs text-amber-600/70 dark:text-amber-400/60 mt-1">Partial</p>
         </div>
         <div className="p-5 bg-blue-500/5 border border-blue-500/10 rounded-2xl">
-          <p className="text-3xl font-black text-blue-600 dark:text-blue-400">
+          <p className="text-3xl font-extrabold text-blue-600 dark:text-blue-400">
             {materials.filter((m) => m.structured_material.gap_type === "SURFACE_GAP").length}
           </p>
           <p className="text-xs text-blue-600/70 dark:text-blue-400/60 mt-1">Surface</p>

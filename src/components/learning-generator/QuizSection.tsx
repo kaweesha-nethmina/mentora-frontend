@@ -32,7 +32,7 @@ export default function QuizSection({
           <div className="inline-flex w-16 h-16 rounded-full bg-teal-500/10 border border-teal-500/30 items-center justify-center mb-4">
             <Target className="w-8 h-8 text-teal-500 dark:text-teal-400" />
           </div>
-          <h2 className="text-3xl font-black text-[var(--lmg-text-primary)]">Knowledge Check</h2>
+          <h2 className="text-3xl font-extrabold text-[var(--lmg-text-primary)]">Knowledge Check</h2>
           <p className="text-[var(--lmg-text-muted)] mt-2">Pass this quick assessment to achieve mastery in {sm.topic}.</p>
         </div>
 
@@ -42,7 +42,7 @@ export default function QuizSection({
               <p className="text-sm font-bold text-teal-600 dark:text-teal-400 mb-2">Question {q.question_number} ({typeof q.type === 'string' ? q.type.replace('_', ' ') : q.type})</p>
               <h3 className="text-lg font-medium text-[var(--lmg-text-primary)] mb-4 whitespace-pre-wrap">{q.question}</h3>
               {q.code_snippet && (
-                <pre className="p-3 bg-slate-50 dark:bg-[#0b1021] rounded-xl text-slate-900 dark:text-teal-200 text-sm font-mono mb-4 border border-slate-200 dark:border-white/10 shadow-xs">
+                <pre className="p-3 bg-sunken rounded-xl text-slate-900 dark:text-teal-200 text-sm font-mono mb-4 border border-border shadow-xs">
                   {q.code_snippet}
                 </pre>
               )}
@@ -74,7 +74,7 @@ export default function QuizSection({
           <button
             onClick={onSubmit}
             disabled={Object.keys(answers).length < assessment.quiz.length || savingProgress}
-            className="px-6 py-3 bg-teal-600 disabled:bg-teal-800 disabled:opacity-50 text-white font-bold rounded-xl shadow-[0_0_15px_rgba(13,148,136,0.3)] hover:bg-teal-500 transition-all flex items-center gap-2"
+            className="px-6 py-3 bg-primary disabled:bg-teal-800 disabled:opacity-50 text-primary-foreground font-bold rounded-xl hover:bg-primary-hover transition-all flex items-center gap-2"
           >
             {savingProgress ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             Submit Answers
@@ -92,7 +92,7 @@ export default function QuizSection({
         <Award className="w-16 h-16 text-[#B45309] relative z-10" />
       </div>
       <div>
-        <h2 className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-r from-amber-500 to-[#B45309]">{quizScore >= 80 ? "Mastery Achieved!" : "Good Try!"}</h2>
+        <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-amber-500 to-[#B45309]">{quizScore >= 80 ? "Mastery Achieved!" : "Good Try!"}</h2>
         <p className="text-[var(--lmg-text-muted)] mt-3">You scored <span className="text-[var(--lmg-text-primary)] font-bold">{quizScore}%</span> on the {sm.topic} module.</p>
       </div>
 
@@ -103,7 +103,7 @@ export default function QuizSection({
       </div>
 
       <div className="pt-4">
-        <Link href="/learning-generator" className="px-8 py-3 bg-teal-600 hover:bg-teal-500 text-white font-black rounded-xl transition-colors w-full flex items-center justify-center gap-2 shadow-lg shadow-teal-900/20">
+        <Link href="/learning-generator" className="px-8 py-3 bg-primary hover:bg-primary-hover text-primary-foreground font-extrabold rounded-xl transition-colors w-full flex items-center justify-center gap-2 shadow-raised ">
           Return to Hub
         </Link>
       </div>

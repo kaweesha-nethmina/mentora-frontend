@@ -38,7 +38,7 @@ type SandboxRedirect = {
 };
 
 const statusStyle = {
-  queued: "border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/50",
+  queued: "border-border bg-muted text-muted-foreground",
   running: "border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-200",
   done: "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-200",
   error: "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-200",
@@ -318,10 +318,10 @@ export default function KnowledgeAssistForensicsPage() {
               <p className="text-[11px] uppercase tracking-[0.2em] text-amber-700 dark:text-amber-300 font-bold">
                 GitHub required
               </p>
-              <h1 className="mt-1 text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+              <h1 className="mt-1 text-2xl md:text-3xl font-extrabold text-foreground">
                 Connect GitHub to review repositories
               </h1>
-              <p className="mt-2 max-w-2xl text-sm text-slate-700 dark:text-white/60">
+              <p className="mt-2 max-w-2xl text-sm text-foreground/80">
                 Use the GitHub status control at the bottom of the sidebar. After it is connected,
                 this page will load your eligible repositories without needing a manual refresh.
               </p>
@@ -334,7 +334,7 @@ export default function KnowledgeAssistForensicsPage() {
                   Don&apos;t have a GitHub account?
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-                <span className="text-xs text-slate-500 dark:text-white/45">
+                <span className="text-xs text-muted-foreground">
                   Continue with sandbox coding questions and retry practice.
                 </span>
               </div>
@@ -348,16 +348,16 @@ export default function KnowledgeAssistForensicsPage() {
   return (
     <div className="space-y-4 pb-4">
       {/* ── HEADER ── */}
-      <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
+      <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p className="text-[11px] uppercase tracking-[0.2em] text-teal-700 dark:text-cyan-300 font-bold">
               Repository Forensics
             </p>
-            <h1 className="mt-1 text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
+            <h1 className="mt-1 text-2xl md:text-3xl font-extrabold text-foreground">
               Mentora Code Review Pipeline
             </h1>
-            <p className="mt-2 max-w-3xl text-sm text-slate-600 dark:text-white/55">
+            <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
               Select up to five linked GitHub repositories. Mentora bundles source files server-side,
               reviews them through the Mentora AI expert review engine, and stores the report for recovery.
             </p>
@@ -367,7 +367,7 @@ export default function KnowledgeAssistForensicsPage() {
             <p className="text-xs font-semibold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
               GitHub connected
             </p>
-            <p className="mt-1 text-sm font-medium text-slate-800 dark:text-white">
+            <p className="mt-1 text-sm font-medium text-foreground">
               {githubLogin ? `@${githubLogin}` : "Linked account"}
             </p>
           </div>
@@ -393,45 +393,45 @@ export default function KnowledgeAssistForensicsPage() {
       {/* ── MAIN GRID ── */}
       <section className="grid grid-cols-1 xl:grid-cols-[390px_minmax(0,1fr)] gap-4">
         {/* ── REPO SELECTION PANEL ── */}
-        <article className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 flex flex-col shadow-xs">
+        <article className="rounded-2xl border border-border bg-card/55 p-4 flex flex-col shadow-xs">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+            <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
               <GitBranch className="h-4 w-4 text-teal-600 dark:text-cyan-300" />
               Repository Selection
             </h2>
-            <span className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] px-2 py-1 text-xs text-slate-600 dark:text-white/55">
+            <span className="rounded-lg border border-border bg-background px-2 py-1 text-xs text-muted-foreground">
               {selectedCount} / {MAX_SELECTED_REPOS}
             </span>
           </div>
 
           {/* Search bar */}
           <div className="mt-3 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 dark:text-white/30 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-subtle-foreground pointer-events-none" />
             <input
               type="text"
               placeholder="Search repositories..."
               value={repoSearch}
               onChange={(e) => setRepoSearch(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] pl-9 pr-3 py-2 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-teal-500/50 transition-all"
+              className="w-full rounded-lg border border-border bg-background pl-9 pr-3 py-2 text-sm text-foreground placeholder:text-subtle-foreground outline-none focus:border-teal-500/50 transition-all"
             />
           </div>
 
           {/* Scrollable repo list */}
           <div className="mt-3 flex-1 min-h-0 max-h-[340px] overflow-y-auto space-y-2 custom-scrollbar pr-1">
             {loadingRepos && (
-              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4 text-sm text-slate-500 dark:text-white/50">
+              <div className="rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
                 Loading GitHub repositories...
               </div>
             )}
 
             {!loadingRepos && repos.length === 0 && (
-              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4 text-sm text-slate-500 dark:text-white/50">
+              <div className="rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
                 No eligible repositories were found for this GitHub account.
               </div>
             )}
 
             {!loadingRepos && repos.length > 0 && filteredAndOrderedRepos.length === 0 && (
-              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-4 text-sm text-slate-500 dark:text-white/50">
+              <div className="rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
                 No repositories match &ldquo;{repoSearch}&rdquo;
               </div>
             )}
@@ -446,24 +446,24 @@ export default function KnowledgeAssistForensicsPage() {
                   className={`w-full rounded-xl border p-3 text-left transition-all duration-200 ${
                     checked
                       ? "border-teal-500/50 bg-teal-50/70 dark:bg-teal-500/10 shadow-xs"
-                      : "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] hover:border-slate-300 dark:hover:border-white/20 hover:bg-slate-100 dark:hover:bg-white/[0.04]"
+                      : "border-border bg-background hover:border-border-strong hover:bg-muted"
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <span
                       className={`mt-0.5 h-4 w-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
                         checked
-                          ? "border-teal-600 bg-teal-600 dark:border-teal-400 dark:bg-teal-400 text-white dark:text-[#0F172A]"
-                          : "border-slate-300 dark:border-white/25"
+                          ? "border-teal-600 bg-primary dark:border-teal-400 dark:bg-teal-400 text-primary-foreground dark:text-[#0F172A]"
+                          : "border-border-strong"
                       }`}
                     >
                       {checked && <CheckCircle2 className="h-3 w-3" />}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-semibold text-slate-900 dark:text-white">
+                      <span className="block truncate text-sm font-semibold text-foreground">
                         {repo.full_name}
                       </span>
-                      <span className="mt-0.5 block text-xs text-slate-500 dark:text-white/45">
+                      <span className="mt-0.5 block text-xs text-muted-foreground">
                         {formatRepoMeta(repo)}
                       </span>
                     </span>
@@ -475,18 +475,18 @@ export default function KnowledgeAssistForensicsPage() {
 
           {/* Choose LLM engine */}
           <div className="mt-4">
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
               Choose LLM
             </p>
-            <div className="grid grid-cols-2 gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 p-1">
+            <div className="grid grid-cols-2 gap-2 rounded-xl border border-border bg-muted p-1">
               <button
                 type="button"
                 onClick={() => setSelectedLlm("gemini")}
                 disabled={runningReview || activeReviewIsRunning}
                 className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-all disabled:cursor-not-allowed ${
                   selectedLlm === "gemini"
-                    ? "bg-teal-600 dark:bg-gradient-to-r dark:from-teal-500 dark:to-teal-400 text-white dark:text-[#061016] shadow-xs"
-                    : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-primary dark:bg-gradient-to-r dark:from-teal-500 dark:to-teal-400 text-primary-foreground dark:text-[#061016] shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 <Sparkles className="h-4 w-4" />
@@ -503,8 +503,8 @@ export default function KnowledgeAssistForensicsPage() {
                 }
                 className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
                   selectedLlm === "ollama"
-                    ? "bg-teal-600 dark:bg-gradient-to-r dark:from-teal-500 dark:to-teal-400 text-white dark:text-[#061016] shadow-xs"
-                    : "text-slate-600 dark:text-white/60 hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-primary dark:bg-gradient-to-r dark:from-teal-500 dark:to-teal-400 text-primary-foreground dark:text-[#061016] shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 <Cpu className="h-4 w-4" />
@@ -528,7 +528,7 @@ export default function KnowledgeAssistForensicsPage() {
               !!sandboxRedirect ||
               activeReviewIsRunning
             }
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold px-4 py-3 text-sm transition-all shadow-sm hover:brightness-110 disabled:cursor-not-allowed disabled:bg-slate-200 dark:disabled:bg-white/10 disabled:text-slate-400 dark:disabled:text-white/35 disabled:shadow-none"
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-hover text-primary-foreground font-bold px-4 py-3 text-sm transition-all shadow-sm hover:brightness-110 disabled:cursor-not-allowed disabled:bg-surface-3 disabled:text-subtle-foreground disabled:shadow-none"
           >
             {runningReview || activeReviewIsRunning ? (
               <CircleDashed className="h-4 w-4 animate-spin" />
@@ -554,9 +554,9 @@ export default function KnowledgeAssistForensicsPage() {
             <MetricCard label="High Risk" value={reportStats.high} tone="text-amber-700 dark:text-amber-300" />
           </section>
 
-          <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-4 shadow-xs">
+          <section className="rounded-2xl border border-border bg-card/55 p-4 shadow-xs">
             <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
-              <h2 className="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
                 <Sparkles className="h-4 w-4 text-cyan-600 dark:text-cyan-300" />
                 Review Results
               </h2>
@@ -572,7 +572,7 @@ export default function KnowledgeAssistForensicsPage() {
             </div>
 
             {!job && (
-              <div className="mt-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172A] p-5 text-sm text-slate-500 dark:text-white/50">
+              <div className="mt-4 rounded-xl border border-border bg-background p-5 text-sm text-muted-foreground">
                 Run a review to see repository summaries, defects, skill-level signals, and fix hints.
               </div>
             )}
@@ -584,7 +584,7 @@ export default function KnowledgeAssistForensicsPage() {
                     <p className="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">
                       Inferred Java level
                     </p>
-                    <p className="mt-1 text-sm text-slate-900 dark:text-white">
+                    <p className="mt-1 text-sm text-foreground">
                       {job.java_level_inferred}
                       {job.signals_evidence ? ` - ${job.signals_evidence}` : ""}
                     </p>
@@ -666,7 +666,7 @@ function ForensicsActiveReviewBanner({
     <section className={`rounded-2xl border p-4 ${borderTone}`}>
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex min-w-0 items-start gap-4">
-          <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cyan-500/35 bg-white dark:bg-[#0F172A]/70 text-cyan-700 dark:text-cyan-200">
+          <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cyan-500/35 bg-background/70 text-cyan-700 dark:text-cyan-200">
             {running ? (
               <CircleDashed className="h-5 w-5 animate-spin" />
             ) : failedStatus ? (
@@ -679,8 +679,8 @@ function ForensicsActiveReviewBanner({
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-200">
               Repository Forensics
             </p>
-            <h2 className="mt-1 text-xl font-black text-slate-900 dark:text-white">{title}</h2>
-            <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-600 dark:text-white/65">
+            <h2 className="mt-1 text-xl font-extrabold text-foreground">{title}</h2>
+            <p className="mt-1 max-w-3xl text-sm leading-6 text-muted-foreground">
               {description}
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -690,7 +690,7 @@ function ForensicsActiveReviewBanner({
                 <LlmIcon className="h-3.5 w-3.5" />
                 Using {llmName}
               </span>
-              <span className="font-mono text-xs text-slate-500 dark:text-white/35">
+              <span className="font-mono text-xs text-muted-foreground">
                 Job {review.jobId}
               </span>
             </div>
@@ -716,9 +716,9 @@ function ForensicsActiveReviewBanner({
 
 function ReviewCountPill({ label, value }: { label: string; value: number }) {
   return (
-    <div className="min-w-20 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172A]/70 px-3 py-2 text-center shadow-xs">
-      <p className="text-lg font-black text-slate-900 dark:text-white">{value}</p>
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white/40">
+    <div className="min-w-20 rounded-xl border border-border bg-background/70 px-3 py-2 text-center shadow-xs">
+      <p className="text-lg font-extrabold text-foreground">{value}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
     </div>
@@ -741,7 +741,7 @@ function ReviewStartedDialog({
         aria-modal="true"
         aria-labelledby="review-started-title"
         aria-describedby="review-started-description"
-        className="my-auto w-full max-w-lg rounded-2xl border border-cyan-500/30 bg-white dark:bg-[#111827] p-6 shadow-2xl"
+        className="my-auto w-full max-w-lg rounded-2xl border border-cyan-500/30 bg-popover p-6 shadow-overlay"
       >
         <div className="flex items-start gap-4">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-200">
@@ -751,14 +751,14 @@ function ReviewStartedDialog({
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">
               Review queued
             </p>
-            <h2 id="review-started-title" className="mt-1 text-2xl font-black text-slate-900 dark:text-white">
+            <h2 id="review-started-title" className="mt-1 text-2xl font-extrabold text-foreground">
               Continue in Sandbox
             </h2>
-            <p id="review-started-description" className="mt-3 text-sm leading-6 text-slate-600 dark:text-white/65">
+            <p id="review-started-description" className="mt-3 text-sm leading-6 text-muted-foreground">
               Your repository review is running in the background. Open Sandbox to keep
               practicing while the analysis completes.
             </p>
-            <p className="mt-3 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 px-3 py-2 font-mono text-xs text-slate-600 dark:text-white/45">
+            <p className="mt-3 rounded-lg border border-border bg-muted px-3 py-2 font-mono text-xs text-muted-foreground">
               Job ID: {jobId}
             </p>
           </div>
@@ -768,7 +768,7 @@ function ReviewStartedDialog({
           <button
             type="button"
             onClick={onConfirm}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-300 px-5 py-3 text-sm font-black text-[#061016] transition-all hover:bg-cyan-200 hover:shadow-[0_0_20px_rgba(34,211,238,0.35)]"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-300 px-5 py-3 text-sm font-extrabold text-[#061016] transition-all hover:bg-cyan-200 "
           >
             OK, open Sandbox
             <ArrowRight className="h-4 w-4" />
@@ -790,9 +790,9 @@ function MetricCard({
   tone: string;
 }) {
   return (
-    <article className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1e293b]/55 p-3 shadow-xs">
-      <p className="text-xs uppercase tracking-wider text-slate-500 dark:text-white/40">{label}</p>
-      <p className={`mt-1 text-2xl font-black ${tone}`}>{value}</p>
+    <article className="rounded-xl border border-border bg-card/55 p-3 shadow-xs">
+      <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
+      <p className={`mt-1 text-2xl font-extrabold ${tone}`}>{value}</p>
     </article>
   );
 }
@@ -807,10 +807,10 @@ function RepoReport({
   onRerun: () => void;
 }) {
   return (
-    <article className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172A] p-4 shadow-xs">
+    <article className="rounded-xl border border-border bg-background p-4 shadow-xs">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0">
-          <p className="truncate text-base font-semibold text-slate-900 dark:text-white">{repo.full_name}</p>
+          <p className="truncate text-base font-semibold text-foreground">{repo.full_name}</p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <span
               className={`inline-flex rounded-lg border px-2 py-1 text-xs font-semibold uppercase ${
@@ -824,7 +824,7 @@ function RepoReport({
                 className={`inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-[10px] font-semibold uppercase ${
                   repo.llm_choice === "ollama"
                     ? "border-amber-500/25 bg-amber-500/10 text-amber-800 dark:text-amber-200"
-                    : "border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-white/55"
+                    : "border-border bg-muted text-muted-foreground"
                 }`}
               >
                 {repo.llm_choice === "ollama" ? (
@@ -842,7 +842,7 @@ function RepoReport({
           type="button"
           onClick={onRerun}
           disabled={rerunning}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-transparent px-3 py-2 text-xs font-semibold text-cyan-700 dark:text-cyan-200 transition-colors hover:bg-slate-100 dark:hover:bg-cyan-500/10 disabled:cursor-not-allowed disabled:text-slate-400 dark:disabled:text-white/30"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-slate-50 dark:bg-transparent px-3 py-2 text-xs font-semibold text-cyan-700 dark:text-cyan-200 transition-colors hover:bg-slate-100 dark:hover:bg-cyan-500/10 disabled:cursor-not-allowed disabled:text-subtle-foreground"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${rerunning ? "animate-spin" : ""}`} />
           Re-review
@@ -857,21 +857,21 @@ function RepoReport({
 
       {repo.review && (
         <div className="mt-4 space-y-4">
-          <div className="rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50/70 dark:bg-white/[0.03] p-3">
-            <p className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white">
+          <div className="rounded-lg border border-border bg-muted p-3">
+            <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-300" />
               Summary
             </p>
-            <p className="mt-2 text-sm leading-6 text-slate-700 dark:text-white/65">{repo.review.summary}</p>
+            <p className="mt-2 text-sm leading-6 text-foreground/80">{repo.review.summary}</p>
           </div>
 
           {repo.review.errors.length > 0 && (
-            <div className="overflow-hidden rounded-lg border border-slate-200 dark:border-white/10">
-              <div className="grid grid-cols-[88px_minmax(0,1fr)] gap-3 bg-slate-100 dark:bg-[#111827] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-white/40">
+            <div className="overflow-hidden rounded-lg border border-border">
+              <div className="grid grid-cols-[88px_minmax(0,1fr)] gap-3 bg-popover px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 <span>Severity</span>
                 <span>Review details</span>
               </div>
-              <div className="divide-y divide-slate-100 dark:divide-white/5">
+              <div className="divide-y divide-border">
                 {repo.review.errors.map((item, index) => (
                   <div key={`${item.file}-${item.line ?? "line"}-${index}`} className="p-3">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
@@ -885,10 +885,10 @@ function RepoReport({
                         </span>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-white/35">
+                        <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                           Location
                         </p>
-                        <p className="mt-1 break-all font-mono text-xs leading-5 text-slate-800 dark:text-white/60">
+                        <p className="mt-1 break-all font-mono text-xs leading-5 text-foreground">
                           {item.file}
                           {item.line ? `:${item.line}` : ""}
                         </p>
@@ -897,15 +897,15 @@ function RepoReport({
 
                     <div className="mt-3 grid gap-3 lg:grid-cols-2">
                       <div className="min-w-0">
-                        <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-white/35">
+                        <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                           Finding
                         </p>
-                        <p className="mt-1 break-words text-sm leading-6 text-slate-800 dark:text-white/75">
+                        <p className="mt-1 break-words text-sm leading-6 text-foreground">
                           {item.why}
                         </p>
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-white/35">
+                        <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                           Fix hint
                         </p>
                         <p className="mt-1 break-words text-sm leading-6 text-cyan-800 dark:text-cyan-100/80">

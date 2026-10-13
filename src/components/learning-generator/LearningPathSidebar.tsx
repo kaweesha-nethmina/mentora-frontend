@@ -32,7 +32,7 @@ export default function LearningPathSidebar({
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-teal-500/10 border border-teal-500/20 text-teal-700 dark:text-teal-400 text-[10px] font-bold uppercase tracking-wider mb-3">
           {sm.difficulty_level} Module
         </div>
-        <h2 className="text-xl font-black mb-1 text-[var(--lmg-text-primary)]">{sm.topic}</h2>
+        <h2 className="text-xl font-extrabold mb-1 text-[var(--lmg-text-primary)]">{sm.topic}</h2>
         <p className="text-[var(--lmg-text-muted)] text-xs mb-2">{steps.length} steps • {completedSteps.length} completed</p>
 
         <div className="w-full h-1.5 bg-[var(--lmg-bg-card-subtle)] rounded-full overflow-hidden mb-8">

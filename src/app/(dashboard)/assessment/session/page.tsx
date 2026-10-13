@@ -298,37 +298,37 @@ export default function SessionPage() {
   };
 
   const getMasteryColor = (mastery: number) => {
-    if (mastery >= 85) return { text: "text-emerald-400", bg: "bg-emerald-500", ring: "stroke-emerald-400" };
-    if (mastery >= 60) return { text: "text-blue-400", bg: "bg-blue-500", ring: "stroke-blue-400" };
-    if (mastery >= 40) return { text: "text-amber-400", bg: "bg-amber-500", ring: "stroke-amber-400" };
-    return { text: "text-red-400", bg: "bg-red-500", ring: "stroke-red-400" };
+    if (mastery >= 85) return { text: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-500", ring: "stroke-emerald-400" };
+    if (mastery >= 60) return { text: "text-blue-700 dark:text-blue-400", bg: "bg-blue-500", ring: "stroke-blue-400" };
+    if (mastery >= 40) return { text: "text-amber-700 dark:text-amber-400", bg: "bg-amber-500", ring: "stroke-amber-400" };
+    return { text: "text-red-700 dark:text-red-400", bg: "bg-red-500", ring: "stroke-red-400" };
   };
 
   const getTopicIcon = (status: string) => {
     switch (status) {
-      case "mastered": return <CheckCircle className="w-4 h-4 text-emerald-400" />;
-      case "current": return <Clock className="w-4 h-4 text-blue-400" />;
-      default: return <Circle className="w-4 h-4 text-slate-500" />;
+      case "mastered": return <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />;
+      case "current": return <Clock className="w-4 h-4 text-blue-700 dark:text-blue-400" />;
+      default: return <Circle className="w-4 h-4 text-subtle-foreground" />;
     }
   };
 
   const getDifficultyConfig = (difficulty: string) => {
     switch (difficulty) {
-      case "Easy": return { color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30", dot: "bg-emerald-400" };
-      case "Medium": return { color: "bg-amber-500/10 text-amber-400 border-amber-500/30", dot: "bg-amber-400" };
-      case "Hard": return { color: "bg-red-500/10 text-red-400 border-red-500/30", dot: "bg-red-400" };
-      default: return { color: "bg-slate-500/10 text-slate-400 border-slate-500/30", dot: "bg-slate-400" };
+      case "Easy": return { color: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30", dot: "bg-emerald-400" };
+      case "Medium": return { color: "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30", dot: "bg-amber-400" };
+      case "Hard": return { color: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/30", dot: "bg-red-400" };
+      default: return { color: "bg-slate-500/10 text-muted-foreground border-slate-500/30", dot: "bg-slate-400" };
     }
   };
 
   const getTypeConfig = (type: string) => {
     switch (type) {
-      case "mcq": return { label: "Multiple Choice", color: "bg-blue-500/10 text-blue-400 border-blue-500/30" };
-      case "code_completion": return { label: "Code Completion", color: "bg-purple-500/10 text-purple-400 border-purple-500/30" };
-      case "code_tracing": return { label: "Code Tracing", color: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30" };
-      case "debugging": return { label: "Debugging", color: "bg-orange-500/10 text-orange-400 border-orange-500/30" };
-      case "coding_challenge": return { label: "Coding Challenge", color: "bg-red-500/10 text-red-400 border-red-500/30" };
-      default: return { label: type, color: "bg-slate-500/10 text-slate-400 border-slate-500/30" };
+      case "mcq": return { label: "Multiple Choice", color: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30" };
+      case "code_completion": return { label: "Code Completion", color: "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/30" };
+      case "code_tracing": return { label: "Code Tracing", color: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/30" };
+      case "debugging": return { label: "Debugging", color: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/30" };
+      case "coding_challenge": return { label: "Coding Challenge", color: "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/30" };
+      default: return { label: type, color: "bg-slate-500/10 text-muted-foreground border-slate-500/30" };
     }
   };
 
@@ -691,10 +691,10 @@ export default function SessionPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-teal-500/30 border-t-teal-500 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/70 font-semibold">Loading assessment session...</p>
+          <p className="text-foreground/80 font-semibold">Loading assessment session...</p>
         </div>
       </div>
     );
@@ -702,12 +702,12 @@ export default function SessionPage() {
 
   if (error || !sessionData) {
     return (
-      <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center max-w-md">
-          <AlertTriangle className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-white mb-2">Session Error</h2>
-          <p className="text-white/60 mb-6">{error || 'Failed to load session data'}</p>
-          <Button onClick={() => router.push('/assessment')} className="bg-teal-600 hover:bg-teal-500 text-white">
+          <AlertTriangle className="w-16 h-16 text-amber-700 dark:text-amber-400 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-foreground mb-2">Session Error</h2>
+          <p className="text-muted-foreground mb-6">{error || 'Failed to load session data'}</p>
+          <Button onClick={() => router.push('/assessment')} className="bg-primary hover:bg-primary-hover text-primary-foreground">
             Back to Assessment
           </Button>
         </div>
@@ -734,7 +734,7 @@ export default function SessionPage() {
       onClick={handleRunCode}
       disabled={isRunning || isEvaluating || !runSource.trim()}
       variant="outline"
-      className="border-teal-500/40 text-teal-300 hover:bg-teal-500/10 px-5 py-2 font-semibold rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+      className="border-teal-500/40 text-teal-700 dark:text-teal-300 hover:bg-teal-500/10 px-5 py-2 font-semibold rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all"
     >
       {isRunning ? (
         <div className="flex items-center gap-2">
@@ -751,11 +751,11 @@ export default function SessionPage() {
   );
 
   const consoleOutput = (isRunning || runResult) && (
-    <div className="rounded-xl border border-white/10 bg-[#0F172A] overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
+    <div className="rounded-xl border border-border bg-background overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2 bg-muted border-b border-border">
         <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-teal-400" />
-          <span className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+          <Terminal className="w-4 h-4 text-teal-700 dark:text-teal-400" />
+          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Console Output
           </span>
         </div>
@@ -764,8 +764,8 @@ export default function SessionPage() {
             variant="outline"
             className={
               runResult.executed_successfully
-                ? "border-emerald-500/30 text-emerald-400"
-                : "border-red-500/30 text-red-400"
+                ? "border-emerald-500/30 text-emerald-700 dark:text-emerald-400"
+                : "border-red-500/30 text-red-700 dark:text-red-400"
             }
           >
             {runResult.status}
@@ -774,7 +774,7 @@ export default function SessionPage() {
       </div>
       <div className="p-4 max-h-64 overflow-y-auto font-mono text-sm space-y-3">
         {isRunning && (
-          <p className="text-white/40 flex items-center gap-2">
+          <p className="text-subtle-foreground flex items-center gap-2">
             <span className="w-3 h-3 border-2 border-teal-400/30 border-t-teal-400 rounded-full animate-spin inline-block" />
             Compiling &amp; executing your code...
           </p>
@@ -783,27 +783,27 @@ export default function SessionPage() {
           <>
             {runResult.compile_output && (
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1">Compile Output</p>
-                <pre className="whitespace-pre-wrap break-words text-amber-300 leading-relaxed">{runResult.compile_output}</pre>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-1">Compile Output</p>
+                <pre className="whitespace-pre-wrap break-words text-amber-700 dark:text-amber-300 leading-relaxed">{runResult.compile_output}</pre>
               </div>
             )}
             {runResult.stdout && (
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">stdout</p>
-                <pre className="whitespace-pre-wrap break-words text-white leading-relaxed">{runResult.stdout}</pre>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">stdout</p>
+                <pre className="whitespace-pre-wrap break-words text-foreground leading-relaxed">{runResult.stdout}</pre>
               </div>
             )}
             {runResult.stderr && (
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-red-400 mb-1">stderr</p>
-                <pre className="whitespace-pre-wrap break-words text-red-300 leading-relaxed">{runResult.stderr}</pre>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-red-700 dark:text-red-400 mb-1">stderr</p>
+                <pre className="whitespace-pre-wrap break-words text-red-700 dark:text-red-300 leading-relaxed">{runResult.stderr}</pre>
               </div>
             )}
             {!runResult.stdout && !runResult.stderr && !runResult.compile_output && (
-              <p className="text-white/30 italic">No output produced.</p>
+              <p className="text-subtle-foreground italic">No output produced.</p>
             )}
             {(runResult.time_seconds || runResult.memory_kb) && (
-              <p className="text-white/25 text-xs pt-1 border-t border-white/5">
+              <p className="text-subtle-foreground/70 text-xs pt-1 border-t border-border">
                 {runResult.time_seconds ? `Time: ${runResult.time_seconds}s` : ''}
                 {runResult.time_seconds && runResult.memory_kb ? ' · ' : ''}
                 {runResult.memory_kb ? `Memory: ${runResult.memory_kb} KB` : ''}
@@ -816,46 +816,46 @@ export default function SessionPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0F172A] flex">
-      <div className="w-72 bg-[#1e293b]/95 backdrop-blur-xl border-r border-white/5 p-5 overflow-y-auto flex flex-col">
+    <div className="min-h-screen bg-background flex">
+      <div className="w-72 bg-card/95 backdrop-blur-xl border-r border-border p-5 overflow-y-auto flex flex-col">
         {/* Session Info Card */}
-        <div className="mb-6 bg-[#0F172A] rounded-xl border border-white/5 p-4">
+        <div className="mb-6 bg-background rounded-xl border border-border p-4">
           <div className="flex items-center gap-2 mb-3">
             <div className="p-1.5 rounded-lg bg-teal-500/10">
-              <Target className="w-4 h-4 text-teal-400" />
+              <Target className="w-4 h-4 text-teal-700 dark:text-teal-400" />
             </div>
-            <span className="text-xs font-bold text-white/40 uppercase tracking-wider">Assessment Session</span>
+            <span className="text-xs font-bold text-subtle-foreground uppercase tracking-wider">Assessment Session</span>
           </div>
 
           <div className="space-y-3">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] font-semibold text-white/30 uppercase tracking-wider">Learner</span>
+                <span className="text-[10px] font-semibold text-subtle-foreground uppercase tracking-wider">Learner</span>
                 <button
                   onClick={() => navigator.clipboard.writeText(sessionData.learnerId)}
-                  className="p-0.5 hover:bg-white/5 rounded transition-colors"
+                  className="p-0.5 hover:bg-muted rounded transition-colors"
                   title="Copy Learner ID"
                 >
-                  <Copy className="w-3 h-3 text-white/30 hover:text-white/60" />
+                  <Copy className="w-3 h-3 text-subtle-foreground hover:text-muted-foreground" />
                 </button>
               </div>
-              <p className="text-xs text-white/70 font-mono bg-white/5 rounded px-2 py-1.5 truncate">
+              <p className="text-xs text-foreground/80 font-mono bg-muted rounded px-2 py-1.5 truncate">
                 {sessionData.learnerId}
               </p>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] font-semibold text-white/30 uppercase tracking-wider">Session ID</span>
+                <span className="text-[10px] font-semibold text-subtle-foreground uppercase tracking-wider">Session ID</span>
                 <button
                   onClick={() => navigator.clipboard.writeText(sessionData.sessionId)}
-                  className="p-0.5 hover:bg-white/5 rounded transition-colors"
+                  className="p-0.5 hover:bg-muted rounded transition-colors"
                   title="Copy Session ID"
                 >
-                  <Copy className="w-3 h-3 text-white/30 hover:text-white/60" />
+                  <Copy className="w-3 h-3 text-subtle-foreground hover:text-muted-foreground" />
                 </button>
               </div>
-              <p className="text-xs text-white/70 font-mono bg-white/5 rounded px-2 py-1.5 truncate">
+              <p className="text-xs text-foreground/80 font-mono bg-muted rounded px-2 py-1.5 truncate">
                 {sessionData.sessionId}
               </p>
             </div>
@@ -870,7 +870,7 @@ export default function SessionPage() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="3"
-                className="text-white/5"
+                className="text-subtle-foreground/70"
               />
               <path
                 d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0-31.831"
@@ -882,20 +882,20 @@ export default function SessionPage() {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className={`text-2xl font-black ${masteryColors.text}`}>{sessionData.currentTopic.mastery}%</span>
-              <span className="text-[10px] text-white/40">Mastery</span>
+              <span className={`text-2xl font-extrabold ${masteryColors.text}`}>{sessionData.currentTopic.mastery}%</span>
+              <span className="text-[10px] text-subtle-foreground">Mastery</span>
             </div>
           </div>
-          <h4 className="text-white font-bold text-sm mb-1">{sessionData.currentTopic.name}</h4>
+          <h4 className="text-foreground font-bold text-sm mb-1">{sessionData.currentTopic.name}</h4>
           <div className="flex items-center justify-center gap-2">
             <div className={`w-2 h-2 rounded-full ${masteryColors.bg}`} />
-            <span className="text-xs text-white/50">Target: 85%</span>
+            <span className="text-xs text-muted-foreground">Target: 85%</span>
           </div>
         </div>
 
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-2">
+            <h4 className="text-xs font-bold text-subtle-foreground uppercase tracking-wider flex items-center gap-2">
               <BarChart3 className="w-3.5 h-3.5" />
               Topic Progress
             </h4>
@@ -918,44 +918,44 @@ export default function SessionPage() {
                     <div className="flex items-center gap-2.5 mb-1.5">
                       {getTopicIcon(topic.status)}
                       <p className={`text-xs font-semibold truncate ${
-                        isCurrent ? "text-white" :
-                        isMastered ? "text-emerald-400" : "text-white/40"
+                        isCurrent ? "text-foreground" :
+                        isMastered ? "text-emerald-700 dark:text-emerald-400" : "text-subtle-foreground"
                       }`}>
                         {topic.name}
                       </p>
                       {isCurrent && (
-                        <span className="ml-auto px-1.5 py-0.5 bg-blue-500/15 text-blue-300 text-[9px] font-bold uppercase tracking-wider rounded">Current</span>
+                        <span className="ml-auto px-1.5 py-0.5 bg-blue-500/15 text-blue-700 dark:text-blue-300 text-[9px] font-bold uppercase tracking-wider rounded">Current</span>
                       )}
                       {isMastered && (
-                        <span className="ml-auto px-1.5 py-0.5 bg-emerald-500/15 text-emerald-400 text-[9px] font-bold uppercase tracking-wider rounded">Done</span>
+                        <span className="ml-auto px-1.5 py-0.5 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 text-[9px] font-bold uppercase tracking-wider rounded">Done</span>
                       )}
                       {topic.status === "pending" && (
-                        <span className="ml-auto text-[9px] text-white/30 font-medium">Pending</span>
+                        <span className="ml-auto text-[9px] text-subtle-foreground font-medium">Pending</span>
                       )}
                     </div>
                     <div className="flex items-center gap-2 pl-7">
-                      <div className="flex-1 h-1.5 bg-[#0F172A] rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-background rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-500 ${
-                            isMastered ? "bg-emerald-500" : isCurrent ? colors.bg : "bg-white/10"
+                            isMastered ? "bg-emerald-500" : isCurrent ? colors.bg : "bg-surface-3"
                           }`}
                           style={{ width: `${topic.mastery}%` }}
                         />
                       </div>
                       <span className={`text-[10px] font-bold ${
-                        topic.mastery >= 85 ? "text-emerald-400" :
-                        topic.mastery > 0 ? "text-white/50" : "text-white/20"
+                        topic.mastery >= 85 ? "text-emerald-700 dark:text-emerald-400" :
+                        topic.mastery > 0 ? "text-muted-foreground" : "text-subtle-foreground/70"
                       }`}>
                         {topic.mastery}%
                       </span>
                     </div>
                     {isCurrent && topic.mastery < 85 && (
-                      <p className="text-[9px] text-white/25 pl-7 mt-1">
+                      <p className="text-[9px] text-subtle-foreground/70 pl-7 mt-1">
                         {85 - topic.mastery}% to target
                       </p>
                     )}
                     {isCurrent && topic.mastery >= 85 && (
-                      <p className="text-[9px] text-emerald-400/60 pl-7 mt-1 font-medium">
+                      <p className="text-[9px] text-emerald-700 dark:text-emerald-400/60 pl-7 mt-1 font-medium">
                         Target reached!
                       </p>
                     )}
@@ -967,47 +967,47 @@ export default function SessionPage() {
         </div>
 
         <div className="mt-auto space-y-4">
-          <div className="bg-[#0F172A] rounded-xl p-4 border border-white/5">
-            <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-3">Session Stats</h4>
+          <div className="bg-background rounded-xl p-4 border border-border">
+            <h4 className="text-xs font-bold text-subtle-foreground uppercase tracking-wider mb-3">Session Stats</h4>
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center">
-                <p className="text-xl font-black text-white">{sessionData.stats.questionsAsked}</p>
-                <p className="text-[10px] text-white/40 uppercase">Asked</p>
+                <p className="text-xl font-extrabold text-foreground">{sessionData.stats.questionsAsked}</p>
+                <p className="text-[10px] text-subtle-foreground uppercase">Asked</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-black text-emerald-400">{sessionData.stats.correctAnswers}</p>
-                <p className="text-[10px] text-white/40 uppercase">Correct</p>
+                <p className="text-xl font-extrabold text-emerald-700 dark:text-emerald-400">{sessionData.stats.correctAnswers}</p>
+                <p className="text-[10px] text-subtle-foreground uppercase">Correct</p>
               </div>
               <div className="text-center">
-                <p className={`text-xl font-black ${
-                  sessionData.stats.accuracy >= 70 ? "text-emerald-400" :
-                  sessionData.stats.accuracy >= 40 ? "text-amber-400" : "text-red-400"
+                <p className={`text-xl font-extrabold ${
+                  sessionData.stats.accuracy >= 70 ? "text-emerald-700 dark:text-emerald-400" :
+                  sessionData.stats.accuracy >= 40 ? "text-amber-700 dark:text-amber-400" : "text-red-700 dark:text-red-400"
                 }`}>{sessionData.stats.accuracy}%</p>
-                <p className="text-[10px] text-white/40 uppercase">Accuracy</p>
+                <p className="text-[10px] text-subtle-foreground uppercase">Accuracy</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-black text-blue-400">{sessionData.stats.streak}</p>
-                <p className="text-[10px] text-white/40 uppercase">Streak</p>
+                <p className="text-xl font-extrabold text-blue-700 dark:text-blue-400">{sessionData.stats.streak}</p>
+                <p className="text-[10px] text-subtle-foreground uppercase">Streak</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-[#0F172A] rounded-xl p-4 border border-white/5 flex items-center justify-between">
+          <div className="bg-background rounded-xl p-4 border border-border flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-white/40" />
-              <span className="text-xs text-white/40 uppercase">Time</span>
+              <Clock className="w-4 h-4 text-subtle-foreground" />
+              <span className="text-xs text-subtle-foreground uppercase">Time</span>
             </div>
-            <span className="text-lg font-mono font-bold text-teal-400">{formatTime(timeElapsed)}</span>
+            <span className="text-lg font-mono font-bold text-teal-700 dark:text-teal-400">{formatTime(timeElapsed)}</span>
           </div>
         </div>
 
         {sessionData.remediationMode && (
           <div className="mt-4 bg-amber-500/10 border border-amber-500/20 p-3 rounded-xl">
             <div className="flex items-center gap-2 mb-1">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
-              <p className="text-amber-300 font-semibold text-xs">Remediation Active</p>
+              <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <p className="text-amber-700 dark:text-amber-300 font-semibold text-xs">Remediation Active</p>
             </div>
-            <p className="text-amber-200/70 text-[11px]">Extra support enabled</p>
+            <p className="text-amber-800 dark:text-amber-200/70 text-[11px]">Extra support enabled</p>
           </div>
         )}
       </div>
@@ -1028,38 +1028,38 @@ export default function SessionPage() {
                 <Badge className={typeConfig.color}>
                   {typeConfig.label}
                 </Badge>
-                <Badge variant="outline" className="border-teal-500/30 text-teal-300">
+                <Badge variant="outline" className="border-teal-500/30 text-teal-700 dark:text-teal-300">
                   {sessionData.currentQuestion.topic}
                 </Badge>
-                <span className="text-sm text-white/40 ml-auto">
+                <span className="text-sm text-subtle-foreground ml-auto">
                   Question {sessionData.currentQuestion.number}
                 </span>
               </div>
 
-              <Card className="bg-[#1e293b]/90 backdrop-blur-xl border-white/5 shadow-xl">
+              <Card className="bg-card/90 backdrop-blur-xl border-border shadow-raised">
                 <CardContent className="p-8">
                   <div className="mb-8">
-                      <h2 className="text-base font-medium text-white leading-relaxed">
+                      <h2 className="text-base font-medium text-foreground leading-relaxed">
                         {sessionData.currentQuestion.text}
                       </h2>
                   </div>
 
                   {sessionData.currentQuestion.code_snippet && (
-                    <div className="mb-8 bg-[#0F172A] rounded-xl border border-white/5 overflow-hidden">
-                      <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
+                    <div className="mb-8 bg-background rounded-xl border border-border overflow-hidden">
+                      <div className="flex items-center justify-between px-4 py-2 bg-muted border-b border-border">
                         <div className="flex items-center gap-2">
-                          <Code className="w-4 h-4 text-teal-400" />
-                          <span className="text-xs font-semibold text-white/50 uppercase tracking-wider">Code</span>
+                          <Code className="w-4 h-4 text-teal-700 dark:text-teal-400" />
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Code</span>
                         </div>
                         <button
                           onClick={copyCode}
-                          className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-white/50 hover:text-white transition-all text-xs"
+                          className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-muted hover:bg-surface-3 text-muted-foreground hover:text-foreground transition-all text-xs"
                         >
                           <Copy className="w-3 h-3" />
                           Copy
                         </button>
                       </div>
-                      <pre className="p-4 text-emerald-400 text-sm overflow-x-auto font-mono whitespace-pre-wrap break-words leading-relaxed">
+                      <pre className="p-4 text-emerald-700 dark:text-emerald-400 text-sm overflow-x-auto font-mono whitespace-pre-wrap break-words leading-relaxed">
                         <code>{sessionData.currentQuestion.code_snippet}</code>
                       </pre>
                     </div>
@@ -1074,16 +1074,16 @@ export default function SessionPage() {
                             onClick={() => setSelectedAnswer(option.letter)}
                             className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
                               selectedAnswer === option.letter
-                                ? "border-teal-500 bg-teal-500/10 text-white shadow-[0_0_20px_rgba(13,148,136,0.15)]"
-                                : "border-white/10 bg-white/[0.02] text-white/80 hover:border-teal-500/30 hover:bg-teal-500/5"
+                                ? "border-teal-500 bg-teal-500/10 text-foreground "
+                                : "border-border bg-muted text-foreground/80 hover:border-teal-500/30 hover:bg-teal-500/5"
                             }`}
                             disabled={isEvaluating}
                           >
                             <div className="flex items-center gap-4">
                               <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all ${
                                 selectedAnswer === option.letter
-                                  ? "border-teal-500 bg-teal-500 text-white"
-                                  : "border-white/20 text-white/40"
+                                  ? "border-teal-500 bg-primary text-primary-foreground"
+                                  : "border-border-strong text-subtle-foreground"
                               }`}>
                                 {option.letter}
                               </div>
@@ -1099,7 +1099,7 @@ export default function SessionPage() {
                         {requiresSandbox ? (
                           <div className="space-y-4">
                             <div className="flex items-center justify-between gap-4 flex-wrap">
-                              <p className="text-white/70 text-sm">
+                              <p className="text-foreground/80 text-sm">
                                 Write your solution in the editor and test it before submitting:
                               </p>
                               {runCodeButton}
@@ -1113,7 +1113,7 @@ export default function SessionPage() {
 
                             {consoleOutput}
 
-                            <p className="text-white/30 text-xs">
+                            <p className="text-subtle-foreground text-xs">
                               Running your code executes it in a secure sandbox — it does not submit or grade your answer.
                             </p>
                           </div>
@@ -1128,7 +1128,7 @@ export default function SessionPage() {
                                 ? "// Fix the bugs in the code above..."
                                 : "// Write your complete solution here..."
                             }
-                            className="w-full h-52 bg-[#0F172A] border border-white/10 rounded-xl p-5 text-emerald-400 font-mono text-sm resize-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20 focus:outline-none transition-all"
+                            className="w-full h-52 bg-background border border-border rounded-xl p-5 text-emerald-700 dark:text-emerald-400 font-mono text-sm resize-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20 focus:outline-none transition-all"
                             disabled={isEvaluating}
                           />
                         )}
@@ -1138,21 +1138,21 @@ export default function SessionPage() {
                     {isTraceQuestion && (
                       <div className="space-y-5">
                         <div>
-                          <p className="text-white/70 text-sm mb-3">Trace through the code and write the expected output:</p>
+                          <p className="text-foreground/80 text-sm mb-3">Trace through the code and write the expected output:</p>
                           <textarea
                             value={codeAnswer}
                             onChange={(e) => setCodeAnswer(e.target.value)}
                             placeholder="Enter expected output..."
-                            className="w-full h-32 bg-[#0F172A] border border-white/10 rounded-xl p-5 text-white font-mono text-sm resize-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20 focus:outline-none transition-all"
+                            className="w-full h-32 bg-background border border-border rounded-xl p-5 text-foreground font-mono text-sm resize-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20 focus:outline-none transition-all"
                             disabled={isEvaluating}
                           />
                         </div>
 
                         {sessionData.currentQuestion.code_snippet && (
-                          <div className="space-y-4 pt-5 border-t border-white/5">
+                          <div className="space-y-4 pt-5 border-t border-border">
                             <div className="flex items-center justify-between gap-4 flex-wrap">
-                              <p className="text-white/50 text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
-                                <Terminal className="w-3.5 h-3.5 text-teal-400" />
+                              <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
+                                <Terminal className="w-3.5 h-3.5 text-teal-700 dark:text-teal-400" />
                                 Sandbox — run the provided snippet to verify your trace
                               </p>
                               {runCodeButton}
@@ -1166,7 +1166,7 @@ export default function SessionPage() {
 
                             {consoleOutput}
 
-                            <p className="text-white/30 text-xs">
+                            <p className="text-subtle-foreground text-xs">
                               Runs the provided snippet in a secure sandbox — only your traced output above is submitted for grading.
                             </p>
                           </div>
@@ -1178,7 +1178,7 @@ export default function SessionPage() {
                   <div className="mb-8">
                     <button
                       onClick={() => setShowHint(prev => prev < sessionData.currentQuestion.hints.length ? prev + 1 : prev)}
-                      className="flex items-center gap-2 text-teal-400 hover:text-teal-300 transition-colors group"
+                      className="flex items-center gap-2 text-teal-700 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition-colors group"
                       disabled={isEvaluating}
                     >
                       <div className="p-2 rounded-lg bg-teal-500/10 group-hover:bg-teal-500/20 transition-colors">
@@ -1196,17 +1196,17 @@ export default function SessionPage() {
                         {sessionData.currentQuestion.hints.slice(0, showHint).map((hint, index) => (
                           <div key={index} className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl">
                             <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                              <span className="text-amber-400 text-xs font-bold">{index + 1}</span>
+                              <span className="text-amber-700 dark:text-amber-400 text-xs font-bold">{index + 1}</span>
                             </div>
-                            <p className="text-amber-200/90 text-sm">{hint}</p>
+                            <p className="text-amber-800 dark:text-amber-200/90 text-sm">{hint}</p>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                    <div className="flex items-center gap-2 text-xs text-white/30">
+                  <div className="flex items-center justify-between pt-6 border-t border-border">
+                    <div className="flex items-center gap-2 text-xs text-subtle-foreground">
                       <Zap className="w-3.5 h-3.5" />
                       <span>AI-powered evaluation</span>
                     </div>
@@ -1217,11 +1217,11 @@ export default function SessionPage() {
                         (sessionData.currentQuestion.type === "mcq" && !selectedAnswer) ||
                         (sessionData.currentQuestion.type !== "mcq" && !codeAnswer.trim())
                       }
-                      className="bg-teal-600 hover:bg-teal-500 text-white px-8 py-3 font-semibold rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-teal-500/20"
+                      className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-3 font-semibold rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-raised "
                     >
                       {isEvaluating ? (
                         <div className="flex items-center gap-2.5">
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <div className="w-4 h-4 border-2 border-border-strong border-t-white rounded-full animate-spin" />
                           <span className="text-sm">
                             {sessionData.currentQuestion.type === "mcq"
                               ? "Checking answer..."
